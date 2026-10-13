@@ -91,6 +91,28 @@
   let draggedCardInfo = null;
   let isDraggingFlag = false;
 
+  // Tap-to-Place Selection Tracking
+  let selectedCardForPlacement = null;
+
+  function clearCardSelection() {
+    selectedCardForPlacement = null;
+    document.querySelectorAll('.mistake-card.is-selected').forEach(el => el.classList.remove('is-selected'));
+    document.body.classList.remove('card-selection-active');
+  }
+
+  function selectCardForPlacement(cardId, sourceCellKey, sourceIndex, cardEl) {
+    clearCardSelection();
+    selectedCardForPlacement = { cardId, sourceCellKey, sourceIndex };
+    if (cardEl) {
+      cardEl.classList.add('is-selected');
+    }
+    document.body.classList.add('card-selection-active');
+    const mistake = MISTAKES_MAP.get(cardId);
+    if (mistake) {
+      showToast(`Выбрано: ${mistake.title}. Нажмите на ячейку матрицы.`, 'info', 2200);
+    }
+  }
+
   // DOM Elements
   const matrixHeaderRowEl = document.getElementById('matrix-header-row');
   const matrixBoardEl = document.getElementById('matrix-board');
@@ -325,9 +347,19 @@
       </div>
       <div class="card-caption">${mistake.title}</div>
       <div class="card-tooltip">${mistake.title}</div>
+      <button class="card-zoom-btn" title="Просмотр"><i class="fa-solid fa-expand"></i></button>
       ${isInCell ? '<button class="card-remove-btn" title="Убрать"><i class="fa-solid fa-xmark"></i></button>' : ''}
       ${!isInCell ? '<span class="card-usage-badge" style="display:none;">0</span>' : ''}
     `;
+
+    // Zoom button opens lightbox
+    const zoomBtn = card.querySelector('.card-zoom-btn');
+    if (zoomBtn) {
+      zoomBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openLightbox(cardId);
+      });
+    }
 
     // Quick remove button inside cell
     if (isInCell) {
@@ -336,11 +368,14 @@
         removeBtn.addEventListener('click', (e) => {
           e.stopPropagation();
           removeCardFromCell(cellKey, itemIndex);
+          if (selectedCardForPlacement && selectedCardForPlacement.sourceCellKey === cellKey && selectedCardForPlacement.sourceIndex === itemIndex) {
+            clearCardSelection();
+          }
         });
       }
     }
 
-    // Drag events
+    // Desktop Drag events
     card.addEventListener('dragstart', (e) => {
       isDraggingFlag = true;
       draggedCardInfo = {
@@ -362,11 +397,132 @@
       }, 50);
     });
 
-    // Click opens Fullscreen Lightbox Modal (if not dragged)
-    card.addEventListener('click', (e) => {
-      if (isDraggingFlag) return;
+    // Mobile / Touch Drag-and-Drop
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let isTouchDragging = false;
+    let touchGhost = null;
+
+    card.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1) return;
+      const touch = e.touches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+      isTouchDragging = false;
+    }, { passive: true });
+
+    card.addEventListener('touchmove', (e) => {
+      if (e.touches.length !== 1) return;
+      const touch = e.touches[0];
+      const dx = touch.clientX - touchStartX;
+      const dy = touch.clientY - touchStartY;
+
+      if (!isTouchDragging && (Math.abs(dx) > 10 || Math.abs(dy) > 10)) {
+        isTouchDragging = true;
+        isDraggingFlag = true;
+        draggedCardInfo = {
+          cardId: cardId,
+          sourceCellKey: isInCell ? cellKey : null,
+          sourceIndex: isInCell ? itemIndex : null
+        };
+
+        touchGhost = document.createElement('div');
+        touchGhost.className = 'touch-drag-avatar';
+        touchGhost.innerHTML = `<img src="${mistake.img}" alt="${mistake.title}" />`;
+        touchGhost.style.left = `${touch.clientX}px`;
+        touchGhost.style.top = `${touch.clientY}px`;
+        document.body.appendChild(touchGhost);
+      }
+
+      if (isTouchDragging && touchGhost) {
+        e.preventDefault(); // Prevent page scroll during card drag
+        touchGhost.style.left = `${touch.clientX}px`;
+        touchGhost.style.top = `${touch.clientY}px`;
+
+        clearAllDragOverStyles();
+        const elemBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+        const targetCell = elemBelow?.closest('.matrix-cell');
+        if (targetCell) {
+          targetCell.classList.add('drag-over');
+        }
+      }
+    }, { passive: false });
+
+    card.addEventListener('touchend', (e) => {
+      if (isTouchDragging) {
+        if (touchGhost) {
+          touchGhost.remove();
+          touchGhost = null;
+        }
+
+        const touch = e.changedTouches[0];
+        const elemBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+        const targetCell = elemBelow?.closest('.matrix-cell');
+
+        clearAllDragOverStyles();
+
+        if (targetCell && draggedCardInfo) {
+          const targetCellKey = targetCell.dataset.cellKey;
+          const { cardId: dCardId, sourceCellKey, sourceIndex: dIndex } = draggedCardInfo;
+          if (sourceCellKey) {
+            if (sourceCellKey !== targetCellKey) {
+              removeCardFromCell(sourceCellKey, dIndex, false);
+              addCardToCell(targetCellKey, dCardId);
+            }
+          } else {
+            addCardToCell(targetCellKey, dCardId);
+          }
+        }
+
+        draggedCardInfo = null;
+        setTimeout(() => {
+          isDraggingFlag = false;
+          isTouchDragging = false;
+        }, 60);
+      }
+    }, { passive: true });
+
+    // Double-click opens Fullscreen Lightbox Modal
+    card.addEventListener('dblclick', (e) => {
       e.stopPropagation();
       openLightbox(cardId);
+    });
+
+    // Single Click / Tap to Select and Place
+    card.addEventListener('click', (e) => {
+      if (isDraggingFlag || isTouchDragging) return;
+      e.stopPropagation();
+
+      if (isInCell) {
+        // If a card from bank or another cell was selected, drop it into this cell!
+        if (selectedCardForPlacement && selectedCardForPlacement.cardId !== cardId) {
+          const { cardId: sCardId, sourceCellKey, sourceIndex: sIndex } = selectedCardForPlacement;
+          if (sourceCellKey) {
+            if (sourceCellKey !== cellKey) {
+              removeCardFromCell(sourceCellKey, sIndex, false);
+              addCardToCell(cellKey, sCardId);
+            }
+          } else {
+            addCardToCell(cellKey, sCardId);
+          }
+          clearCardSelection();
+          return;
+        }
+
+        // Toggle selection of this in-cell card
+        if (selectedCardForPlacement && selectedCardForPlacement.sourceCellKey === cellKey && selectedCardForPlacement.sourceIndex === itemIndex) {
+          clearCardSelection();
+        } else {
+          selectCardForPlacement(cardId, cellKey, itemIndex, card);
+        }
+      } else {
+        // In Bank: Toggle selection
+        if (selectedCardForPlacement && selectedCardForPlacement.cardId === cardId && !selectedCardForPlacement.sourceCellKey) {
+          clearCardSelection();
+        } else {
+          selectCardForPlacement(cardId, null, null, card);
+        }
+      }
     });
 
     return card;
@@ -419,9 +575,25 @@
     });
   }
 
-  // --- CELL DRAG & DROP EVENTS ---
+  // --- CELL DRAG & DROP EVENTS & TAP-TO-PLACE ---
   function setupCellDragEvents(cellEl) {
     const cellKey = cellEl.dataset.cellKey;
+
+    cellEl.addEventListener('click', (e) => {
+      if (selectedCardForPlacement) {
+        e.stopPropagation();
+        const { cardId, sourceCellKey, sourceIndex } = selectedCardForPlacement;
+        if (sourceCellKey) {
+          if (sourceCellKey !== cellKey) {
+            removeCardFromCell(sourceCellKey, sourceIndex, false);
+            addCardToCell(cellKey, cardId);
+          }
+        } else {
+          addCardToCell(cellKey, cardId);
+        }
+        clearCardSelection();
+      }
+    });
 
     cellEl.addEventListener('dragover', (e) => {
       e.preventDefault();
@@ -855,10 +1027,26 @@
         executeUndo();
         return;
       }
+
+      // If clicked outside cards and matrix cells, clear card selection
+      if (selectedCardForPlacement) {
+        if (!e.target.closest('.mistake-card') && !e.target.closest('.matrix-cell')) {
+          clearCardSelection();
+        }
+      }
     });
 
-    // Dropping on the bottom tray returns card to bank
+    // Clicking or dropping on the bottom tray returns selected in-cell card to bank
     if (bankCardsTrayEl) {
+      bankCardsTrayEl.addEventListener('click', (e) => {
+        if (selectedCardForPlacement && selectedCardForPlacement.sourceCellKey) {
+          e.stopPropagation();
+          const { sourceCellKey, sourceIndex } = selectedCardForPlacement;
+          removeCardFromCell(sourceCellKey, sourceIndex, true);
+          clearCardSelection();
+        }
+      });
+
       bankCardsTrayEl.addEventListener('dragover', (e) => {
         e.preventDefault();
         bankCardsTrayEl.classList.add('drag-over');

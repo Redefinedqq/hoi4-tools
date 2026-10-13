@@ -1,0 +1,17 @@
+{
+  "name": "tier-list-hoi4",
+  "version": "1.0.0",
+  "description": "2D Mistakes Matrix Tier List for Hearts of Iron IV",
+  "main": "index.html",
+  "scripts": {
+    "deploy": "npx vercel --prod --yes && git push origin HEAD:gh-pages",
+    "build:cards": "node build_all_cards.js"
+  },
+  "keywords": [
+    "hoi4",
+    "tier-list",
+    "matrix"
+  ],
+  "author": "@Redefinedgg",
+  "license": "MIT"
+}
