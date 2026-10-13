@@ -1,5 +1,10 @@
 .vercel
 .git
+node_modules
 assets/raw_svgs/
 build_all_cards.js
 download_icons.js
+test_cross.js
+preview-germany.png
+bank-perfect.png
+assets/fonts/AnimeAce-v02.ttf

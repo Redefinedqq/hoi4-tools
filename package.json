@@ -4,7 +4,8 @@
   "description": "2D Mistakes Matrix Tier List for Hearts of Iron IV",
   "main": "index.html",
   "scripts": {
-    "deploy": "npx vercel --prod --yes && git push origin HEAD:gh-pages",
+    "build": "node -e \"console.log('Static build ready')\"",
+    "deploy": "npx vercel --prod --yes && git push origin HEAD:gh-pages --force",
     "build:cards": "node build_all_cards.js"
   },
   "keywords": [

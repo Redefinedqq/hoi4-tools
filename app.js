@@ -343,7 +343,7 @@
 
     card.innerHTML = `
       <div class="card-art-box">
-        <img class="card-img" src="${mistake.img}" alt="${mistake.title}" loading="lazy" />
+        <img class="card-img" src="${mistake.img}" alt="${mistake.title}" loading="lazy" decoding="async" />
       </div>
       <div class="card-caption">${mistake.title}</div>
       <div class="card-tooltip">${mistake.title}</div>
