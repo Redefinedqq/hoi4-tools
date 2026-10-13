@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Матрица ошибок HOI 4 — 2D Тир-лист косяков Hearts of Iron IV</title>
+  
+  <!-- Open Graph / Telegram Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Матрица ошибок HOI 4 — 2D Тир-лист">
+  <meta property="og:description" content="Двумерный интерактивный тир-лист критичности ошибок для ключевых мажоров Hearts of Iron IV.">
+  <meta property="og:site_name" content="Hearts of This Gym">
+  <meta name="theme-color" content="#111318">
+
+  <!-- FontAwesome v6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- LZ-String for Ultra-Compact Shareable URLs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
+
+  <!-- Application Styles (Strict Google Material Design 3) -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Streamlined Header -->
+    <header class="site-header">
+      <div class="header-branding">
+        <h1 class="brand-title">МАТРИЦА ОШИБОК HOI 4</h1>
+        <div class="header-authors">
+          <a href="https://www.youtube.com/@HeartsOfThisGym" target="_blank" rel="noopener noreferrer" class="author-chip" title="YouTube канал">
+            <i class="fa-brands fa-youtube"></i>
+            <span>Hearts of This Gym (Данил)</span>
+          </a>
+          <a href="https://t.me/Redefinedgg" target="_blank" rel="noopener noreferrer" class="author-chip" title="Telegram автора">
+            <i class="fa-brands fa-telegram"></i>
+            <span>Сайтик сделал @Redefinedgg</span>
+          </a>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="wallpaper-btn" class="btn btn-tonal" title="Сменить фоновые обои">
+          <i class="fa-solid fa-image"></i>
+          <span>Обои</span>
+        </button>
+        <button id="preview-wallpaper-btn" class="btn btn-tonal" title="Посмотреть обои на весь экран">
+          <i class="fa-solid fa-eye"></i>
+          <span>Просмотр</span>
+        </button>
+        <button id="undo-btn" class="btn btn-secondary" style="display: none;" title="Восстановить матрицу после сброса">
+          <i class="fa-solid fa-rotate-left"></i>
+          <span>Вернуть</span>
+        </button>
+        <button id="reset-matrix-btn" class="btn btn-danger" title="Очистить все клетки матрицы">
+          <i class="fa-solid fa-trash-can"></i>
+          <span>Сброс</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Matrix Board Container -->
+    <main id="matrix-capture-area" class="matrix-card-wrapper">
+      <div class="matrix-scroll-container">
+        <div id="matrix-header-row" class="matrix-header-row">
+          <!-- Country and Corner Headers (Sticky freeze-pane) -->
+        </div>
+        <div id="matrix-board" class="matrix-board">
+          <!-- Populated dynamically via app.js -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Minimal Bottom Cards Strip (Direct Tray, No Toolbars) -->
+  <div class="bank-cards-strip-container">
+    <div id="bank-cards-tray" class="bank-cards-strip">
+      <!-- Populated dynamically via app.js -->
+    </div>
+  </div>
+
+  <!-- Fullscreen Lightbox Modal (M3 Dialog without duplicate text) -->
+  <div id="lightbox-modal" class="lightbox-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="lightbox-container">
+      <button id="lightbox-close-btn" class="lightbox-close-btn" title="Закрыть (Esc)">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="lightbox-image-frame">
+        <img id="lightbox-img" class="lightbox-img" src="" alt="" />
+      </div>
+      <div id="lightbox-title" class="lightbox-caption-card"></div>
+    </div>
+  </div>
+
+  <!-- Floating Wallpaper Control Bar (Visible in Wallpaper Preview Mode) -->
+  <div id="wallpaper-control-bar" class="wallpaper-control-bar" aria-label="Панель управления обоями">
+    <button id="wp-exit-btn" class="toast-btn toast-btn-cancel" title="Выйти из режима просмотра (Esc)">
+      <i class="fa-solid fa-arrow-left"></i>
+      <span>Назад</span>
+    </button>
+    <button id="wp-prev-btn" class="toast-btn toast-btn-cancel" title="Предыдущие обои">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <span id="wp-title-label" class="wp-title-text">Обои 1/5</span>
+    <button id="wp-next-btn" class="toast-btn toast-btn-cancel" title="Следующие обои">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <!-- M3 Snackbar Notifications (Top-Left) -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>

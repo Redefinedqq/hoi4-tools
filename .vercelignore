@@ -1,0 +1,5 @@
+.vercel
+.git
+assets/raw_svgs/
+build_all_cards.js
+download_icons.js
