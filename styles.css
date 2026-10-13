@@ -488,20 +488,20 @@ body::before {
 }
 
 /* ==========================================================================
-   DYNAMIC CELL CONTAINER (COMPACT DENSITY, AUTO ROW HEIGHT)
+   DYNAMIC CELL CONTAINER (PERFECT GEOMETRIC CENTERING)
    ========================================================================== */
 .matrix-cell {
   position: relative;
   box-sizing: border-box;
-  min-height: 90px;
+  min-height: 100px;
   height: 100%;
   display: flex;
   flex-wrap: wrap;
-  align-content: flex-start;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 4px;
-  padding: 5px;
+  align-items: center;      /* центрирование рядов по вертикали */
+  justify-content: center;   /* центрирование элементов по горизонтали */
+  align-content: center;    /* групповое центрирование всех строк контента */
+  gap: 6px;
+  padding: 6px;
   background-color: rgba(20, 24, 30, 0.45);
   border-radius: var(--m3-radius-cell);
   border: 1px solid rgba(255, 255, 255, 0.07);
@@ -526,10 +526,18 @@ body::before {
   align-items: center;
   justify-content: center;
   align-content: center;
+  padding: 6px;
   background-color: rgba(20, 24, 30, 0.45);
 }
 
 .matrix-cell.cell-has-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;      /* центрирование рядов по вертикали */
+  justify-content: center;   /* центрирование элементов по горизонтали */
+  align-content: center;    /* групповое центрирование всех строк контента */
+  gap: 6px;
+  padding: 6px;
   background-color: rgba(18, 21, 27, 0.65);
   border-color: rgba(255, 255, 255, 0.10);
 }
@@ -537,12 +545,13 @@ body::before {
 .cell-placeholder-hint {
   width: 100%;
   height: 100%;
-  min-height: 60px;
+  min-height: 80px;
   border-radius: 10px;
   border: 1px dashed rgba(255, 255, 255, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0;
   color: rgba(255, 255, 255, 0.35);
   font-size: 1.25rem;
   pointer-events: none;
@@ -578,8 +587,10 @@ body::before {
               box-shadow var(--m3-duration) var(--m3-timing);
 }
 
-/* In-Cell Card: Strict min-width: 54px; min-height: 54px, pure recognizable icon */
-.matrix-cell .mistake-card {
+/* In-Cell Card: Strict min-width: 54px; min-height: 54px, pure recognizable icon, perfectly centered */
+.matrix-cell .mistake-card,
+.matrix-cell .card,
+.matrix-cell .matrix-card {
   position: relative;
   width: 56px;
   height: 56px;
@@ -589,24 +600,40 @@ body::before {
   max-height: 60px;
   aspect-ratio: 1 / 1;
   padding: 0;
+  margin: 0 !important;
+  align-self: auto !important;
   border-radius: 8px;
   flex-shrink: 0;
   overflow: hidden;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
-.matrix-cell .mistake-card .card-art-box {
+.matrix-cell .mistake-card .card-art-box,
+.matrix-cell .card-art-box,
+.matrix-cell .card-icon {
   width: 100%;
   height: 100%;
   flex: 1;
   border-radius: 8px;
   background: #111317;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-.matrix-cell .mistake-card .card-img {
+.matrix-cell .mistake-card .card-img,
+.matrix-cell .card-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 8px;
+  display: block;
+  margin: auto !important;
 }
 
 /* Hide text caption inside matrix cells (clean classic tier-list look) */
