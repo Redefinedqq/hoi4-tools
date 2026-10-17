@@ -4,6 +4,7 @@
   "description": "2D Mistakes Matrix Tier List for Hearts of Iron IV",
   "main": "index.html",
   "scripts": {
+    "dev": "vite",
     "deploy": "node deploy.js",
     "deploy:gh": "git push origin HEAD:gh-pages --force",
     "deploy:vercel": "node deploy.js"
@@ -13,6 +14,9 @@
     "tier-list",
     "matrix"
   ],
-  "author": "@Redefinedgg",
-  "license": "MIT"
+  "author": "@redefinedtgk",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^8.3.4"
+  }
 }

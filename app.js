@@ -9,14 +9,14 @@
 
   // --- CONFIGURATION & DATA ---
   const COUNTRIES = [
+    { id: 'all', name: 'ОБЩЕЕ' },
     { id: 'germany', name: 'ГЕРМАНИЯ', flag: 'assets/flags/germany.svg' },
     { id: 'ussr', name: 'СССР', flag: 'assets/flags/ussr.svg' },
     { id: 'usa', name: 'США', flag: 'assets/flags/usa.svg' },
     { id: 'uk', name: 'ВЕЛИКОБРИТАНИЯ', flag: 'assets/flags/uk.svg' },
     { id: 'japan', name: 'ЯПОНИЯ', flag: 'assets/flags/japan.svg' },
     { id: 'italy', name: 'ИТАЛИЯ', flag: 'assets/flags/italy.svg' },
-    { id: 'france', name: 'ФРАНЦИЯ', flag: 'assets/flags/france.svg' },
-    { id: 'all', name: 'ОБЩЕЕ' }
+    { id: 'france', name: 'ФРАНЦИЯ', flag: 'assets/flags/france.svg' }
   ];
 
   const TIERS = [
@@ -28,45 +28,37 @@
     { id: 'situational', name: 'СИТУАТИВНО', className: 'tier-situational' }
   ];
 
-  // 38 Authentically Curated HOI4 Mistakes in high-res WebP
+  // 30 Authentically Curated HOI4 Mistakes in high-res WebP
   const MISTAKES = [
     { id: 'card-01-rubber-deficit', title: 'НЕТ РЕЗИНЫ', img: 'assets/cards/card-01-rubber-deficit.webp' },
-    { id: 'card-02-training-in-war', title: 'УЧЕНИЯ В ВОЙНЕ', img: 'assets/cards/card-02-training-in-war.webp' },
-    { id: 'card-03-no-order', title: 'БЕЗ ПРИКАЗА', img: 'assets/cards/card-03-no-order.webp' },
+    { id: 'card-02-training-in-war', title: 'ЗАБЫЛ СНЯТЬ С ТРЕНИРОВКИ НУЖНЫЕ ДИВКИ', img: 'assets/cards/card-02-training-in-war.webp' },
+    { id: 'card-03-no-order', title: 'НАСТУПАТЬ БЕЗ ПРИКАЗА', img: 'assets/cards/card-03-no-order.webp' },
     { id: 'card-04-forgot-building', title: 'ЗАБЫЛ СТРОЙКУ', img: 'assets/cards/card-04-forgot-building.webp' },
-    { id: 'card-05-bad-templates', title: 'НЕ МЕТА ШАБЛОНЫ', img: 'assets/cards/card-05-bad-templates.webp' },
+    { id: 'card-05-bad-templates', title: 'НЕ МЕТА ШАБЛОНЫ ДИВОК', img: 'assets/cards/card-05-bad-templates.webp' },
+    { id: 'card-05b-bad-templates-tanks', title: 'НЕ МЕТА ШАБЛОНЫ ТАНКОВ', img: 'assets/cards/card-05b-bad-templates-tanks.webp' },
+    { id: 'card-05c-bad-templates-air', title: 'НЕ МЕТА ШАБЛОНЫ АВИАЦИИ', img: 'assets/cards/card-05c-bad-templates-air.webp' },
+    { id: 'card-05d-bad-templates-navy', title: 'НЕ МЕТА ШАБЛОНЫ ФЛОТА', img: 'assets/cards/card-05d-bad-templates-navy.webp' },
     { id: 'card-06-forgot-agency', title: 'ЗАБЫЛ АГЕНТСТВО', img: 'assets/cards/card-06-forgot-agency.webp' },
     { id: 'card-07-zero-stability', title: 'НЕ СЛЕДИТЬ ПРО СТАБИЛЬНОСТЬ И ПОДДЕРЖКУ ВОЙНЫ', img: 'assets/cards/card-07-zero-stability.webp' },
     { id: 'card-10-fleet-sunk-one-battle', title: 'МИНУС ВЕСЬ ФЛОТ В ОДНОМ СРАЖЕНИИ', img: 'assets/cards/card-10-fleet-sunk-one-battle.webp' },
     { id: 'card-11-naval-bombers-no-fleet', title: 'МОРБОБРЫ БЕЗ ФЛОТА', img: 'assets/cards/card-11-naval-bombers-no-fleet.webp' },
     { id: 'card-12-no-manpower', title: '0 МЕНПАВЕРА', img: 'assets/cards/card-12-no-manpower.webp' },
     { id: 'card-13-lost-air', title: 'КРАСНЫЙ ВОЗДУХ', img: 'assets/cards/card-13-lost-air.webp' },
-    { id: 'card-14-uncovered-front', title: 'НЕ ПОСТАВИЛ ДИВКИ НА ВСЕ ПРОВКИ ФРОНТА ПРИ НАЧАЛЕ ВОЙНЫ', img: 'assets/cards/card-14-uncovered-front.webp' },
-    { id: 'card-15-guns-deficit', title: 'ДЕФИЦИТ СКЛАДОВ', img: 'assets/cards/card-15-guns-deficit.webp' },
-    { id: 'card-17-no-naval-invasion', title: 'НЕТ ВЫСАДКИ', img: 'assets/cards/card-17-no-naval-invasion.webp' },
-    { id: 'card-18-tanks-no-supply', title: 'ГОРЕНИЕ ДИВОК', img: 'assets/cards/card-18-tanks-no-supply.webp' },
-    { id: 'card-19-no-focus', title: 'ЗАБЫЛ ФОКУС', img: 'assets/cards/card-19-no-focus.webp' },
-    { id: 'card-21-red-air', title: 'КРАСНЫЙ ВОЗДУХ НАД СТОЛИЦЕЙ', img: 'assets/cards/card-21-red-air.webp' },
-    { id: 'card-23-horse-logistics', title: 'КОНИ ВМЕСТО АВТО', img: 'assets/cards/card-23-horse-logistics.webp' },
+    { id: 'card-15-guns-deficit', title: 'ДЕФИЦИТ СКЛАДОВ НА НАЧАЛЕ ВОЙНЫ', img: 'assets/cards/card-15-guns-deficit.webp' },
+    { id: 'card-18-tanks-no-supply', title: 'ГОРЕНИЕ ДИВОК ОТ СНАБЖЕНИЯ', img: 'assets/cards/card-18-tanks-no-supply.webp' },
+    { id: 'card-19-no-focus', title: 'ЗАБЫЛ ПОСТАВИТЬ НОВЫЙ ФОКУС', img: 'assets/cards/card-19-no-focus.webp' },
     { id: 'card-26-cb-expired', title: 'СГОРЕЛА ЦЕЛЬ ВОЙНЫ', img: 'assets/cards/card-26-cb-expired.webp' },
-    { id: 'card-56-no-sub-repair', title: 'РЕМОНТ ПОДЛОДОК', img: 'assets/cards/card-56-no-sub-repair.webp' },
     { id: 'card-27-no-dockyards-repair', title: '0 ВЕРФЕЙ НА РЕМОНТ', img: 'assets/cards/card-27-no-dockyards-repair.webp' },
     { id: 'card-28-zero-doctrines', title: 'НЕ ВКАЧЕННЫЕ ДОКТРИНЫ НА НУЖНОМ ЭТАПЕ ВОЙНЫ', img: 'assets/cards/card-28-zero-doctrines.webp' },
-    { id: 'card-29-width-too-big', title: 'НЕ МЕТА ШФ', img: 'assets/cards/card-29-width-too-big.webp' },
-    { id: 'card-31-attack-river-forts', title: 'ШТУРМ В 10-Й ФОРТ', img: 'assets/cards/card-31-attack-river-forts.webp' },
     { id: 'card-32-no-trains', title: '0 ПОЕЗДОВ', img: 'assets/cards/card-32-no-trains.webp' },
     { id: 'card-33-no-convoys-trade', title: '0 КОНВОЕВ', img: 'assets/cards/card-33-no-convoys-trade.webp' },
     { id: 'card-34-generals-no-traits', title: 'АРМИЯ БЕЗ ГЕНЕРАЛА', img: 'assets/cards/card-34-generals-no-traits.webp' },
-    { id: 'card-36-early-mobilization', title: 'ЗАКОН ЭКОНОМИКИ', img: 'assets/cards/card-36-early-mobilization.webp' },
-    { id: 'card-38-no-radar', title: 'БЕЗ РАДАРОВ', img: 'assets/cards/card-38-no-radar.webp' },
+    { id: 'card-36-early-mobilization', title: 'ЗАБЫЛ ПОМЕНЯТЬ ЗАКОН ОБ ЭКОНОМИКЕ', img: 'assets/cards/card-36-early-mobilization.webp' },
+    { id: 'card-38-no-radar', title: 'БЕЗ РАДИО', img: 'assets/cards/card-38-no-radar.webp' },
     { id: 'card-39-no-fuel-empty', title: '0 ТОПЛИВА', img: 'assets/cards/card-39-no-fuel-empty.webp' },
-    { id: 'card-40-tanks-in-mountains', title: 'ТАНКИ В АЛЬПАХ', img: 'assets/cards/card-40-tanks-in-mountains.webp' },
-    { id: 'card-41-garrison-cavalry-loss', title: 'ГАРНИЗОНЫ ЖРУТ ЛЮДЕЙ', img: 'assets/cards/card-41-garrison-cavalry-loss.webp' },
+    { id: 'card-40-tanks-in-mountains', title: 'ТАНКИ В ГОРАХ', img: 'assets/cards/card-40-tanks-in-mountains.webp' },
     { id: 'card-42-no-decryption', title: 'БЕЗ ДЕШИФРОВКИ', img: 'assets/cards/card-42-no-decryption.webp' },
-    { id: 'card-45-lost-capital-paratroopers', title: 'СДАЛ КЛЮЧЕВЫЕ ГОРОДА ВДВ', img: 'assets/cards/card-45-lost-capital-paratroopers.webp' },
-    { id: 'card-47-no-recon', title: 'БЕЗ РАЗВЕДКИ', img: 'assets/cards/card-47-no-recon.webp' },
-    { id: 'card-48-english-channel-convoy', title: 'КОНВОИ В ЛА-МАНШЕ', img: 'assets/cards/card-48-english-channel-convoy.webp' },
-    { id: 'card-52-fort-line-flanked', title: 'ОБОШЛИ МАЖИНО', img: 'assets/cards/card-52-fort-line-flanked.webp' },
+    { id: 'card-48-english-channel-convoy', title: 'КОНВОИ В КРАСНОМ МОРЕ', img: 'assets/cards/card-48-english-channel-convoy.webp' },
     { id: 'card-55-no-microcontrol', title: 'ОТСУТСТВИЕ МИКРОКОНТРОЛЯ', img: 'assets/cards/card-55-no-microcontrol.webp' }
   ];
 
@@ -323,6 +315,41 @@
     });
   }
 
+  // Smart middle truncation: keeps beginning and end of long titles,
+  // omitting only the middle words if the text is very long (> 38 chars)
+  function formatCardCaption(title) {
+    if (!title) return '';
+    if (title.length <= 38) return title;
+    const words = title.split(/\s+/);
+    if (words.length <= 3) {
+      const half = 14;
+      return `${title.slice(0, half).trim()}... ${title.slice(-half).trim()}`;
+    }
+    let headWords = [];
+    let tailWords = [];
+    let i = 0;
+    let j = words.length - 1;
+    let currentLen = 4;
+    while (i < j) {
+      const nextHeadLen = words[i].length + (headWords.length > 0 ? 1 : 0);
+      const nextTailLen = words[j].length + (tailWords.length > 0 ? 1 : 0);
+      if (headWords.length <= tailWords.length && currentLen + nextHeadLen <= 30) {
+        headWords.push(words[i]);
+        currentLen += nextHeadLen;
+        i++;
+      } else if (currentLen + nextTailLen <= 30) {
+        tailWords.unshift(words[j]);
+        currentLen += nextTailLen;
+        j--;
+      } else {
+        break;
+      }
+    }
+    if (headWords.length === 0) headWords.push(words[0]);
+    if (tailWords.length === 0) tailWords.unshift(words[words.length - 1]);
+    return `${headWords.join(' ')}... ${tailWords.join(' ')}`;
+  }
+
   // --- CREATE MISTAKE CARD ELEMENT ---
   function createCardElement(cardId, isInCell = false, cellKey = null, itemIndex = null) {
     const mistake = MISTAKES_MAP.get(cardId);
@@ -345,21 +372,11 @@
       <div class="card-art-box">
         <img class="card-img" src="${mistake.img}" alt="${mistake.title}" loading="lazy" decoding="async" />
       </div>
-      <div class="card-caption">${mistake.title}</div>
+      <div class="card-caption" title="${mistake.title}">${formatCardCaption(mistake.title)}</div>
       <div class="card-tooltip">${mistake.title}</div>
-      <button class="card-zoom-btn" title="Просмотр"><i class="fa-solid fa-expand"></i></button>
       ${isInCell ? '<button class="card-remove-btn" title="Убрать"><i class="fa-solid fa-xmark"></i></button>' : ''}
       ${!isInCell ? '<span class="card-usage-badge" style="display:none;">0</span>' : ''}
     `;
-
-    // Zoom button opens lightbox
-    const zoomBtn = card.querySelector('.card-zoom-btn');
-    if (zoomBtn) {
-      zoomBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openLightbox(cardId);
-      });
-    }
 
     // Quick remove button inside cell
     if (isInCell) {
@@ -482,47 +499,11 @@
       }
     }, { passive: true });
 
-    // Double-click opens Fullscreen Lightbox Modal
-    card.addEventListener('dblclick', (e) => {
-      e.stopPropagation();
-      openLightbox(cardId);
-    });
-
-    // Single Click / Tap to Select and Place
+    // Click on the entire card opens Fullscreen Lightbox Modal (Zoom)
     card.addEventListener('click', (e) => {
       if (isDraggingFlag || isTouchDragging) return;
       e.stopPropagation();
-
-      if (isInCell) {
-        // If a card from bank or another cell was selected, drop it into this cell!
-        if (selectedCardForPlacement && selectedCardForPlacement.cardId !== cardId) {
-          const { cardId: sCardId, sourceCellKey, sourceIndex: sIndex } = selectedCardForPlacement;
-          if (sourceCellKey) {
-            if (sourceCellKey !== cellKey) {
-              removeCardFromCell(sourceCellKey, sIndex, false);
-              addCardToCell(cellKey, sCardId);
-            }
-          } else {
-            addCardToCell(cellKey, sCardId);
-          }
-          clearCardSelection();
-          return;
-        }
-
-        // Toggle selection of this in-cell card
-        if (selectedCardForPlacement && selectedCardForPlacement.sourceCellKey === cellKey && selectedCardForPlacement.sourceIndex === itemIndex) {
-          clearCardSelection();
-        } else {
-          selectCardForPlacement(cardId, cellKey, itemIndex, card);
-        }
-      } else {
-        // In Bank: Toggle selection
-        if (selectedCardForPlacement && selectedCardForPlacement.cardId === cardId && !selectedCardForPlacement.sourceCellKey) {
-          clearCardSelection();
-        } else {
-          selectCardForPlacement(cardId, null, null, card);
-        }
-      }
+      openLightbox(cardId);
     });
 
     return card;

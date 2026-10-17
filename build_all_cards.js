@@ -37,7 +37,7 @@ const CARDS_DATA = [
   },
   {
     id: 'card-02-training-in-war',
-    title: 'УЧЕНИЯ В ВОЙНЕ',
+    title: 'ЗАБЫЛ СНЯТЬ С ТРЕНИРОВКИ НУЖНЫЕ ДИВКИ',
     icon: 'person-burst',
     badge: 'arrows-spin',
     theme: '#e67e22',
@@ -46,7 +46,7 @@ const CARDS_DATA = [
   },
   {
     id: 'card-03-no-order',
-    title: 'БЕЗ ПРИКАЗА',
+    title: 'НАСТУПАТЬ БЕЗ ПРИКАЗА',
     icon: 'route',
     badge: 'ban',
     theme: '#e74c3c',
@@ -64,11 +64,38 @@ const CARDS_DATA = [
   },
   {
     id: 'card-05-bad-templates',
-    title: 'НЕ МЕТА ШАБЛОНЫ',
+    title: 'НЕ МЕТА ШАБЛОНЫ ДИВОК',
     icon: 'network-wired',
     badge: 'circle-xmark',
     theme: '#e74c3c',
     iconColor: '#ff6b6b',
+    badgeColor: '#ff4757'
+  },
+  {
+    id: 'card-05b-bad-templates-tanks',
+    title: 'НЕ МЕТА ШАБЛОНЫ ТАНКОВ',
+    icon: 'tank',
+    badge: 'circle-xmark',
+    theme: '#d35400',
+    iconColor: '#fa8231',
+    badgeColor: '#ff4757'
+  },
+  {
+    id: 'card-05c-bad-templates-air',
+    title: 'НЕ МЕТА ШАБЛОНЫ АВИАЦИИ',
+    icon: 'jet-fighter',
+    badge: 'circle-xmark',
+    theme: '#0984e3',
+    iconColor: '#4bcffa',
+    badgeColor: '#ff4757'
+  },
+  {
+    id: 'card-05d-bad-templates-navy',
+    title: 'НЕ МЕТА ШАБЛОНЫ ФЛОТА',
+    icon: 'ship',
+    badge: 'circle-xmark',
+    theme: '#2980b9',
+    iconColor: '#70a1ff',
     badgeColor: '#ff4757'
   },
   {
@@ -126,17 +153,8 @@ const CARDS_DATA = [
     badgeColor: '#ff793f'
   },
   {
-    id: 'card-14-uncovered-front',
-    title: 'НЕ ПОСТАВИЛ ДИВКИ НА ВСЕ ПРОВКИ ФРОНТА ПРИ НАЧАЛЕ ВОЙНЫ',
-    icon: 'link-slash',
-    badge: 'route',
-    theme: '#d35400',
-    iconColor: '#fa8231',
-    badgeColor: '#e15f41'
-  },
-  {
     id: 'card-15-guns-deficit',
-    title: 'ДЕФИЦИТ СКЛАДОВ',
+    title: 'ДЕФИЦИТ СКЛАДОВ НА НАЧАЛЕ ВОЙНЫ',
     icon: 'gun',
     badge: 'circle-xmark',
     theme: '#e74c3c',
@@ -144,17 +162,8 @@ const CARDS_DATA = [
     badgeColor: '#eb3b5a'
   },
   {
-    id: 'card-17-no-naval-invasion',
-    title: 'НЕТ ВЫСАДКИ',
-    icon: 'anchor',
-    badge: 'circle-xmark',
-    theme: '#3498db',
-    iconColor: '#4bcffa',
-    badgeColor: '#0fbcf9'
-  },
-  {
     id: 'card-18-tanks-no-supply',
-    title: 'ГОРЕНИЕ ДИВОК',
+    title: 'ГОРЕНИЕ ДИВОК ОТ СНАБЖЕНИЯ',
     icon: 'boxes-stacked',
     badge: 'droplet-slash',
     theme: '#e67e22',
@@ -163,30 +172,12 @@ const CARDS_DATA = [
   },
   {
     id: 'card-19-no-focus',
-    title: 'ЗАБЫЛ ФОКУС',
+    title: 'ЗАБЫЛ ПОСТАВИТЬ НОВЫЙ ФОКУС',
     icon: 'sitemap',
     badge: 'circle-xmark',
     theme: '#e74c3c',
     iconColor: '#ff6b6b',
     badgeColor: '#ff4757'
-  },
-  {
-    id: 'card-21-red-air',
-    title: 'КРАСНЫЙ ВОЗДУХ НАД СТОЛИЦЕЙ',
-    icon: 'jet-fighter',
-    badge: 'fire',
-    theme: '#c0392b',
-    iconColor: '#ff5252',
-    badgeColor: '#ff793f'
-  },
-  {
-    id: 'card-23-horse-logistics',
-    title: 'КОНИ ВМЕСТО АВТО',
-    icon: 'horse',
-    badge: 'circle-xmark',
-    theme: '#f39c12',
-    iconColor: '#f5cd79',
-    badgeColor: '#e67e22'
   },
   {
     id: 'card-26-cb-expired',
@@ -225,24 +216,6 @@ const CARDS_DATA = [
     badgeColor: '#778ca3'
   },
   {
-    id: 'card-29-width-too-big',
-    title: 'НЕ МЕТА ШФ',
-    icon: 'mountain',
-    badge: 'weight-hanging',
-    theme: '#7f8c8d',
-    iconColor: '#d1d8e0',
-    badgeColor: '#a5b1c2'
-  },
-  {
-    id: 'card-31-attack-river-forts',
-    title: 'ШТУРМ В 10-Й ФОРТ',
-    icon: 'shield-halved',
-    badge: 'water',
-    theme: '#e74c3c',
-    iconColor: '#ff6b6b',
-    badgeColor: '#45aaf2'
-  },
-  {
     id: 'card-32-no-trains',
     title: '0 ПОЕЗДОВ',
     icon: 'train',
@@ -271,7 +244,7 @@ const CARDS_DATA = [
   },
   {
     id: 'card-36-early-mobilization',
-    title: 'ЗАКОН ЭКОНОМИКИ',
+    title: 'ЗАБЫЛ ПОМЕНЯТЬ ЗАКОН ОБ ЭКОНОМИКЕ',
     icon: 'industry',
     badge: 'circle-xmark',
     theme: '#f39c12',
@@ -298,21 +271,12 @@ const CARDS_DATA = [
   },
   {
     id: 'card-40-tanks-in-mountains',
-    title: 'ТАНКИ В АЛЬПАХ',
+    title: 'ТАНКИ В ГОРАХ',
     icon: 'mountain',
     badge: 'car-burst',
     theme: '#7f8c8d',
     iconColor: '#d1d8e0',
     badgeColor: '#e74c3c'
-  },
-  {
-    id: 'card-41-garrison-cavalry-loss',
-    title: 'ГАРНИЗОНЫ ЖРУТ ЛЮДЕЙ',
-    icon: 'horse',
-    badge: 'skull',
-    theme: '#c0392b',
-    iconColor: '#fa8231',
-    badgeColor: '#eb3b5a'
   },
   {
     id: 'card-42-no-decryption',
@@ -322,15 +286,6 @@ const CARDS_DATA = [
     theme: '#8e44ad',
     iconColor: '#a55eea',
     badgeColor: '#778ca3'
-  },
-  {
-    id: 'card-45-lost-capital-paratroopers',
-    title: 'СДАЛ КЛЮЧЕВЫЕ ГОРОДА ВДВ',
-    icon: 'parachute-box',
-    badge: 'landmark-flag',
-    theme: '#c0392b',
-    iconColor: '#eb3b5a',
-    badgeColor: '#fc5c65'
   },
   {
     id: 'card-47-no-recon',
@@ -349,15 +304,6 @@ const CARDS_DATA = [
     theme: '#e74c3c',
     iconColor: '#45aaf2',
     badgeColor: '#eb3b5a'
-  },
-  {
-    id: 'card-52-fort-line-flanked',
-    title: 'ОБОШЛИ МАЖИНО',
-    icon: 'shield-halved',
-    badge: 'route',
-    theme: '#d35400',
-    iconColor: '#fa8231',
-    badgeColor: '#e74c3c'
   },
   {
     id: 'card-55-no-microcontrol',

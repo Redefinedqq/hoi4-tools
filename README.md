@@ -16,7 +16,7 @@
 
 ## Авторство и ссылки
 - **Сделано для канала:** [Hearts of This Gym (Данил)](https://www.youtube.com/@HeartsOfThisGym)
-- **Сайтик сделал:** [@Redefinedgg](https://t.me/Redefinedgg)
+- **Сайтик сделал:** [@redefinedtgk](https://t.me/redefinedtgk)
 
 ---
 
