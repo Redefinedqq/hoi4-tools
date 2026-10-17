@@ -107,8 +107,23 @@
     </main>
   </div>
 
-  <!-- Minimal Bottom Cards Strip (Direct Tray, No Toolbars) -->
+  <!-- Minimal Bottom Cards Strip with Scale Control -->
   <div class="bank-cards-strip-container">
+    <div class="tray-top-bar">
+      <div class="tray-label">
+        <i class="fa-solid fa-layer-group"></i>
+        <span>КОЛОДА ОШИБОК</span>
+        <span class="tray-count" id="tray-cards-count">30</span>
+      </div>
+      <div class="tray-scale-control" aria-label="Масштаб колоды">
+        <span class="tray-scale-title"><i class="fa-solid fa-magnifying-glass"></i> Масштаб:</span>
+        <button id="tray-scale-down" class="tray-scale-btn" title="Уменьшить масштаб"><i class="fa-solid fa-minus"></i></button>
+        <input type="range" id="tray-scale-slider" min="65" max="145" step="5" value="100" class="tray-scale-slider" title="Ползунок масштаба" />
+        <span id="tray-scale-value" class="tray-scale-value" title="Нажмите, чтобы сбросить масштаб на 100%">100%</span>
+        <button id="tray-scale-up" class="tray-scale-btn" title="Увеличить масштаб"><i class="fa-solid fa-plus"></i></button>
+        <button id="tray-scale-reset" class="tray-scale-btn tray-scale-reset" title="Сбросить на 100%"><i class="fa-solid fa-rotate-left"></i></button>
+      </div>
+    </div>
     <div id="bank-cards-tray" class="bank-cards-strip">
       <!-- Populated dynamically via app.js -->
     </div>

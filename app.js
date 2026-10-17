@@ -105,37 +105,151 @@
     }
   }
 
-  // DOM Elements
-  const matrixHeaderRowEl = document.getElementById('matrix-header-row');
-  const matrixBoardEl = document.getElementById('matrix-board');
-  const bankCardsTrayEl = document.getElementById('bank-cards-tray');
-  const resetBtnEl = document.getElementById('reset-matrix-btn') || document.getElementById('reset-btn');
-  const undoBtnEl = document.getElementById('undo-btn');
-  const wallpaperBtnEl = document.getElementById('wallpaper-btn');
-  const previewWpBtnEl = document.getElementById('preview-wallpaper-btn');
-  const wpControlBarEl = document.getElementById('wallpaper-control-bar');
-  const wpExitBtnEl = document.getElementById('wp-exit-btn');
-  const wpPrevBtnEl = document.getElementById('wp-prev-btn');
-  const wpNextBtnEl = document.getElementById('wp-next-btn');
-  const wpTitleLabelEl = document.getElementById('wp-title-label');
-  const toastContainerEl = document.getElementById('toast-container');
+  // DOM Elements (Populated on init)
+  let matrixHeaderRowEl = null;
+  let matrixBoardEl = null;
+  let bankCardsTrayEl = null;
+  let resetBtnEl = null;
+  let undoBtnEl = null;
+  let wallpaperBtnEl = null;
+  let previewWpBtnEl = null;
+  let wpControlBarEl = null;
+  let wpExitBtnEl = null;
+  let wpPrevBtnEl = null;
+  let wpNextBtnEl = null;
+  let wpTitleLabelEl = null;
+  let toastContainerEl = null;
 
   // Lightbox DOM Elements
-  const lightboxModalEl = document.getElementById('lightbox-modal');
-  const lightboxCloseBtnEl = document.getElementById('lightbox-close-btn');
-  const lightboxImgEl = document.getElementById('lightbox-img');
-  const lightboxTitleEl = document.getElementById('lightbox-title');
+  let lightboxModalEl = null;
+  let lightboxCloseBtnEl = null;
+  let lightboxImgEl = null;
+  let lightboxTitleEl = null;
+
+  function initElements() {
+    matrixHeaderRowEl = document.getElementById('matrix-header-row');
+    matrixBoardEl = document.getElementById('matrix-board');
+    bankCardsTrayEl = document.getElementById('bank-cards-tray');
+    resetBtnEl = document.getElementById('reset-matrix-btn') || document.getElementById('reset-btn');
+    undoBtnEl = document.getElementById('undo-btn');
+    wallpaperBtnEl = document.getElementById('wallpaper-btn');
+    previewWpBtnEl = document.getElementById('preview-wallpaper-btn');
+    wpControlBarEl = document.getElementById('wallpaper-control-bar');
+    wpExitBtnEl = document.getElementById('wp-exit-btn');
+    wpPrevBtnEl = document.getElementById('wp-prev-btn');
+    wpNextBtnEl = document.getElementById('wp-next-btn');
+    wpTitleLabelEl = document.getElementById('wp-title-label');
+    toastContainerEl = document.getElementById('toast-container');
+
+    lightboxModalEl = document.getElementById('lightbox-modal');
+    lightboxCloseBtnEl = document.getElementById('lightbox-close-btn');
+    lightboxImgEl = document.getElementById('lightbox-img');
+    lightboxTitleEl = document.getElementById('lightbox-title');
+  }
 
   // --- INITIALIZATION ---
   function init() {
-    initWallpaper();
-    buildMatrixGrid();
-    renderBankCards();
-    loadStateFromURL();
-    setupEventListeners();
-    setupLightboxListeners();
-    setupWallpaperListeners();
-    updateBankUsageCounters();
+    try {
+      console.log('--- Initializing HOI4 Matrix App ---');
+      initElements();
+      initWallpaper();
+      initTrayScale();
+      buildMatrixGrid();
+      renderBankCards();
+      loadStateFromURL();
+      setupEventListeners();
+      setupLightboxListeners();
+      setupWallpaperListeners();
+      setupTrayScaleListeners();
+      updateBankUsageCounters();
+      showInitialTip();
+      console.log('--- HOI4 Matrix App Initialized Successfully ---');
+    } catch (e) {
+      console.error('CRITICAL INIT ERROR:', e);
+    }
+  }
+
+  // --- TRAY SCALE CONTROLLER ---
+  let currentTrayScale = 100; // in percent (65 to 145)
+
+  function initTrayScale() {
+    try {
+      const saved = localStorage.getItem('hoi4_tray_scale');
+      if (saved !== null) {
+        const val = parseInt(saved, 10);
+        if (!isNaN(val) && val >= 65 && val <= 145) {
+          currentTrayScale = val;
+        }
+      }
+    } catch (e) {}
+
+    applyTrayScale(currentTrayScale, false);
+  }
+
+  function applyTrayScale(percent, save = true) {
+    percent = Math.max(65, Math.min(145, Math.round(percent / 5) * 5));
+    currentTrayScale = percent;
+
+    const scaleFactor = (percent / 100).toFixed(2);
+    document.documentElement.style.setProperty('--tray-scale', scaleFactor);
+
+    const sliderEl = document.getElementById('tray-scale-slider');
+    const valueEl = document.getElementById('tray-scale-value');
+
+    if (sliderEl) sliderEl.value = percent;
+    if (valueEl) valueEl.textContent = `${percent}%`;
+
+    if (save) {
+      try {
+        localStorage.setItem('hoi4_tray_scale', percent);
+      } catch (e) {}
+    }
+  }
+
+  function setupTrayScaleListeners() {
+    const sliderEl = document.getElementById('tray-scale-slider');
+    const downBtn = document.getElementById('tray-scale-down');
+    const upBtn = document.getElementById('tray-scale-up');
+    const resetBtn = document.getElementById('tray-scale-reset');
+    const valueEl = document.getElementById('tray-scale-value');
+
+    if (sliderEl) {
+      sliderEl.addEventListener('input', (e) => {
+        applyTrayScale(parseInt(e.target.value, 10));
+      });
+    }
+
+    if (downBtn) {
+      downBtn.addEventListener('click', () => {
+        applyTrayScale(currentTrayScale - 10);
+      });
+    }
+
+    if (upBtn) {
+      upBtn.addEventListener('click', () => {
+        applyTrayScale(currentTrayScale + 10);
+      });
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        applyTrayScale(100);
+        showToast('Масштаб колоды сброшен на 100%', 2200, false, 'info');
+      });
+    }
+
+    if (valueEl) {
+      valueEl.addEventListener('click', () => {
+        applyTrayScale(100);
+        showToast('Масштаб колоды сброшен на 100%', 2200, false, 'info');
+      });
+    }
+  }
+
+  function showInitialTip() {
+    setTimeout(() => {
+      showToast('💡 Совет: вы можете отрегулировать масштаб нижней панели с карточками под свой экран (+ / - в панели)', 7500, false, 'tip');
+    }, 1100);
   }
 
   // --- WALLPAPERS CONTROLLER ---
@@ -313,6 +427,9 @@
       const cardEl = createCardElement(mistake.id, false);
       bankCardsTrayEl.appendChild(cardEl);
     });
+
+    const countEl = document.getElementById('tray-cards-count');
+    if (countEl) countEl.textContent = MISTAKES.length;
   }
 
   // Smart middle truncation: keeps beginning and end of long titles,
@@ -906,11 +1023,13 @@
     }
 
     const toast = document.createElement('div');
-    toast.className = 'toast toast-confirm show';
+    toast.className = 'toast toast-danger show';
     toast.innerHTML = `
+      <div class="toast-icon-badge">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
       <div class="toast-content">
-        <i class="fa-solid fa-triangle-exclamation toast-icon"></i>
-        <span>Сбросить матрицу?</span>
+        <span>Сбросить всю матрицу?</span>
       </div>
       <div class="toast-actions">
         <button class="toast-btn toast-btn-confirm" id="confirm-reset-action">
@@ -1048,17 +1167,59 @@
     }
   }
 
-  // --- TOAST NOTIFICATIONS (TOP-LEFT) ---
-  function showToast(message, duration = 3200, showUndo = false) {
+  // --- PROMINENT TOAST NOTIFICATIONS ---
+  function showToast(message, arg2 = 3600, arg3 = false, arg4 = 'info') {
+    let duration = 3600;
+    let showUndo = false;
+    let type = 'info';
+
+    if (typeof arg2 === 'number') {
+      duration = arg2;
+      if (typeof arg3 === 'boolean') {
+        showUndo = arg3;
+        if (typeof arg4 === 'string') type = arg4;
+      } else if (typeof arg3 === 'string') {
+        type = arg3;
+      }
+    } else if (typeof arg2 === 'string') {
+      type = arg2;
+      if (typeof arg3 === 'number') {
+        duration = arg3;
+      } else if (typeof arg3 === 'boolean') {
+        showUndo = arg3;
+      }
+    } else if (typeof arg2 === 'boolean') {
+      showUndo = arg2;
+      if (typeof arg3 === 'number') duration = arg3;
+    }
+
+    if (isNaN(duration) || duration <= 0) {
+      duration = 3600;
+    }
+
+    if (!toastContainerEl) {
+      toastContainerEl = document.getElementById('toast-container');
+    }
     if (!toastContainerEl) return;
 
     const toast = document.createElement('div');
-    toast.className = 'toast';
+    toast.className = `toast toast-${type}`;
+
+    let iconClass = 'fa-solid fa-circle-info';
+    if (type === 'tip') {
+      iconClass = 'fa-solid fa-lightbulb';
+    } else if (type === 'danger') {
+      iconClass = 'fa-solid fa-triangle-exclamation';
+    } else if (type === 'success') {
+      iconClass = 'fa-solid fa-circle-check';
+    }
 
     if (showUndo) {
       toast.innerHTML = `
+        <div class="toast-icon-badge">
+          <i class="${iconClass}"></i>
+        </div>
         <div class="toast-content">
-          <i class="fa-solid fa-circle-check toast-icon"></i>
           <span>${message}</span>
         </div>
         <div class="toast-actions">
@@ -1066,39 +1227,58 @@
             <i class="fa-solid fa-rotate-left"></i>
             <span>Вернуть</span>
           </button>
+          <button class="toast-close-btn" title="Закрыть">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
         </div>
       `;
       const undoBtn = toast.querySelector('#toast-undo-action');
       if (undoBtn) {
         undoBtn.addEventListener('click', (e) => {
           e.stopPropagation();
-          toast.classList.remove('show');
-          setTimeout(() => toast.remove(), 160);
+          dismissToast(toast);
           executeUndo();
         });
       }
     } else {
       toast.innerHTML = `
+        <div class="toast-icon-badge">
+          <i class="${iconClass}"></i>
+        </div>
         <div class="toast-content">
-          <i class="fa-solid fa-circle-info toast-icon"></i>
           <span>${message}</span>
         </div>
+        <button class="toast-close-btn" title="Закрыть">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       `;
     }
 
+    const closeBtn = toast.querySelector('.toast-close-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dismissToast(toast);
+      });
+    }
+
     toastContainerEl.appendChild(toast);
+    toast.classList.add('show');
 
-    requestAnimationFrame(() => {
-      toast.classList.add('show');
-    });
-
-    setTimeout(() => {
-      if (toast.parentNode) {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 160);
-      }
+    const timer = setTimeout(() => {
+      dismissToast(toast);
     }, duration);
+
+    function dismissToast(el) {
+      clearTimeout(timer);
+      if (el && el.parentNode) {
+        el.classList.remove('show');
+        setTimeout(() => el.remove(), 220);
+      }
+    }
   }
+
+  window.showToast = showToast;
 
   // Start app
   if (document.readyState === 'loading') {
