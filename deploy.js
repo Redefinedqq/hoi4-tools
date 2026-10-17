@@ -17,9 +17,12 @@ fs.mkdirSync(path.join(dist, '.vercel'), { recursive: true });
   }
 });
 
-// Копирование ассетов
+// Копирование ассетов (исключая внутренние папки бэкапов)
 if (fs.existsSync(path.join(__dirname, 'assets'))) {
-  fs.cpSync(path.join(__dirname, 'assets'), path.join(dist, 'assets'), { recursive: true });
+  fs.cpSync(path.join(__dirname, 'assets'), path.join(dist, 'assets'), {
+    recursive: true,
+    filter: (src) => !src.includes('backup')
+  });
 }
 
 // Перенос конфигурации Vercel проекта
