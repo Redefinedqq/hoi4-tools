@@ -1,7 +1,8 @@
 {
-  "name": "tier-list-hoi4",
+  "name": "hoi4-tools",
   "version": "1.0.0",
-  "description": "2D Mistakes Matrix Tier List for Hearts of Iron IV",
+  "description": "2D Matrix Tier List for Hearts of Iron IV",
+  "homepage": "https://redefinedqq.github.io/hoi4-tools/",
   "main": "index.html",
   "scripts": {
     "dev": "vite",

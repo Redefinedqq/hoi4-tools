@@ -20,9 +20,7 @@
 
 ---
 
-## Развертывание на Vercel
-
-```bash
-npx vercel --prod
-```
-Live Production URL: [https://tier-list-hoi4.vercel.app](https://tier-list-hoi4.vercel.app)
+## Ссылки на проект
+- **GitHub Pages:** [https://redefinedqq.github.io/hoi4-tools/](https://redefinedqq.github.io/hoi4-tools/)
+- **Vercel Mirror:** [https://tier-list-hoi4.vercel.app](https://tier-list-hoi4.vercel.app)
+- **GitHub Репозиторий:** [https://github.com/Redefinedqq/hoi4-tools](https://github.com/Redefinedqq/hoi4-tools)

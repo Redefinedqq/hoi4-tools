@@ -3,31 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Матрица ошибок HOI 4 — 2D Тир-лист косяков Hearts of Iron IV</title>
+  <title>2D Тир-лист Hearts of Iron IV — Ошибки (trikiwi) и Фишки (Атом в леггинсах)</title>
   
   <!-- Primary Meta Tags & SEO -->
-  <meta name="title" content="Матрица ошибок HOI 4 — 2D Тир-лист косяков Hearts of Iron IV">
-  <meta name="description" content="Интерактивный 2D тир-лист и матрица ошибок Hearts of Iron IV. Оценка критичности косяков для мажоров: Германия, СССР, США, Британия, Япония, Италия, Франция.">
-  <meta name="keywords" content="Hearts of Iron IV, HOI4, тир-лист, матрица ошибок, Hearts of This Gym, гайды HOI4, шаблоны дивизий, косяки hoi4, Paradox Interactive">
-  <meta name="author" content="@redefinedtgk, Hearts of This Gym (Данил)">
+  <meta name="title" content="2D Тир-лист Hearts of Iron IV — Ошибки (trikiwi) и Фишки (Атом в леггинсах)">
+  <meta name="description" content="Интерактивный 2D тир-лист и матрица ошибок и механик Hearts of Iron IV. Оценка для мажоров: Германия, СССР, США, Британия, Япония, Италия, Франция.">
+  <meta name="keywords" content="Hearts of Iron IV, HOI4, тир-лист, матрица ошибок, trikiwi, Атом в леггинсах, фишки hoi4, косяки hoi4, Paradox Interactive">
+  <meta name="author" content="@redefinedtgk">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://tier-list-hoi4.vercel.app">
+  <link rel="canonical" href="https://redefinedqq.github.io/hoi4-tools/">
   <link rel="icon" type="image/svg+xml" href="assets/flags/germany.svg">
 
   <!-- Open Graph / Facebook / Telegram Metadata -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://tier-list-hoi4.vercel.app">
-  <meta property="og:title" content="Матрица ошибок HOI 4 — 2D Тир-лист">
-  <meta property="og:description" content="Двумерный интерактивный тир-лист критичности ошибок для ключевых мажоров Hearts of Iron IV.">
-  <meta property="og:image" content="https://tier-list-hoi4.vercel.app/assets/wallpapers/bg-1.webp">
-  <meta property="og:site_name" content="Hearts of This Gym">
+  <meta property="og:url" content="https://redefinedqq.github.io/hoi4-tools/">
+  <meta property="og:title" content="2D Тир-лист Hearts of Iron IV — Ошибки и Фишки">
+  <meta property="og:description" content="Двумерный интерактивный тир-лист ошибок и механик для мажоров Hearts of Iron IV.">
+  <meta property="og:image" content="https://redefinedqq.github.io/hoi4-tools/assets/wallpapers/bg-1.webp">
+  <meta property="og:site_name" content="HOI4 Tier List Hub">
   <meta name="theme-color" content="#111318">
-
-  <!-- Twitter Card Metadata -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Матрица ошибок HOI 4 — 2D Тир-лист">
-  <meta name="twitter:description" content="Двумерный интерактивный тир-лист критичности ошибок для ключевых мажоров Hearts of Iron IV.">
-  <meta name="twitter:image" content="https://tier-list-hoi4.vercel.app/assets/wallpapers/bg-1.webp">
 
   <!-- High-Performance Preconnect & Preloads -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -42,7 +36,7 @@
   <!-- LZ-String for Ultra-Compact Shareable URLs (Deferred) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js" defer></script>
 
-  <!-- Application Styles (Strict Google Material Design 3) -->
+  <!-- Application Styles (Strict HOI4 Graphite Theme) -->
   <link rel="stylesheet" href="styles.css">
 
   <!-- Structured Data JSON-LD -->
@@ -50,9 +44,9 @@
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Матрица ошибок HOI 4",
-    "url": "https://tier-list-hoi4.vercel.app",
-    "description": "Двумерный интерактивный тир-лист критичности ошибок для мажоров Hearts of Iron IV.",
+    "name": "2D Тир-лист Hearts of Iron IV",
+    "url": "https://redefinedqq.github.io/hoi4-tools/",
+    "description": "Двумерный интерактивный тир-лист ошибок и механик для мажоров Hearts of Iron IV.",
     "applicationCategory": "GameApplication",
     "operatingSystem": "All",
     "inLanguage": "ru",
@@ -65,16 +59,112 @@
   </script>
 </head>
 <body>
-  <div class="app-wrapper">
+
+  <!-- Fullscreen Welcome Screen / Tier-List Selector Modal -->
+  <div id="welcome-screen" class="welcome-screen-overlay" role="dialog" aria-modal="true">
+    <div class="welcome-container">
+      <header class="welcome-header">
+        <h1 class="welcome-title">ВЫБЕРИТЕ ТИР-ЛИСТ</h1>
+      </header>
+
+      <div class="welcome-cards-grid">
+        <!-- Card 1: Ошибки в HOI4 -->
+        <div class="welcome-card" id="select-trikiwi-card" role="button" tabindex="0">
+          <div class="welcome-card-glow welcome-card-glow-red"></div>
+          <h2 class="welcome-card-title">ОШИБКИ В HOI4</h2>
+          <div class="welcome-card-previews">
+            <div class="preview-thumb"><img src="assets/cards/card-01-rubber-deficit.webp" alt="Нет резины" title="Нет резины" loading="lazy" /></div>
+            <div class="preview-thumb"><img src="assets/cards/card-13-lost-air.webp" alt="Красный воздух" title="Красный воздух" loading="lazy" /></div>
+            <div class="preview-thumb"><img src="assets/cards/card-18-tanks-no-supply.webp" alt="Горение от снабжения" title="Горение от снабжения" loading="lazy" /></div>
+            <div class="preview-thumb"><img src="assets/cards/card-39-no-fuel-empty.webp" alt="0 топлива" title="0 топлива" loading="lazy" /></div>
+          </div>
+          <div class="welcome-card-meta">
+            <span><i class="fa-solid fa-layer-group"></i> 30 ошибок</span>
+            <span><i class="fa-solid fa-flag"></i> 8 направлений</span>
+            <span><i class="fa-solid fa-chart-simple"></i> 6 уровней</span>
+          </div>
+          <button class="welcome-card-btn btn-trikiwi">
+            <span>Открыть тир-лист</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Card 2: Фишки и механики -->
+        <div class="welcome-card" id="select-atom-card" role="button" tabindex="0">
+          <div class="welcome-card-glow welcome-card-glow-cyan"></div>
+          <h2 class="welcome-card-title">ФИШКИ И МЕХАНИКИ</h2>
+          <div class="welcome-card-previews">
+            <div class="preview-thumb"><img src="assets/cards/card-38-no-radar.webp" alt="Радио и ротация" title="Радио и ротация" loading="lazy" /></div>
+            <div class="preview-thumb"><img src="assets/cards/card-18-tanks-no-supply.webp" alt="Снабжение" title="Снабжение" loading="lazy" /></div>
+            <div class="preview-thumb"><img src="assets/cards/card-17-no-naval-invasion.webp" alt="Морские дропы" title="Морские дропы" loading="lazy" /></div>
+            <div class="preview-thumb"><img src="assets/cards/card-05b-bad-templates-tanks.webp" alt="Шаблоны танков" title="Шаблоны танков" loading="lazy" /></div>
+          </div>
+          <div class="welcome-card-meta">
+            <span><i class="fa-solid fa-bolt"></i> 30 фишек</span>
+            <span><i class="fa-solid fa-flag"></i> 8 направлений</span>
+            <span><i class="fa-solid fa-chart-simple"></i> 6 уровней</span>
+          </div>
+          <button class="welcome-card-btn btn-atom">
+            <span>Открыть тир-лист</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leave Confirmation Dialog -->
+  <div id="leave-confirm-modal" class="confirm-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="confirm-modal-card">
+      <div class="confirm-modal-icon">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <div class="confirm-modal-body">
+        <h3 class="confirm-modal-title">Вернуться к выбору тир-листа?</h3>
+        <p class="confirm-modal-desc">На текущей доске есть несохраненные карточки. При возврате к меню несохраненный прогресс будет сброшен.</p>
+      </div>
+      <div class="confirm-modal-actions">
+        <button id="cancel-leave-btn" class="btn btn-secondary">
+          <i class="fa-solid fa-xmark"></i>
+          <span>Остаться</span>
+        </button>
+        <button id="confirm-leave-btn" class="btn btn-danger">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Да, выйти</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Application Wrapper -->
+  <div class="app-wrapper" id="main-app-wrapper">
     <!-- Streamlined Header -->
     <header class="site-header">
-      <div class="header-branding">
-        <h1 class="brand-title">МАТРИЦА ОШИБОК HOI 4</h1>
-        <a href="https://t.me/redefinedtgk" target="_blank" rel="noopener noreferrer" class="developer-tag" title="Telegram разработчика">
-          ТЕЛЕГА РАЗРАБОТЧИКА: @REDEFINEDTGK
-        </a>
+      <div class="header-left">
+        <button id="back-to-select-btn" class="btn btn-tonal btn-back" title="Вернуться к выбору тир-листа">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Назад</span>
+        </button>
+        <div class="header-branding">
+          <h1 id="brand-title" class="brand-title">ОШИБКИ В HOI 4</h1>
+          <a href="https://t.me/redefinedtgk" target="_blank" rel="noopener noreferrer" class="developer-tag" title="Telegram разработчика">
+            DEV: @REDEFINEDTGK
+          </a>
+        </div>
       </div>
       <div class="header-actions">
+        <div class="tray-scale-control" aria-label="Масштаб колоды">
+          <span class="tray-scale-title"><i class="fa-solid fa-magnifying-glass"></i> Масштаб колоды:</span>
+          <button id="tray-scale-down" class="tray-scale-btn" title="Уменьшить масштаб"><i class="fa-solid fa-minus"></i></button>
+          <input type="range" id="tray-scale-slider" min="80" max="120" step="5" value="100" class="tray-scale-slider" title="Ползунок масштаба (двойной клик для сброса на 100%)" />
+          <span id="tray-scale-value" class="tray-scale-value" title="Дважды кликните, чтобы сбросить масштаб на 100%">100%</span>
+          <button id="tray-scale-up" class="tray-scale-btn" title="Увеличить масштаб"><i class="fa-solid fa-plus"></i></button>
+          <button id="tray-scale-reset" class="tray-scale-btn tray-scale-reset" title="Сбросить на 100%"><i class="fa-solid fa-rotate-left"></i></button>
+        </div>
+        <button id="share-btn" class="btn btn-primary" title="Скопировать ссылку с текущим состоянием тир-листа">
+          <i class="fa-solid fa-share-nodes"></i>
+          <span>Сохранить / Поделиться</span>
+        </button>
         <button id="wallpaper-btn" class="btn btn-tonal" title="Сменить фоновые обои">
           <i class="fa-solid fa-image"></i>
           <span>Обои</span>
@@ -107,29 +197,22 @@
     </main>
   </div>
 
-  <!-- Minimal Bottom Cards Strip with Scale Control -->
+  <!-- Bottom Cards Strip with Smooth Scroll -->
   <div class="bank-cards-strip-container">
-    <div class="tray-top-bar">
-      <div class="tray-label">
-        <i class="fa-solid fa-layer-group"></i>
-        <span>КОЛОДА ОШИБОК</span>
-        <span class="tray-count" id="tray-cards-count">30</span>
-      </div>
-      <div class="tray-scale-control" aria-label="Масштаб колоды">
-        <span class="tray-scale-title"><i class="fa-solid fa-magnifying-glass"></i> Масштаб:</span>
-        <button id="tray-scale-down" class="tray-scale-btn" title="Уменьшить масштаб"><i class="fa-solid fa-minus"></i></button>
-        <input type="range" id="tray-scale-slider" min="65" max="145" step="5" value="100" class="tray-scale-slider" title="Ползунок масштаба" />
-        <span id="tray-scale-value" class="tray-scale-value" title="Нажмите, чтобы сбросить масштаб на 100%">100%</span>
-        <button id="tray-scale-up" class="tray-scale-btn" title="Увеличить масштаб"><i class="fa-solid fa-plus"></i></button>
-        <button id="tray-scale-reset" class="tray-scale-btn tray-scale-reset" title="Сбросить на 100%"><i class="fa-solid fa-rotate-left"></i></button>
-      </div>
-    </div>
     <div id="bank-cards-tray" class="bank-cards-strip">
       <!-- Populated dynamically via app.js -->
     </div>
   </div>
 
-  <!-- Fullscreen Lightbox Modal (M3 Dialog without duplicate text) -->
+  <!-- Floating Developer Credit Badge (Does not block workspace) -->
+  <aside class="floating-author-badge" aria-label="Связь с автором">
+    <a href="https://t.me/redefinedtgk" target="_blank" rel="noopener noreferrer" title="Telegram разработчика: @redefinedtgk">
+      <i class="fa-brands fa-telegram"></i>
+      <span>@redefinedtgk</span>
+    </a>
+  </aside>
+
+  <!-- Fullscreen Lightbox Modal (Zoom view) -->
   <div id="lightbox-modal" class="lightbox-modal" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="lightbox-container">
       <button id="lightbox-close-btn" class="lightbox-close-btn" title="Закрыть (Esc)">
@@ -157,10 +240,10 @@
     </button>
   </div>
 
-  <!-- M3 Snackbar Notifications (Top-Left) -->
+  <!-- M3 Snackbar Notifications -->
   <div id="toast-container" class="toast-container" aria-live="polite"></div>
 
-  <!-- Application Logic (Deferred for optimal performance) -->
+  <!-- Application Logic -->
   <script src="app.js" defer></script>
 </body>
 </html>

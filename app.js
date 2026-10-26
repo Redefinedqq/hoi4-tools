@@ -1,13 +1,23 @@
 /**
- * Hearts of Iron IV - 2D Mistakes Matrix Tier List
- * Streamlined UI / Pure Material 3 / Dynamic Square Grid
- * Author: @Redefinedgg for Hearts of This Gym (Данил)
+ * Hearts of Iron IV - 2D Matrix Tier List Hub
+ * Supports:
+ *   1. "Ошибки в HOI4 (trikiwi)"
+ *   2. "Фишки и механики (Атом в леггинсах)"
+ * Features:
+ *   - Welcome Screen / Modal Tier-List Selector
+ *   - Dynamic Tier-Colored Drag-and-Drop Highlights
+ *   - Anti-Duplicate Protection (Streamer Bug Fix)
+ *   - Share & Restore State via URL (LZString / Base64)
+ *   - Smooth Horizontal Wheel Scrolling & Zoom Control (80%-120% with double-click reset)
+ *   - High-contrast M3 Dark Graphite HOI4 styling
+ * Author: @redefinedtgk
  */
 
 (function () {
   'use strict';
 
-  // --- CONFIGURATION & DATA ---
+  // --- 1. CONFIGURATION & DATASETS ---
+
   const COUNTRIES = [
     { id: 'all', name: 'ОБЩЕЕ' },
     { id: 'germany', name: 'ГЕРМАНИЯ', flag: 'assets/flags/germany.svg' },
@@ -19,16 +29,7 @@
     { id: 'france', name: 'ФРАНЦИЯ', flag: 'assets/flags/france.svg' }
   ];
 
-  const TIERS = [
-    { id: 'meta', name: 'ПОЛОЖИТЕЛЬНО', className: 'tier-meta' },
-    { id: 'whatever', name: 'БЕЗ РАЗНИЦЫ', className: 'tier-whatever' },
-    { id: 'noob', name: 'НЕПРИЯТНЕНЬКО', className: 'tier-noob' },
-    { id: 'serious', name: 'СЕРЬЁЗНАЯ ОШИБКА', className: 'tier-serious' },
-    { id: 'ruin', name: 'РУИНА', className: 'tier-ruin' },
-    { id: 'situational', name: 'СИТУАТИВНО', className: 'tier-situational' }
-  ];
-
-  // 30 Authentically Curated HOI4 Mistakes in high-res WebP
+  // 30 Curated Mistakes (trikiwi)
   const MISTAKES = [
     { id: 'card-01-rubber-deficit', title: 'НЕТ РЕЗИНЫ', img: 'assets/cards/card-01-rubber-deficit.webp' },
     { id: 'card-02-training-in-war', title: 'ЗАБЫЛ СНЯТЬ С ТРЕНИРОВКИ НУЖНЫЕ ДИВКИ', img: 'assets/cards/card-02-training-in-war.webp' },
@@ -58,11 +59,82 @@
     { id: 'card-39-no-fuel-empty', title: '0 ТОПЛИВА', img: 'assets/cards/card-39-no-fuel-empty.webp' },
     { id: 'card-40-tanks-in-mountains', title: 'ТАНКИ В ГОРАХ', img: 'assets/cards/card-40-tanks-in-mountains.webp' },
     { id: 'card-42-no-decryption', title: 'БЕЗ ДЕШИФРОВКИ', img: 'assets/cards/card-42-no-decryption.webp' },
-    { id: 'card-48-english-channel-convoy', title: 'КОНВОИ В КРАСНОМ МОРЕ', img: 'assets/cards/card-48-english-channel-convoy.webp' },
+    { id: 'card-48-english-channel-convoy', title: 'КОНВОИ В ЛА-МАНШЕ', img: 'assets/cards/card-48-english-channel-convoy.webp' },
     { id: 'card-55-no-microcontrol', title: 'ОТСУТСТВИЕ МИКРОКОНТРОЛЯ', img: 'assets/cards/card-55-no-microcontrol.webp' }
   ];
 
-  const MISTAKES_MAP = new Map(MISTAKES.map(m => [m.id, m]));
+  // 30 Curated Mechanics and Tricks (Атом в леггинсах) - All using authentic in-game HOI4 screenshots
+  const MECHANICS = [
+    { id: 'trick-01-radio-rotation', title: 'РОТАЦИЯ ЧЕРЕЗ РАДИО', img: 'assets/cards/card-38-no-radar.webp' },
+    { id: 'trick-02-supply-interception', title: 'ПЕРЕХВАТ СНАБЖЕНИЯ', img: 'assets/cards/card-32-no-trains.webp' },
+    { id: 'trick-03-naval-drops', title: 'МОРСКИЕ ДРОПЫ', img: 'assets/cards/card-17-no-naval-invasion.webp' },
+    { id: 'trick-04-hull-conversion', title: 'КОНВЕРСИЯ КОРПУСОВ', img: 'assets/cards/card-05b-bad-templates-tanks.webp' },
+    { id: 'trick-05-spg-piercing', title: 'ПРОБИТИЕ САУ', img: 'assets/cards/card-05-bad-templates.webp' },
+    { id: 'trick-06-attache-coop', title: 'АТТАШЕ И КООП', img: 'assets/cards/card-07-zero-stability.webp' },
+    { id: 'trick-07-force-attack-cycling', title: 'ЦИКЛИЧНЫЙ FORCE ATTACK', img: 'assets/cards/card-03-no-order.webp' },
+    { id: 'trick-08-cas-logistics-strike', title: 'УДАР ШТУРМОВИКОВ ПО СНАБЖЕНИЮ', img: 'assets/cards/card-13-lost-air.webp' },
+    { id: 'trick-09-air-transports-supply', title: 'СНАБЖЕНИЕ С ВОЗДУХА', img: 'assets/cards/card-18-tanks-no-supply.webp' },
+    { id: 'trick-10-space-marines', title: 'КОСМОДЕСАНТ', img: 'assets/cards/card-40-tanks-in-mountains.webp' },
+    { id: 'trick-11-licence-production', title: 'ЛИЦЕНЗИОННОЕ ПРОИЗВОДСТВО', img: 'assets/cards/card-04-forgot-building.webp' },
+    { id: 'trick-12-manual-naval-strike', title: 'РУЧНОЙ МОРСКОЙ НАЛЁТ', img: 'assets/cards/card-11-naval-bombers-no-fleet.webp' },
+    { id: 'trick-13-fake-intel-divisions', title: 'ДЕКОЙНЫЕ ДИВИЗИИ (ЛОЖНЫЕ ЦЕЛИ)', img: 'assets/cards/card-06-forgot-agency.webp' },
+    { id: 'trick-14-motorized-supply-hub', title: 'МОТОРИЗАЦИЯ ХАБОВ', img: 'assets/cards/card-23-horse-logistics.webp' },
+    { id: 'trick-15-collaborators-govt', title: 'КОЛЛАБОРАЦИОНИСТЫ', img: 'assets/cards/card-42-no-decryption.webp' },
+    { id: 'trick-16-scorch-earth-retreat', title: 'ВЫЖЖЕННАЯ ЗЕМЛЯ', img: 'assets/cards/card-52-fort-line-flanked.webp' },
+    { id: 'trick-17-paradrop-victory-points', title: 'ДРОП В ПОБЕДНЫЕ ОЧКИ', img: 'assets/cards/card-45-lost-capital-paratroopers.webp' },
+    { id: 'trick-18-refit-cruiser-armor', title: 'РЕФИТ КРЕЙСЕРОВ', img: 'assets/cards/card-27-no-dockyards-repair.webp' },
+    { id: 'trick-19-carrier-overcrowding', title: 'ПЕРЕГРУЗ АВИАНОСЦЕВ', img: 'assets/cards/card-05c-bad-templates-air.webp' },
+    { id: 'trick-20-tank-speed-matching', title: 'СИНХРОНИЗАЦИЯ СКОРОСТИ', img: 'assets/cards/card-29-width-too-big.webp' },
+    { id: 'trick-21-sniping-supply-depot', title: 'СНАЙПИНГ СКЛАДОВ', img: 'assets/cards/card-14-uncovered-front.webp' },
+    { id: 'trick-22-sub-pack-tactics', title: 'ВОЛЧЬИ СТАИ НА МЕЛКОВОДЬЕ', img: 'assets/cards/card-56-no-sub-repair.webp' },
+    { id: 'trick-23-entrenchment-stacking', title: 'СТАКАНИЕ ОКАПЫВАНИЯ', img: 'assets/cards/card-31-attack-river-forts.webp' },
+    { id: 'trick-24-doctrine-xp-boost', title: 'ФАРМ ОПЫТА НА ПОЛИГОНЕ', img: 'assets/cards/card-28-zero-doctrines.webp' },
+    { id: 'trick-25-puppet-manpower', title: 'МЕНПАВЕР МАРИОНЕТОК', img: 'assets/cards/card-12-no-manpower.webp' },
+    { id: 'trick-26-railway-guns-barrage', title: 'АРТОБСТРЕЛ Ж/Д ОРУДИЙ', img: 'assets/cards/card-15-guns-deficit.webp' },
+    { id: 'trick-27-midget-sub-mines', title: 'МИННЫЕ ПОЛЯ В ПРОЛИВАХ', img: 'assets/cards/card-48-english-channel-convoy.webp' },
+    { id: 'trick-28-armor-meme-slicing', title: 'СРЕЗ БРОНИ ПОД ПРОБИТИЕ', img: 'assets/cards/card-34-generals-no-traits.webp' },
+    { id: 'trick-29-anti-air-piercing', title: 'ПВО ВМЕСТО ПТ', img: 'assets/cards/card-05d-bad-templates-navy.webp' },
+    { id: 'trick-30-volunteer-air-wing', title: 'ДОБРОВОЛЬЧЕСКАЯ АВИАЦИЯ', img: 'assets/cards/card-19-no-focus.webp' }
+  ];
+
+  const TIER_LISTS = {
+    trikiwi: {
+      id: 'trikiwi',
+      title: 'ОШИБКИ В HOI 4',
+      author: 'trikiwi',
+      trayTitle: 'КОЛОДА ОШИБОК',
+      itemNoun: 'ошибок',
+      axisH: 'НАПРАВЛЕНИЯ',
+      axisV: 'КРИТИЧНОСТЬ',
+      tiers: [
+        { id: 'meta', name: 'ПОЛОЖИТЕЛЬНО', className: 'tier-meta', color: '#2e7d32', glow: 'rgba(46, 125, 50, 0.45)', bg: 'rgba(46, 125, 50, 0.15)' },
+        { id: 'whatever', name: 'БЕЗ РАЗНИЦЫ', className: 'tier-whatever', color: '#8bc34a', glow: 'rgba(139, 195, 74, 0.45)', bg: 'rgba(139, 195, 74, 0.15)' },
+        { id: 'noob', name: 'НЕПРИЯТНЕНЬКО', className: 'tier-noob', color: '#fbc02d', glow: 'rgba(251, 192, 45, 0.45)', bg: 'rgba(251, 192, 45, 0.15)' },
+        { id: 'serious', name: 'СЕРЬЁЗНАЯ ОШИБКА', className: 'tier-serious', color: '#f57c00', glow: 'rgba(245, 124, 0, 0.45)', bg: 'rgba(245, 124, 0, 0.15)' },
+        { id: 'ruin', name: 'РУИНА', className: 'tier-ruin', color: '#c62828', glow: 'rgba(198, 40, 40, 0.45)', bg: 'rgba(198, 40, 40, 0.15)' },
+        { id: 'situational', name: 'СИТУАТИВНО', className: 'tier-situational', color: '#f5f5f7', glow: 'rgba(245, 245, 247, 0.45)', bg: 'rgba(245, 245, 247, 0.15)' }
+      ],
+      cards: MISTAKES
+    },
+    atom: {
+      id: 'atom',
+      title: 'ФИШКИ И МЕХАНИКИ',
+      author: 'Атом в леггинсах',
+      trayTitle: 'КОЛОДА ФИШЕК',
+      itemNoun: 'фишек',
+      axisH: 'СТРАНЫ',
+      axisV: 'ПОЛЕЗНОСТЬ',
+      tiers: [
+        { id: 'must_have', name: 'МАСТ-ХЭВ', className: 'tier-meta', color: '#2e7d32', glow: 'rgba(46, 125, 50, 0.45)', bg: 'rgba(46, 125, 50, 0.15)' },
+        { id: 'strong', name: 'ОЧЕНЬ СИЛЬНО', className: 'tier-whatever', color: '#8bc34a', glow: 'rgba(139, 195, 74, 0.45)', bg: 'rgba(139, 195, 74, 0.15)' },
+        { id: 'useful', name: 'ПОЛЕЗНО', className: 'tier-noob', color: '#fbc02d', glow: 'rgba(251, 192, 45, 0.45)', bg: 'rgba(251, 192, 45, 0.15)' },
+        { id: 'situational', name: 'СИТУАТИВНО', className: 'tier-situational', color: '#f5f5f7', glow: 'rgba(245, 245, 247, 0.45)', bg: 'rgba(245, 245, 247, 0.15)' },
+        { id: 'weak', name: 'СОМНИТЕЛЬНО', className: 'tier-serious', color: '#f57c00', glow: 'rgba(245, 124, 0, 0.45)', bg: 'rgba(245, 124, 0, 0.15)' },
+        { id: 'useless', name: 'Ммм... Хуета', className: 'tier-ruin', color: '#c62828', glow: 'rgba(198, 40, 40, 0.45)', bg: 'rgba(198, 40, 40, 0.15)' }
+      ],
+      cards: MECHANICS
+    }
+  };
 
   // Wallpapers gallery
   const WALLPAPERS = [
@@ -74,9 +146,9 @@
   ];
   let currentWpIndex = 0;
 
-  // App State: { [cellKey]: [cardId1, cardId2, ...] }
-  // STARTS 100% EMPTY BY DEFAULT!
-  let matrixState = {};
+  // --- 2. APPLICATION STATE ---
+  let currentTierListId = 'trikiwi'; // 'trikiwi' or 'atom'
+  let matrixState = {}; // { [cellKey]: [cardId] }
   let lastResetSnapshot = null;
 
   // Drag Tracking
@@ -86,29 +158,23 @@
   // Tap-to-Place Selection Tracking
   let selectedCardForPlacement = null;
 
-  function clearCardSelection() {
-    selectedCardForPlacement = null;
-    document.querySelectorAll('.mistake-card.is-selected').forEach(el => el.classList.remove('is-selected'));
-    document.body.classList.remove('card-selection-active');
-  }
+  // DOM Elements
+  let welcomeScreenEl = null;
+  let leaveConfirmModalEl = null;
+  let selectTrikiwiCardEl = null;
+  let selectAtomCardEl = null;
+  let backToSelectBtnEl = null;
+  let cancelLeaveBtnEl = null;
+  let confirmLeaveBtnEl = null;
+  let brandTitleEl = null;
+  let shareBtnEl = null;
 
-  function selectCardForPlacement(cardId, sourceCellKey, sourceIndex, cardEl) {
-    clearCardSelection();
-    selectedCardForPlacement = { cardId, sourceCellKey, sourceIndex };
-    if (cardEl) {
-      cardEl.classList.add('is-selected');
-    }
-    document.body.classList.add('card-selection-active');
-    const mistake = MISTAKES_MAP.get(cardId);
-    if (mistake) {
-      showToast(`Выбрано: ${mistake.title}. Нажмите на ячейку матрицы.`, 'info', 2200);
-    }
-  }
-
-  // DOM Elements (Populated on init)
   let matrixHeaderRowEl = null;
   let matrixBoardEl = null;
   let bankCardsTrayEl = null;
+  let trayTitleTextEl = null;
+  let trayCardsCountEl = null;
+
   let resetBtnEl = null;
   let undoBtnEl = null;
   let wallpaperBtnEl = null;
@@ -120,17 +186,104 @@
   let wpTitleLabelEl = null;
   let toastContainerEl = null;
 
-  // Lightbox DOM Elements
   let lightboxModalEl = null;
   let lightboxCloseBtnEl = null;
   let lightboxImgEl = null;
   let lightboxTitleEl = null;
 
+  // --- 3. HELPER LOOKUPS ---
+  function getCurrentTierList() {
+    return TIER_LISTS[currentTierListId] || TIER_LISTS.trikiwi;
+  }
+
+  function getCurrentCards() {
+    return getCurrentTierList().cards;
+  }
+
+  function getCardById(cardId) {
+    const list = getCurrentTierList();
+    return list.cards.find(c => c.id === cardId) || null;
+  }
+
+  function getCellKey(countryId, tierId) {
+    return `${countryId}__${tierId}`;
+  }
+
+  function getCardCountries(cardId) {
+    const countrySet = new Set();
+    for (const key in matrixState) {
+      if (Array.isArray(matrixState[key]) && matrixState[key].includes(cardId)) {
+        const [countryId] = key.split('__');
+        if (countryId) countrySet.add(countryId);
+      }
+    }
+    return countrySet;
+  }
+
+  function findCardCellInCountry(cardId, countryId) {
+    const list = getCurrentTierList();
+    for (const tier of list.tiers) {
+      const cellKey = getCellKey(countryId, tier.id);
+      if (Array.isArray(matrixState[cellKey])) {
+        const idx = matrixState[cellKey].indexOf(cardId);
+        if (idx !== -1) {
+          return { cellKey, tierId: tier.id, index: idx };
+        }
+      }
+    }
+    return null;
+  }
+
+  function isCardPlacedInCountry(cardId, countryId) {
+    return findCardCellInCountry(cardId, countryId) !== null;
+  }
+
+  function isCardFullyPlaced(cardId) {
+    return getCardCountries(cardId).size >= COUNTRIES.length;
+  }
+
+  function isCardPlacedOnBoard(cardId) {
+    for (const key in matrixState) {
+      if (Array.isArray(matrixState[key]) && matrixState[key].includes(cardId)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function countPlacedCards() {
+    let count = 0;
+    for (const key in matrixState) {
+      if (Array.isArray(matrixState[key])) {
+        count += matrixState[key].length;
+      }
+    }
+    return count;
+  }
+
+  function hasPlacedCards() {
+    return countPlacedCards() > 0;
+  }
+
+  // --- 4. DOM ELEMENT INIT ---
   function initElements() {
+    welcomeScreenEl = document.getElementById('welcome-screen');
+    leaveConfirmModalEl = document.getElementById('leave-confirm-modal');
+    selectTrikiwiCardEl = document.getElementById('select-trikiwi-card');
+    selectAtomCardEl = document.getElementById('select-atom-card');
+    backToSelectBtnEl = document.getElementById('back-to-select-btn');
+    cancelLeaveBtnEl = document.getElementById('cancel-leave-btn');
+    confirmLeaveBtnEl = document.getElementById('confirm-leave-btn');
+    brandTitleEl = document.getElementById('brand-title');
+    shareBtnEl = document.getElementById('share-btn');
+
     matrixHeaderRowEl = document.getElementById('matrix-header-row');
     matrixBoardEl = document.getElementById('matrix-board');
     bankCardsTrayEl = document.getElementById('bank-cards-tray');
-    resetBtnEl = document.getElementById('reset-matrix-btn') || document.getElementById('reset-btn');
+    trayTitleTextEl = document.getElementById('tray-title-text');
+    trayCardsCountEl = document.getElementById('tray-cards-count');
+
+    resetBtnEl = document.getElementById('reset-matrix-btn');
     undoBtnEl = document.getElementById('undo-btn');
     wallpaperBtnEl = document.getElementById('wallpaper-btn');
     previewWpBtnEl = document.getElementById('preview-wallpaper-btn');
@@ -147,47 +300,909 @@
     lightboxTitleEl = document.getElementById('lightbox-title');
   }
 
-  // --- INITIALIZATION ---
+  // --- 5. INITIALIZATION ---
   function init() {
     try {
-      console.log('--- Initializing HOI4 Matrix App ---');
+      console.log('--- Initializing HOI4 2D Matrix Hub ---');
       initElements();
       initWallpaper();
       initTrayScale();
-      buildMatrixGrid();
-      renderBankCards();
-      loadStateFromURL();
-      setupEventListeners();
+      setupWelcomeAndNavListeners();
+      setupTrayScaleListeners();
+      setupTrayWheelScroll();
       setupLightboxListeners();
       setupWallpaperListeners();
-      setupTrayScaleListeners();
-      updateBankUsageCounters();
-      showInitialTip();
+      setupActionListeners();
+
+      // Check if URL has state/list parameters
+      const urlLoadResult = loadStateFromURL();
+      if (!urlLoadResult) {
+        // First visit or no state: show Welcome Screen
+        showWelcomeScreen();
+      }
       console.log('--- HOI4 Matrix App Initialized Successfully ---');
     } catch (e) {
       console.error('CRITICAL INIT ERROR:', e);
     }
   }
 
-  // --- TRAY SCALE CONTROLLER ---
-  let currentTrayScale = 100; // in percent (65 to 145)
+  // --- 6. WELCOME SCREEN & TIER LIST SELECTION ---
+  function showWelcomeScreen() {
+    clearCardSelection();
+    if (welcomeScreenEl) {
+      welcomeScreenEl.classList.remove('is-hidden');
+    }
+  }
+
+  function hideWelcomeScreen() {
+    if (welcomeScreenEl) {
+      welcomeScreenEl.classList.add('is-hidden');
+    }
+  }
+
+  function selectTierList(listId, skipUrlUpdate = false) {
+    if (!TIER_LISTS[listId]) listId = 'trikiwi';
+    currentTierListId = listId;
+    const list = TIER_LISTS[listId];
+
+    // Update UI headers
+    if (brandTitleEl) brandTitleEl.textContent = list.title;
+    if (trayTitleTextEl) trayTitleTextEl.textContent = list.trayTitle;
+
+    // Reset matrix & build
+    matrixState = {};
+    lastResetSnapshot = null;
+    if (undoBtnEl) undoBtnEl.style.display = 'none';
+
+    buildMatrixGrid();
+    renderBankCards();
+    updateBankCardsStatus();
+
+    hideWelcomeScreen();
+
+    if (!skipUrlUpdate) {
+      try {
+        window.history.pushState({}, '', `${window.location.pathname}?list=${listId}`);
+      } catch (e) {}
+    }
+  }
+
+  function requestReturnToWelcomeScreen() {
+    if (hasPlacedCards()) {
+      if (leaveConfirmModalEl) {
+        leaveConfirmModalEl.classList.add('is-active');
+      }
+    } else {
+      executeReturnToWelcomeScreen();
+    }
+  }
+
+  function executeReturnToWelcomeScreen() {
+    if (leaveConfirmModalEl) {
+      leaveConfirmModalEl.classList.remove('is-active');
+    }
+    matrixState = {};
+    lastResetSnapshot = null;
+    clearCardSelection();
+    try {
+      window.history.pushState({}, '', window.location.pathname);
+    } catch (e) {}
+    showWelcomeScreen();
+  }
+
+  function setupWelcomeAndNavListeners() {
+    if (selectTrikiwiCardEl) {
+      selectTrikiwiCardEl.addEventListener('click', () => selectTierList('trikiwi'));
+      selectTrikiwiCardEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          selectTierList('trikiwi');
+        }
+      });
+    }
+
+    if (selectAtomCardEl) {
+      selectAtomCardEl.addEventListener('click', () => selectTierList('atom'));
+      selectAtomCardEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          selectTierList('atom');
+        }
+      });
+    }
+
+    if (backToSelectBtnEl) {
+      backToSelectBtnEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        requestReturnToWelcomeScreen();
+      });
+    }
+
+    if (cancelLeaveBtnEl) {
+      cancelLeaveBtnEl.addEventListener('click', () => {
+        if (leaveConfirmModalEl) leaveConfirmModalEl.classList.remove('is-active');
+      });
+    }
+
+    if (confirmLeaveBtnEl) {
+      confirmLeaveBtnEl.addEventListener('click', () => {
+        executeReturnToWelcomeScreen();
+      });
+    }
+
+    if (shareBtnEl) {
+      shareBtnEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        copyShareLink();
+      });
+    }
+  }
+
+  // --- 7. URL PERSISTENCE & SHARING (LZ-STRING / BASE64) ---
+  function encodeStatePayload(stateObj) {
+    const jsonStr = JSON.stringify(stateObj);
+    if (window.LZString && typeof window.LZString.compressToEncodedURIComponent === 'function') {
+      return window.LZString.compressToEncodedURIComponent(jsonStr);
+    }
+    try {
+      return encodeURIComponent(btoa(unescape(encodeURIComponent(jsonStr))));
+    } catch (e) {
+      return encodeURIComponent(jsonStr);
+    }
+  }
+
+  function decodeStatePayload(encodedStr) {
+    if (!encodedStr) return null;
+    let jsonStr = null;
+    if (window.LZString && typeof window.LZString.decompressFromEncodedURIComponent === 'function') {
+      jsonStr = window.LZString.decompressFromEncodedURIComponent(encodedStr);
+    }
+    if (!jsonStr) {
+      try {
+        jsonStr = decodeURIComponent(escape(atob(decodeURIComponent(encodedStr))));
+      } catch (e) {
+        try {
+          jsonStr = atob(encodedStr);
+        } catch (e2) {
+          try {
+            jsonStr = decodeURIComponent(encodedStr);
+          } catch (e3) {}
+        }
+      }
+    }
+    if (jsonStr) {
+      try {
+        return JSON.parse(jsonStr);
+      } catch (e) {}
+    }
+    return null;
+  }
+
+  async function copyShareLink() {
+    try {
+      const stateObj = {
+        l: currentTierListId,
+        m: matrixState
+      };
+      const encoded = encodeStatePayload(stateObj);
+      const shareUrl = `${window.location.origin}${window.location.pathname}?state=${encoded}`;
+
+      // Update address bar
+      window.history.replaceState({}, '', shareUrl);
+
+      // Copy to clipboard
+      let copied = false;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        try {
+          await navigator.clipboard.writeText(shareUrl);
+          copied = true;
+        } catch (e) {}
+      }
+
+      if (!copied) {
+        const ta = document.createElement('textarea');
+        ta.value = shareUrl;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        copied = document.execCommand('copy');
+        ta.remove();
+      }
+
+      showToast('Ссылка скопирована! Открыв её, откроется ваш заполненный тир-лист', 4200, false, 'success');
+    } catch (err) {
+      console.error('Failed to copy share link:', err);
+      showToast('Не удалось скопировать ссылку в буфер обмена', 3000, false, 'danger');
+    }
+  }
+
+  function loadStateFromURL() {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      let stateParam = urlParams.get('state');
+
+      // Check hash #state=... or #data=...
+      if (!stateParam && window.location.hash) {
+        const hashStr = window.location.hash.substring(1);
+        const hashParams = new URLSearchParams(hashStr);
+        stateParam = hashParams.get('state') || hashParams.get('data');
+      }
+
+      if (stateParam) {
+        const payload = decodeStatePayload(stateParam);
+        if (payload && typeof payload === 'object') {
+          const listId = payload.l || payload.list || 'trikiwi';
+          const matrix = payload.m || payload.matrix || {};
+
+          selectTierList(listId, true);
+          matrixState = matrix;
+          renderAllCells();
+          updateBankCardsStatus();
+          showToast('Тир-лист загружен из ссылки!', 3500, false, 'success');
+          return true;
+        }
+      }
+
+      // Check list param: ?list=trikiwi or ?list=atom
+      const listParam = urlParams.get('list');
+      if (listParam && TIER_LISTS[listParam]) {
+        selectTierList(listParam, true);
+        const legacyM = urlParams.get('m');
+        if (legacyM) {
+          parseLegacyCompactParam(legacyM);
+        }
+        return true;
+      }
+
+      // Legacy parameter ?m=...
+      const legacyM = urlParams.get('m');
+      if (legacyM) {
+        selectTierList('trikiwi', true);
+        parseLegacyCompactParam(legacyM);
+        return true;
+      }
+    } catch (e) {
+      console.warn('Error reading URL state:', e);
+    }
+    return false;
+  }
+
+  function parseLegacyCompactParam(compactStr) {
+    try {
+      const list = getCurrentTierList();
+      const codeToCountry = {
+        GER: 'germany', SOV: 'ussr', USA: 'usa', ENG: 'uk', JAP: 'japan', ITA: 'italy', FRA: 'france', ALL: 'all', GEN: 'all'
+      };
+      const numToTier = {
+        '1': list.tiers[0]?.id,
+        '2': list.tiers[1]?.id,
+        '3': list.tiers[2]?.id,
+        '4': list.tiers[3]?.id,
+        '5': list.tiers[4]?.id,
+        '6': list.tiers[5]?.id
+      };
+      const numToCard = {};
+      list.cards.forEach((c, idx) => {
+        const match = c.id.match(/^card-(\d+)/) || c.id.match(/^trick-(\d+)/);
+        const num = match ? parseInt(match[1], 10) : (idx + 1);
+        numToCard[num] = c.id;
+      });
+
+      const segments = decodeURIComponent(compactStr).split(/[|;]/);
+      for (const seg of segments) {
+        const parts = seg.trim().split(':');
+        if (parts.length >= 3) {
+          const countryId = codeToCountry[parts[0].toUpperCase()];
+          const tierId = numToTier[parts[1].toUpperCase()];
+          const cardNums = parts[2].split(',');
+          if (countryId && tierId) {
+            const cellKey = getCellKey(countryId, tierId);
+            const cardIds = cardNums
+              .map(n => parseInt(n.trim(), 10))
+              .filter(n => !isNaN(n) && numToCard[n])
+              .map(n => numToCard[n]);
+            if (cardIds.length > 0) {
+              matrixState[cellKey] = cardIds;
+            }
+          }
+        }
+      }
+      renderAllCells();
+      updateBankCardsStatus();
+    } catch (e) {}
+  }
+
+  // --- 8. MATRIX GRID BUILDING ---
+  function buildMatrixGrid() {
+    if (matrixHeaderRowEl) matrixHeaderRowEl.innerHTML = '';
+    if (matrixBoardEl) matrixBoardEl.innerHTML = '';
+
+    const list = getCurrentTierList();
+    const headerContainer = matrixHeaderRowEl || matrixBoardEl;
+
+    // 1. Top-Left Corner Header
+    const axisH = list.axisH || 'НАПРАВЛЕНИЯ';
+    const axisV = list.axisV || 'КРИТИЧНОСТЬ';
+
+    const cornerEl = document.createElement('div');
+    cornerEl.className = 'matrix-corner-header';
+    cornerEl.innerHTML = `
+      <div class="axis-label-h"><i class="fa-solid fa-arrow-right"></i> ${axisH}</div>
+      <div class="axis-label-v"><i class="fa-solid fa-arrow-down"></i> ${axisV}</div>
+    `;
+    headerContainer.appendChild(cornerEl);
+
+    // 2. Top Columns: 7 Majors + "ОБЩЕЕ"
+    COUNTRIES.forEach(country => {
+      const colEl = document.createElement('div');
+      colEl.className = 'country-col-header';
+      if (country.flag) {
+        colEl.innerHTML = `
+          <div class="flag-box country-flag-box">
+            <img src="${country.flag}" alt="${country.name}" loading="lazy" />
+          </div>
+          <div class="country-title">${country.name}</div>
+        `;
+      } else {
+        colEl.classList.add('general-col-header');
+        colEl.innerHTML = `
+          <div class="country-title general-title">
+            <span>${country.name}</span>
+          </div>
+        `;
+      }
+      headerContainer.appendChild(colEl);
+    });
+
+    // 3. Rows: 6 Tiers x 8 Columns
+    list.tiers.forEach(tier => {
+      const rowHeaderEl = document.createElement('div');
+      rowHeaderEl.className = `tier-row-header ${tier.className}`;
+      rowHeaderEl.dataset.tier = tier.id;
+      rowHeaderEl.innerHTML = `
+        <span class="tier-badge-text">${tier.name}</span>
+      `;
+      matrixBoardEl.appendChild(rowHeaderEl);
+
+      COUNTRIES.forEach(country => {
+        const cellKey = getCellKey(country.id, tier.id);
+        const cellEl = document.createElement('div');
+        cellEl.className = 'matrix-cell cell-empty';
+        cellEl.dataset.cellKey = cellKey;
+        cellEl.dataset.country = country.id;
+        cellEl.dataset.tier = tier.id;
+
+        cellEl.innerHTML = `
+          <div class="cell-placeholder-hint">
+            <i class="fa-solid fa-plus"></i>
+          </div>
+        `;
+
+        setupCellDragEvents(cellEl, tier);
+        matrixBoardEl.appendChild(cellEl);
+      });
+    });
+  }
+
+  // --- 9. TRAY & CARD BANK RENDERING ---
+  function renderBankCards() {
+    if (!bankCardsTrayEl) return;
+    bankCardsTrayEl.innerHTML = '';
+
+    const cards = getCurrentCards();
+    cards.forEach(cardData => {
+      const cardEl = createCardElement(cardData.id, false);
+      bankCardsTrayEl.appendChild(cardEl);
+    });
+
+    updateBankCardsStatus();
+  }
+
+  // Multi-Country Matrix Logic: Update status and placement counters of all cards in tray
+  function updateBankCardsStatus() {
+    const cards = getCurrentCards();
+    const totalCountries = COUNTRIES.length; // 8
+
+    // Map each cardId to the Set of countryIds where it is placed
+    const cardCountriesMap = new Map();
+    cards.forEach(c => cardCountriesMap.set(c.id, new Set()));
+
+    let totalPlacements = 0;
+
+    for (const key in matrixState) {
+      if (Array.isArray(matrixState[key])) {
+        const [countryId] = key.split('__');
+        matrixState[key].forEach(cId => {
+          totalPlacements++;
+          const set = cardCountriesMap.get(cId);
+          if (set && countryId) {
+            set.add(countryId);
+          }
+        });
+      }
+    }
+
+    let fullyPlacedCount = 0;
+
+    if (bankCardsTrayEl) {
+      const trayCards = bankCardsTrayEl.querySelectorAll('.mistake-card');
+      trayCards.forEach(cardEl => {
+        const cId = cardEl.dataset.cardId;
+        const placedCountriesSet = cardCountriesMap.get(cId) || new Set();
+        const count = placedCountriesSet.size;
+        const isFullyPlaced = count >= totalCountries;
+
+        if (isFullyPlaced) {
+          fullyPlacedCount++;
+        }
+
+        // Clean existing badges
+        const oldPlacedBadge = cardEl.querySelector('.card-placed-badge');
+        if (oldPlacedBadge) oldPlacedBadge.remove();
+        const oldCounterBadge = cardEl.querySelector('.card-counter-badge');
+        if (oldCounterBadge) oldCounterBadge.remove();
+
+        if (isFullyPlaced) {
+          cardEl.classList.add('is-placed');
+          cardEl.classList.remove('is-partial');
+          cardEl.draggable = false;
+          cardEl.setAttribute('aria-disabled', 'true');
+
+          const badge = document.createElement('div');
+          badge.className = 'card-placed-badge';
+          badge.innerHTML = `<i class="fa-solid fa-check"></i><span>${count}/${totalCountries} стран</span>`;
+          cardEl.appendChild(badge);
+        } else if (count > 0) {
+          cardEl.classList.remove('is-placed');
+          cardEl.classList.add('is-partial');
+          cardEl.draggable = true;
+          cardEl.removeAttribute('aria-disabled');
+
+          const badge = document.createElement('div');
+          badge.className = 'card-counter-badge';
+          badge.title = `Размещено в ${count} из ${totalCountries} стран`;
+          badge.innerHTML = `<i class="fa-solid fa-flag"></i><span>${count}/${totalCountries}</span>`;
+          cardEl.appendChild(badge);
+        } else {
+          cardEl.classList.remove('is-placed', 'is-partial');
+          cardEl.draggable = true;
+          cardEl.removeAttribute('aria-disabled');
+        }
+      });
+    }
+
+    // Update Counter: available cards / total cards
+    const totalCount = cards.length;
+    const availableCount = totalCount - fullyPlacedCount;
+    if (trayCardsCountEl) {
+      trayCardsCountEl.textContent = `${availableCount} / ${totalCount}`;
+      trayCardsCountEl.title = `Доступно в колоде: ${availableCount} из ${totalCount} (всего на доске: ${totalPlacements})`;
+    }
+  }
+
+  function formatCardCaption(title) {
+    if (!title) return '';
+    if (title.length <= 34) return title;
+    const words = title.split(/\s+/);
+    if (words.length <= 3) {
+      const half = 12;
+      return `${title.slice(0, half).trim()}... ${title.slice(-half).trim()}`;
+    }
+    let head = [];
+    let tail = [];
+    let i = 0;
+    let j = words.length - 1;
+    let len = 4;
+    while (i < j) {
+      const nHead = words[i].length + (head.length > 0 ? 1 : 0);
+      const nTail = words[j].length + (tail.length > 0 ? 1 : 0);
+      if (head.length <= tail.length && len + nHead <= 26) {
+        head.push(words[i]);
+        len += nHead;
+        i++;
+      } else if (len + nTail <= 26) {
+        tail.unshift(words[j]);
+        len += nTail;
+        j--;
+      } else {
+        break;
+      }
+    }
+    if (head.length === 0) head.push(words[0]);
+    if (tail.length === 0) tail.unshift(words[words.length - 1]);
+    return `${head.join(' ')}... ${tail.join(' ')}`;
+  }
+
+  // --- 10. CREATE CARD ELEMENT ---
+  function createCardElement(cardId, isInCell = false, cellKey = null, itemIndex = null) {
+    const cardData = getCardById(cardId);
+    if (!cardData) return document.createElement('div');
+
+    const card = document.createElement('div');
+    card.className = 'mistake-card';
+    card.draggable = true;
+    card.dataset.cardId = cardId;
+
+    if (isInCell) {
+      card.dataset.inCell = 'true';
+      card.dataset.cellKey = cellKey;
+      card.dataset.itemIndex = itemIndex;
+    } else {
+      card.dataset.inCell = 'false';
+    }
+
+    card.innerHTML = `
+      <div class="card-art-box">
+        <img class="card-img" src="${cardData.img}" alt="${cardData.title}" loading="lazy" decoding="async" />
+      </div>
+      <div class="card-caption" title="${cardData.title}">${cardData.title}</div>
+      <div class="card-tooltip">${cardData.title}</div>
+      ${isInCell ? '<button class="card-remove-btn" title="Убрать из ячейки"><i class="fa-solid fa-xmark"></i></button>' : ''}
+    `;
+
+    // Remove button in cell
+    if (isInCell) {
+      const removeBtn = card.querySelector('.card-remove-btn');
+      if (removeBtn) {
+        removeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          removeCardFromCell(cellKey, itemIndex);
+          if (selectedCardForPlacement && selectedCardForPlacement.sourceCellKey === cellKey && selectedCardForPlacement.sourceIndex === itemIndex) {
+            clearCardSelection();
+          }
+        });
+      }
+    }
+
+    // Dragstart
+    card.addEventListener('dragstart', (e) => {
+      // If card in tray is already placed across all countries, cancel drag
+      if (!isInCell && isCardFullyPlaced(cardId)) {
+        e.preventDefault();
+        return;
+      }
+
+      isDraggingFlag = true;
+      draggedCardInfo = {
+        cardId: cardId,
+        sourceCellKey: isInCell ? cellKey : null,
+        sourceIndex: isInCell ? itemIndex : null
+      };
+      card.classList.add('is-dragging');
+      e.dataTransfer.setData('text/plain', cardId);
+      e.dataTransfer.effectAllowed = 'move';
+    });
+
+    card.addEventListener('dragend', () => {
+      card.classList.remove('is-dragging');
+      clearAllDragOverStyles();
+      draggedCardInfo = null;
+      setTimeout(() => {
+        isDraggingFlag = false;
+      }, 50);
+    });
+
+    // Touch Drag-and-Drop
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let isTouchDragging = false;
+    let touchGhost = null;
+
+    card.addEventListener('touchstart', (e) => {
+      if (!isInCell && isCardFullyPlaced(cardId)) return;
+      if (e.touches.length !== 1) return;
+      const touch = e.touches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+      isTouchDragging = false;
+    }, { passive: true });
+
+    card.addEventListener('touchmove', (e) => {
+      if (!isInCell && isCardFullyPlaced(cardId)) return;
+      if (e.touches.length !== 1) return;
+      const touch = e.touches[0];
+      const dx = touch.clientX - touchStartX;
+      const dy = touch.clientY - touchStartY;
+
+      if (!isTouchDragging && (Math.abs(dx) > 10 || Math.abs(dy) > 10)) {
+        isTouchDragging = true;
+        isDraggingFlag = true;
+        draggedCardInfo = {
+          cardId: cardId,
+          sourceCellKey: isInCell ? cellKey : null,
+          sourceIndex: isInCell ? itemIndex : null
+        };
+
+        touchGhost = document.createElement('div');
+        touchGhost.className = 'touch-drag-avatar';
+        touchGhost.innerHTML = `<img src="${cardData.img}" alt="${cardData.title}" />`;
+        touchGhost.style.left = `${touch.clientX}px`;
+        touchGhost.style.top = `${touch.clientY}px`;
+        document.body.appendChild(touchGhost);
+      }
+
+      if (isTouchDragging && touchGhost) {
+        e.preventDefault();
+        touchGhost.style.left = `${touch.clientX}px`;
+        touchGhost.style.top = `${touch.clientY}px`;
+
+        clearAllDragOverStyles();
+        const elemBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+        const targetCell = elemBelow?.closest('.matrix-cell');
+        if (targetCell) {
+          applyCellDragOverHighlight(targetCell);
+        }
+      }
+    }, { passive: false });
+
+    card.addEventListener('touchend', (e) => {
+      if (isTouchDragging) {
+        if (touchGhost) {
+          touchGhost.remove();
+          touchGhost = null;
+        }
+
+        const touch = e.changedTouches[0];
+        const elemBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+        const targetCell = elemBelow?.closest('.matrix-cell');
+
+        clearAllDragOverStyles();
+
+        if (targetCell && draggedCardInfo) {
+          const targetCellKey = targetCell.dataset.cellKey;
+          const { cardId: dCardId, sourceCellKey } = draggedCardInfo;
+          handleCardDrop(targetCellKey, dCardId, sourceCellKey);
+        }
+
+        draggedCardInfo = null;
+        setTimeout(() => {
+          isDraggingFlag = false;
+          isTouchDragging = false;
+        }, 60);
+      }
+    }, { passive: true });
+
+    // Click handler: Lightbox Zoom or Tap-to-Place
+    card.addEventListener('click', (e) => {
+      if (isDraggingFlag || isTouchDragging) return;
+      e.stopPropagation();
+
+      // If in tray and placed in all countries: inform user
+      if (!isInCell && isCardFullyPlaced(cardId)) {
+        showToast('Карточка уже выставлена во всех странах!', 2500, false, 'tip');
+        return;
+      }
+
+      openLightbox(cardId);
+    });
+
+    return card;
+  }
+
+  // --- 11. DYNAMIC COLOR DRAG-AND-DROP (REQUIREMENT 3.1) ---
+  function applyCellDragOverHighlight(cellEl) {
+    const list = getCurrentTierList();
+    const tierId = cellEl.dataset.tier;
+    const tier = list.tiers.find(t => t.id === tierId);
+
+    if (tier) {
+      cellEl.style.setProperty('--cell-drag-color', tier.color);
+      cellEl.style.setProperty('--cell-drag-glow', tier.glow);
+      cellEl.style.setProperty('--cell-drag-bg', tier.bg);
+    }
+    cellEl.classList.add('drag-over');
+  }
+
+  function clearCellDragOverHighlight(cellEl) {
+    cellEl.classList.remove('drag-over');
+    cellEl.style.removeProperty('--cell-drag-color');
+    cellEl.style.removeProperty('--cell-drag-glow');
+    cellEl.style.removeProperty('--cell-drag-bg');
+  }
+
+  function clearAllDragOverStyles() {
+    document.querySelectorAll('.matrix-cell.drag-over').forEach(el => clearCellDragOverHighlight(el));
+    if (bankCardsTrayEl) bankCardsTrayEl.classList.remove('drag-over');
+  }
+
+  // Setup Cell Drag & Drop
+  function setupCellDragEvents(cellEl, tier) {
+    const cellKey = cellEl.dataset.cellKey;
+
+    cellEl.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      applyCellDragOverHighlight(cellEl);
+    });
+
+    cellEl.addEventListener('dragleave', (e) => {
+      if (!cellEl.contains(e.relatedTarget)) {
+        clearCellDragOverHighlight(cellEl);
+      }
+    });
+
+    cellEl.addEventListener('drop', (e) => {
+      e.preventDefault();
+      clearCellDragOverHighlight(cellEl);
+
+      let cardId = null;
+      let sourceCellKey = null;
+
+      if (draggedCardInfo) {
+        cardId = draggedCardInfo.cardId;
+        sourceCellKey = draggedCardInfo.sourceCellKey;
+      } else {
+        cardId = e.dataTransfer.getData('text/plain');
+      }
+
+      if (!cardId || !getCardById(cardId)) return;
+
+      handleCardDrop(cellKey, cardId, sourceCellKey);
+    });
+  }
+
+  // Multi-Country Matrix Drop Handler
+  function handleCardDrop(targetCellKey, cardId, sourceCellKey = null) {
+    if (!targetCellKey || !cardId) return;
+
+    const [targetCountryId] = targetCellKey.split('__');
+    if (!targetCountryId) return;
+
+    // 1. Dragged from another cell on the board
+    if (sourceCellKey) {
+      if (sourceCellKey === targetCellKey) return;
+
+      const [sourceCountryId] = sourceCellKey.split('__');
+
+      // If moving within the same country to another tier
+      if (sourceCountryId === targetCountryId) {
+        removeCardIdFromCell(sourceCellKey, cardId, false);
+        addCardToCell(targetCellKey, cardId);
+        return;
+      }
+
+      // If moving between different countries:
+      // Remove any existing copy in targetCountry to prevent duplicate in target country
+      removeCardFromCountry(targetCountryId, cardId, false);
+      // Remove from source cell
+      removeCardIdFromCell(sourceCellKey, cardId, false);
+      // Add to target cell
+      addCardToCell(targetCellKey, cardId);
+      return;
+    }
+
+    // 2. Dragged from the bottom tray
+    const existingPlacement = findCardCellInCountry(cardId, targetCountryId);
+    if (existingPlacement) {
+      if (existingPlacement.cellKey === targetCellKey) {
+        showToast('Карточка уже находится в этой ячейке', 2000, false, 'tip');
+        return;
+      }
+      // Move within the country to the new tier
+      removeCardIdFromCell(existingPlacement.cellKey, cardId, false);
+      addCardToCell(targetCellKey, cardId);
+      return;
+    }
+
+    // New placement in this country
+    addCardToCell(targetCellKey, cardId);
+  }
+
+  // --- 12. STATE MUTATION & CELL SCALING ---
+  function addCardToCell(cellKey, cardId) {
+    if (!matrixState[cellKey]) {
+      matrixState[cellKey] = [];
+    }
+    matrixState[cellKey].push(cardId);
+    renderCell(cellKey);
+    updateBankCardsStatus();
+  }
+
+  function removeCardIdFromCell(cellKey, cardId, shouldUpdateStatus = true) {
+    if (!matrixState[cellKey]) return;
+    const idx = matrixState[cellKey].indexOf(cardId);
+    if (idx !== -1) {
+      matrixState[cellKey].splice(idx, 1);
+      if (matrixState[cellKey].length === 0) {
+        delete matrixState[cellKey];
+      }
+      renderCell(cellKey);
+      if (shouldUpdateStatus) {
+        updateBankCardsStatus();
+      }
+    }
+  }
+
+  function removeCardFromCountry(countryId, cardId, shouldUpdateStatus = true) {
+    const list = getCurrentTierList();
+    for (const tier of list.tiers) {
+      const cellKey = getCellKey(countryId, tier.id);
+      if (Array.isArray(matrixState[cellKey])) {
+        const idx = matrixState[cellKey].indexOf(cardId);
+        if (idx !== -1) {
+          matrixState[cellKey].splice(idx, 1);
+          if (matrixState[cellKey].length === 0) {
+            delete matrixState[cellKey];
+          }
+          renderCell(cellKey);
+          if (shouldUpdateStatus) {
+            updateBankCardsStatus();
+          }
+          return;
+        }
+      }
+    }
+  }
+
+  function removeCardFromCell(cellKey, itemIndex, shouldUpdateStatus = true) {
+    if (!matrixState[cellKey]) return;
+    matrixState[cellKey].splice(itemIndex, 1);
+    if (matrixState[cellKey].length === 0) {
+      delete matrixState[cellKey];
+    }
+    renderCell(cellKey);
+    if (shouldUpdateStatus) {
+      updateBankCardsStatus();
+    }
+  }
+
+  function renderCell(cellKey) {
+    const cellEl = document.querySelector(`.matrix-cell[data-cell-key="${cellKey}"]`);
+    if (!cellEl) return;
+
+    const cardsInCell = matrixState[cellKey] || [];
+    const count = cardsInCell.length;
+    cellEl.innerHTML = '';
+
+    if (count === 0) {
+      cellEl.classList.add('cell-empty');
+      cellEl.classList.remove('cell-has-items');
+      cellEl.removeAttribute('data-count');
+      cellEl.innerHTML = `
+        <div class="cell-placeholder-hint">
+          <i class="fa-solid fa-plus"></i>
+        </div>
+      `;
+    } else {
+      cellEl.classList.remove('cell-empty');
+      cellEl.classList.add('cell-has-items');
+      cellEl.dataset.count = count;
+
+      cardsInCell.forEach((cId, idx) => {
+        const cardEl = createCardElement(cId, true, cellKey, idx);
+        cellEl.appendChild(cardEl);
+      });
+    }
+  }
+
+  function renderAllCells() {
+    const cells = document.querySelectorAll('.matrix-cell');
+    cells.forEach(cell => {
+      renderCell(cell.dataset.cellKey);
+    });
+  }
+
+  // --- 13. TRAY SCALE & SMOOTH HORIZONTAL SCROLL ---
+  let currentTrayScale = 100; // in percent (80 to 120)
 
   function initTrayScale() {
     try {
-      const saved = localStorage.getItem('hoi4_tray_scale');
+      const saved = localStorage.getItem('hoi4_tray_scale_v2');
       if (saved !== null) {
         const val = parseInt(saved, 10);
-        if (!isNaN(val) && val >= 65 && val <= 145) {
+        if (!isNaN(val) && val >= 80 && val <= 120) {
           currentTrayScale = val;
         }
       }
     } catch (e) {}
-
     applyTrayScale(currentTrayScale, false);
   }
 
   function applyTrayScale(percent, save = true) {
-    percent = Math.max(65, Math.min(145, Math.round(percent / 5) * 5));
+    percent = Math.max(80, Math.min(120, Math.round(percent / 5) * 5));
     currentTrayScale = percent;
 
     const scaleFactor = (percent / 100).toFixed(2);
@@ -201,7 +1216,7 @@
 
     if (save) {
       try {
-        localStorage.setItem('hoi4_tray_scale', percent);
+        localStorage.setItem('hoi4_tray_scale_v2', percent);
       } catch (e) {}
     }
   }
@@ -217,42 +1232,114 @@
       sliderEl.addEventListener('input', (e) => {
         applyTrayScale(parseInt(e.target.value, 10));
       });
+      // Double click reset
+      sliderEl.addEventListener('dblclick', () => {
+        applyTrayScale(100);
+        showToast('Масштаб колоды сброшен на 100%', 2000, false, 'info');
+      });
     }
 
     if (downBtn) {
       downBtn.addEventListener('click', () => {
-        applyTrayScale(currentTrayScale - 10);
+        applyTrayScale(currentTrayScale - 5);
       });
     }
 
     if (upBtn) {
       upBtn.addEventListener('click', () => {
-        applyTrayScale(currentTrayScale + 10);
+        applyTrayScale(currentTrayScale + 5);
       });
     }
 
     if (resetBtn) {
       resetBtn.addEventListener('click', () => {
         applyTrayScale(100);
-        showToast('Масштаб колоды сброшен на 100%', 2200, false, 'info');
+        showToast('Масштаб колоды сброшен на 100%', 2000, false, 'info');
       });
     }
 
     if (valueEl) {
       valueEl.addEventListener('click', () => {
         applyTrayScale(100);
-        showToast('Масштаб колоды сброшен на 100%', 2200, false, 'info');
+        showToast('Масштаб колоды сброшен на 100%', 2000, false, 'info');
+      });
+      valueEl.addEventListener('dblclick', () => {
+        applyTrayScale(100);
       });
     }
   }
 
-  function showInitialTip() {
-    setTimeout(() => {
-      showToast('💡 Совет: вы можете отрегулировать масштаб нижней панели с карточками под свой экран (+ / - в панели)', 7500, false, 'tip');
-    }, 1100);
+  // Smooth Horizontal Wheel Scroll for Bottom Tray
+  function setupTrayWheelScroll() {
+    if (!bankCardsTrayEl) return;
+    bankCardsTrayEl.addEventListener('wheel', (e) => {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        bankCardsTrayEl.scrollLeft += e.deltaY;
+      }
+    }, { passive: false });
   }
 
-  // --- WALLPAPERS CONTROLLER ---
+  // --- 14. TAP-TO-PLACE SELECTION LOGIC ---
+  function clearCardSelection() {
+    selectedCardForPlacement = null;
+    document.querySelectorAll('.mistake-card.is-selected').forEach(el => el.classList.remove('is-selected'));
+    document.body.classList.remove('card-selection-active');
+  }
+
+  // --- 15. LIGHTBOX MODAL ---
+  function openLightbox(cardId) {
+    const cardData = getCardById(cardId);
+    if (!cardData || !lightboxModalEl) return;
+
+    if (lightboxImgEl) {
+      lightboxImgEl.src = cardData.img;
+      lightboxImgEl.alt = cardData.title;
+    }
+    if (lightboxTitleEl) {
+      lightboxTitleEl.textContent = cardData.title;
+    }
+
+    lightboxModalEl.classList.add('is-active');
+    lightboxModalEl.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeLightbox() {
+    if (!lightboxModalEl) return;
+    lightboxModalEl.classList.remove('is-active');
+    lightboxModalEl.setAttribute('aria-hidden', 'true');
+  }
+
+  function setupLightboxListeners() {
+    if (!lightboxModalEl) return;
+
+    if (lightboxCloseBtnEl) {
+      lightboxCloseBtnEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeLightbox();
+      });
+    }
+
+    lightboxModalEl.addEventListener('click', (e) => {
+      if (!e.target.closest('.lightbox-img')) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (lightboxModalEl.classList.contains('is-active')) {
+          closeLightbox();
+        } else if (document.body.classList.contains('wallpaper-preview-active')) {
+          setWallpaperPreview(false);
+        } else if (leaveConfirmModalEl && leaveConfirmModalEl.classList.contains('is-active')) {
+          leaveConfirmModalEl.classList.remove('is-active');
+        }
+      }
+    });
+  }
+
+  // --- 16. WALLPAPERS CONTROLLER ---
   function initWallpaper() {
     try {
       const saved = localStorage.getItem('hoi4_tier_wp');
@@ -290,7 +1377,7 @@
     } catch (e) {}
 
     if (showFeedback) {
-      showToast(`Обои: ${wp.name}`);
+      showToast(`Обои: ${wp.name}`, 2200, false, 'info');
     }
   }
 
@@ -338,7 +1425,6 @@
       });
     }
 
-    // Click anywhere on wallpaper in preview mode exits preview
     document.addEventListener('click', (e) => {
       if (document.body.classList.contains('wallpaper-preview-active')) {
         if (!e.target.closest('#wallpaper-control-bar')) {
@@ -348,672 +1434,12 @@
     });
   }
 
-  // --- MATRIX BUILDING ---
-  function buildMatrixGrid() {
-    if (matrixHeaderRowEl) matrixHeaderRowEl.innerHTML = '';
-    matrixBoardEl.innerHTML = '';
-
-    const headerContainer = matrixHeaderRowEl || matrixBoardEl;
-
-    // 1. Top-Left Corner Header
-    const cornerEl = document.createElement('div');
-    cornerEl.className = 'matrix-corner-header';
-    cornerEl.innerHTML = `
-      <div class="axis-label-h"><i class="fa-solid fa-arrow-right"></i> Направления</div>
-      <div class="axis-label-v"><i class="fa-solid fa-arrow-down"></i> Критичность</div>
-    `;
-    headerContainer.appendChild(cornerEl);
-
-    // 2. Top Columns: 7 Majors + "ОБЩЕЕ" (Centered, No Subtitles)
-    COUNTRIES.forEach(country => {
-      const colEl = document.createElement('div');
-      colEl.className = 'country-col-header';
-      if (country.flag) {
-        colEl.innerHTML = `
-          <div class="flag-box country-flag-box">
-            <img src="${country.flag}" alt="${country.name}" loading="lazy" />
-          </div>
-          <div class="country-title">${country.name}</div>
-        `;
-      } else {
-        colEl.classList.add('general-col-header');
-        colEl.innerHTML = `
-          <div class="country-title general-title">
-            <span>${country.name}</span>
-          </div>
-        `;
-      }
-      headerContainer.appendChild(colEl);
-    });
-
-    // 3. Rows: 6 Tiers x 8 Columns (Centered, Single Clean Main Label)
-    TIERS.forEach(tier => {
-      const rowHeaderEl = document.createElement('div');
-      rowHeaderEl.className = `tier-row-header ${tier.className}`;
-      rowHeaderEl.innerHTML = `
-        <span class="tier-badge-text">${tier.name}</span>
-      `;
-      matrixBoardEl.appendChild(rowHeaderEl);
-
-      COUNTRIES.forEach(country => {
-        const cellKey = getCellKey(country.id, tier.id);
-        const cellEl = document.createElement('div');
-        cellEl.className = 'matrix-cell cell-empty';
-        cellEl.dataset.cellKey = cellKey;
-        cellEl.dataset.country = country.id;
-        cellEl.dataset.tier = tier.id;
-
-        cellEl.innerHTML = `
-          <div class="cell-placeholder-hint">
-            <i class="fa-solid fa-plus"></i>
-          </div>
-        `;
-
-        setupCellDragEvents(cellEl);
-        matrixBoardEl.appendChild(cellEl);
-      });
-    });
-  }
-
-  function getCellKey(countryId, tierId) {
-    return `${countryId}__${tierId}`;
-  }
-
-  // --- CARD BANK RENDERING ---
-  function renderBankCards() {
-    bankCardsTrayEl.innerHTML = '';
-
-    MISTAKES.forEach(mistake => {
-      const cardEl = createCardElement(mistake.id, false);
-      bankCardsTrayEl.appendChild(cardEl);
-    });
-
-    const countEl = document.getElementById('tray-cards-count');
-    if (countEl) countEl.textContent = MISTAKES.length;
-  }
-
-  // Smart middle truncation: keeps beginning and end of long titles,
-  // omitting only the middle words if the text is very long (> 38 chars)
-  function formatCardCaption(title) {
-    if (!title) return '';
-    if (title.length <= 38) return title;
-    const words = title.split(/\s+/);
-    if (words.length <= 3) {
-      const half = 14;
-      return `${title.slice(0, half).trim()}... ${title.slice(-half).trim()}`;
-    }
-    let headWords = [];
-    let tailWords = [];
-    let i = 0;
-    let j = words.length - 1;
-    let currentLen = 4;
-    while (i < j) {
-      const nextHeadLen = words[i].length + (headWords.length > 0 ? 1 : 0);
-      const nextTailLen = words[j].length + (tailWords.length > 0 ? 1 : 0);
-      if (headWords.length <= tailWords.length && currentLen + nextHeadLen <= 30) {
-        headWords.push(words[i]);
-        currentLen += nextHeadLen;
-        i++;
-      } else if (currentLen + nextTailLen <= 30) {
-        tailWords.unshift(words[j]);
-        currentLen += nextTailLen;
-        j--;
-      } else {
-        break;
-      }
-    }
-    if (headWords.length === 0) headWords.push(words[0]);
-    if (tailWords.length === 0) tailWords.unshift(words[words.length - 1]);
-    return `${headWords.join(' ')}... ${tailWords.join(' ')}`;
-  }
-
-  // --- CREATE MISTAKE CARD ELEMENT ---
-  function createCardElement(cardId, isInCell = false, cellKey = null, itemIndex = null) {
-    const mistake = MISTAKES_MAP.get(cardId);
-    if (!mistake) return document.createElement('div');
-
-    const card = document.createElement('div');
-    card.className = 'mistake-card';
-    card.draggable = true;
-    card.dataset.cardId = cardId;
-
-    if (isInCell) {
-      card.dataset.inCell = 'true';
-      card.dataset.cellKey = cellKey;
-      card.dataset.itemIndex = itemIndex;
-    } else {
-      card.dataset.inCell = 'false';
-    }
-
-    card.innerHTML = `
-      <div class="card-art-box">
-        <img class="card-img" src="${mistake.img}" alt="${mistake.title}" loading="lazy" decoding="async" />
-      </div>
-      <div class="card-caption" title="${mistake.title}">${formatCardCaption(mistake.title)}</div>
-      <div class="card-tooltip">${mistake.title}</div>
-      ${isInCell ? '<button class="card-remove-btn" title="Убрать"><i class="fa-solid fa-xmark"></i></button>' : ''}
-      ${!isInCell ? '<span class="card-usage-badge" style="display:none;">0</span>' : ''}
-    `;
-
-    // Quick remove button inside cell
-    if (isInCell) {
-      const removeBtn = card.querySelector('.card-remove-btn');
-      if (removeBtn) {
-        removeBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          removeCardFromCell(cellKey, itemIndex);
-          if (selectedCardForPlacement && selectedCardForPlacement.sourceCellKey === cellKey && selectedCardForPlacement.sourceIndex === itemIndex) {
-            clearCardSelection();
-          }
-        });
-      }
-    }
-
-    // Desktop Drag events
-    card.addEventListener('dragstart', (e) => {
-      isDraggingFlag = true;
-      draggedCardInfo = {
-        cardId: cardId,
-        sourceCellKey: isInCell ? cellKey : null,
-        sourceIndex: isInCell ? itemIndex : null
-      };
-      card.classList.add('is-dragging');
-      e.dataTransfer.setData('text/plain', cardId);
-      e.dataTransfer.effectAllowed = 'move';
-    });
-
-    card.addEventListener('dragend', () => {
-      card.classList.remove('is-dragging');
-      clearAllDragOverStyles();
-      draggedCardInfo = null;
-      setTimeout(() => {
-        isDraggingFlag = false;
-      }, 50);
-    });
-
-    // Mobile / Touch Drag-and-Drop
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let isTouchDragging = false;
-    let touchGhost = null;
-
-    card.addEventListener('touchstart', (e) => {
-      if (e.touches.length !== 1) return;
-      const touch = e.touches[0];
-      touchStartX = touch.clientX;
-      touchStartY = touch.clientY;
-      isTouchDragging = false;
-    }, { passive: true });
-
-    card.addEventListener('touchmove', (e) => {
-      if (e.touches.length !== 1) return;
-      const touch = e.touches[0];
-      const dx = touch.clientX - touchStartX;
-      const dy = touch.clientY - touchStartY;
-
-      if (!isTouchDragging && (Math.abs(dx) > 10 || Math.abs(dy) > 10)) {
-        isTouchDragging = true;
-        isDraggingFlag = true;
-        draggedCardInfo = {
-          cardId: cardId,
-          sourceCellKey: isInCell ? cellKey : null,
-          sourceIndex: isInCell ? itemIndex : null
-        };
-
-        touchGhost = document.createElement('div');
-        touchGhost.className = 'touch-drag-avatar';
-        touchGhost.innerHTML = `<img src="${mistake.img}" alt="${mistake.title}" />`;
-        touchGhost.style.left = `${touch.clientX}px`;
-        touchGhost.style.top = `${touch.clientY}px`;
-        document.body.appendChild(touchGhost);
-      }
-
-      if (isTouchDragging && touchGhost) {
-        e.preventDefault(); // Prevent page scroll during card drag
-        touchGhost.style.left = `${touch.clientX}px`;
-        touchGhost.style.top = `${touch.clientY}px`;
-
-        clearAllDragOverStyles();
-        const elemBelow = document.elementFromPoint(touch.clientX, touch.clientY);
-        const targetCell = elemBelow?.closest('.matrix-cell');
-        if (targetCell) {
-          targetCell.classList.add('drag-over');
-        }
-      }
-    }, { passive: false });
-
-    card.addEventListener('touchend', (e) => {
-      if (isTouchDragging) {
-        if (touchGhost) {
-          touchGhost.remove();
-          touchGhost = null;
-        }
-
-        const touch = e.changedTouches[0];
-        const elemBelow = document.elementFromPoint(touch.clientX, touch.clientY);
-        const targetCell = elemBelow?.closest('.matrix-cell');
-
-        clearAllDragOverStyles();
-
-        if (targetCell && draggedCardInfo) {
-          const targetCellKey = targetCell.dataset.cellKey;
-          const { cardId: dCardId, sourceCellKey, sourceIndex: dIndex } = draggedCardInfo;
-          if (sourceCellKey) {
-            if (sourceCellKey !== targetCellKey) {
-              removeCardFromCell(sourceCellKey, dIndex, false);
-              addCardToCell(targetCellKey, dCardId);
-            }
-          } else {
-            addCardToCell(targetCellKey, dCardId);
-          }
-        }
-
-        draggedCardInfo = null;
-        setTimeout(() => {
-          isDraggingFlag = false;
-          isTouchDragging = false;
-        }, 60);
-      }
-    }, { passive: true });
-
-    // Click on the entire card opens Fullscreen Lightbox Modal (Zoom)
-    card.addEventListener('click', (e) => {
-      if (isDraggingFlag || isTouchDragging) return;
-      e.stopPropagation();
-      openLightbox(cardId);
-    });
-
-    return card;
-  }
-
-  // --- FULLSCREEN LIGHTBOX CONTROLLER ---
-  function openLightbox(cardId) {
-    const mistake = MISTAKES_MAP.get(cardId);
-    if (!mistake) return;
-
-    lightboxImgEl.src = mistake.img;
-    lightboxImgEl.alt = mistake.title;
-    if (lightboxTitleEl) {
-      lightboxTitleEl.textContent = mistake.title;
-    }
-
-    lightboxModalEl.classList.add('is-active');
-    lightboxModalEl.setAttribute('aria-hidden', 'false');
-  }
-
-  function closeLightbox() {
-    lightboxModalEl.classList.remove('is-active');
-    lightboxModalEl.setAttribute('aria-hidden', 'true');
-  }
-
-  function setupLightboxListeners() {
-    if (!lightboxModalEl) return;
-
-    if (lightboxCloseBtnEl) {
-      lightboxCloseBtnEl.addEventListener('click', (e) => {
-        e.stopPropagation();
-        closeLightbox();
-      });
-    }
-
-    lightboxModalEl.addEventListener('click', (e) => {
-      if (!e.target.closest('.lightbox-img')) {
-        closeLightbox();
-      }
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        if (lightboxModalEl.classList.contains('is-active')) {
-          closeLightbox();
-        } else if (document.body.classList.contains('wallpaper-preview-active')) {
-          setWallpaperPreview(false);
-        }
-      }
-    });
-  }
-
-  // --- CELL DRAG & DROP EVENTS & TAP-TO-PLACE ---
-  function setupCellDragEvents(cellEl) {
-    const cellKey = cellEl.dataset.cellKey;
-
-    cellEl.addEventListener('click', (e) => {
-      if (selectedCardForPlacement) {
-        e.stopPropagation();
-        const { cardId, sourceCellKey, sourceIndex } = selectedCardForPlacement;
-        if (sourceCellKey) {
-          if (sourceCellKey !== cellKey) {
-            removeCardFromCell(sourceCellKey, sourceIndex, false);
-            addCardToCell(cellKey, cardId);
-          }
-        } else {
-          addCardToCell(cellKey, cardId);
-        }
-        clearCardSelection();
-      }
-    });
-
-    cellEl.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-      cellEl.classList.add('drag-over');
-    });
-
-    cellEl.addEventListener('dragleave', (e) => {
-      if (!cellEl.contains(e.relatedTarget)) {
-        cellEl.classList.remove('drag-over');
-      }
-    });
-
-    cellEl.addEventListener('drop', (e) => {
-      e.preventDefault();
-      cellEl.classList.remove('drag-over');
-
-      if (!draggedCardInfo) {
-        const cardId = e.dataTransfer.getData('text/plain');
-        if (cardId && MISTAKES_MAP.has(cardId)) {
-          addCardToCell(cellKey, cardId);
-        }
-        return;
-      }
-
-      const { cardId, sourceCellKey, sourceIndex } = draggedCardInfo;
-
-      if (sourceCellKey) {
-        if (sourceCellKey === cellKey) {
-          return;
-        }
-        removeCardFromCell(sourceCellKey, sourceIndex, false);
-        addCardToCell(cellKey, cardId);
-      } else {
-        addCardToCell(cellKey, cardId);
-      }
-    });
-  }
-
-  // --- STATE MUTATION & CELL SCALING (DYNAMIC SQUARE GRID ALGORITHM) ---
-  function addCardToCell(cellKey, cardId) {
-    if (!matrixState[cellKey]) {
-      matrixState[cellKey] = [];
-    }
-    matrixState[cellKey].push(cardId);
-    renderCell(cellKey);
-    syncStateToURL();
-    updateBankUsageCounters();
-  }
-
-  function removeCardFromCell(cellKey, itemIndex, shouldSync = true) {
-    if (!matrixState[cellKey]) return;
-    matrixState[cellKey].splice(itemIndex, 1);
-    if (matrixState[cellKey].length === 0) {
-      delete matrixState[cellKey];
-    }
-    renderCell(cellKey);
-    if (shouldSync) {
-      syncStateToURL();
-      updateBankUsageCounters();
-    }
-  }
-
-  function renderCell(cellKey) {
-    const cellEl = document.querySelector(`.matrix-cell[data-cell-key="${cellKey}"]`);
-    if (!cellEl) return;
-
-    const cardsInCell = matrixState[cellKey] || [];
-    const count = cardsInCell.length;
-    cellEl.innerHTML = '';
-
-    if (count === 0) {
-      cellEl.classList.add('cell-empty');
-      cellEl.classList.remove('cell-has-items', 'cell-dense', 'cell-dense-max');
-      cellEl.removeAttribute('data-count');
-      cellEl.removeAttribute('data-count-tier');
-      cellEl.style.removeProperty('--cols');
-      cellEl.innerHTML = `
-        <div class="cell-placeholder-hint">
-          <i class="fa-solid fa-plus"></i>
-        </div>
-      `;
-    } else {
-      cellEl.classList.remove('cell-empty');
-      cellEl.classList.add('cell-has-items');
-      cellEl.dataset.count = count;
-
-      // Adaptive density scaling: 1-3 -> normal (64px), 4-8 -> dense (48px), 9+ -> ultra-dense (40px)
-      if (count <= 3) {
-        cellEl.classList.remove('cell-dense', 'cell-dense-max');
-        cellEl.dataset.countTier = 'normal';
-      } else if (count <= 8) {
-        cellEl.classList.add('cell-dense');
-        cellEl.classList.remove('cell-dense-max');
-        cellEl.dataset.countTier = 'dense';
-      } else {
-        cellEl.classList.add('cell-dense', 'cell-dense-max');
-        cellEl.dataset.countTier = 'ultra-dense';
-      }
-
-      cardsInCell.forEach((cId, idx) => {
-        const cardEl = createCardElement(cId, true, cellKey, idx);
-        cellEl.appendChild(cardEl);
-      });
-    }
-  }
-
-  function renderAllCells() {
-    const cells = document.querySelectorAll('.matrix-cell');
-    cells.forEach(cell => {
-      renderCell(cell.dataset.cellKey);
-    });
-  }
-
-  function clearAllDragOverStyles() {
-    document.querySelectorAll('.matrix-cell.drag-over').forEach(el => el.classList.remove('drag-over'));
-    if (bankCardsTrayEl) bankCardsTrayEl.classList.remove('drag-over');
-  }
-
-  function updateBankUsageCounters() {
-    const counts = {};
-    Object.values(matrixState).forEach(arr => {
-      arr.forEach(cId => {
-        counts[cId] = (counts[cId] || 0) + 1;
-      });
-    });
-
-    document.querySelectorAll('#bank-cards-tray .mistake-card').forEach(cardEl => {
-      const cId = cardEl.dataset.cardId;
-      const count = counts[cId] || 0;
-      const badge = cardEl.querySelector('.card-usage-badge');
-      if (badge) {
-        if (count > 0) {
-          badge.textContent = count;
-          badge.style.display = 'block';
-        } else {
-          badge.style.display = 'none';
-        }
-      }
-    });
-  }
-
-  // --- COMPACT HUMAN-READABLE URL CODEC ---
-  // Format: ?m=GER:1:5,12|USA:4:1|ALL:6:14
-  const COUNTRY_TO_CODE = {
-    germany: 'GER',
-    ussr: 'SOV',
-    usa: 'USA',
-    uk: 'ENG',
-    japan: 'JAP',
-    italy: 'ITA',
-    france: 'FRA',
-    all: 'ALL'
-  };
-
-  const CODE_TO_COUNTRY = {
-    GER: 'germany',
-    SOV: 'ussr',
-    USA: 'usa',
-    ENG: 'uk',
-    JAP: 'japan',
-    ITA: 'italy',
-    FRA: 'france',
-    ALL: 'all',
-    GEN: 'all'
-  };
-
-  const TIER_TO_NUM = {
-    meta: '1',         // 1: Положительно
-    whatever: '2',     // 2: Без разницы
-    noob: '3',         // 3: Неприятненько
-    serious: '4',      // 4: Серьёзная ошибка
-    ruin: '5',         // 5: Руина
-    situational: '6'   // 6: Ситуативно
-  };
-
-  const NUM_TO_TIER = {
-    '1': 'meta',
-    '2': 'whatever',
-    '3': 'noob',
-    '4': 'serious',
-    '5': 'ruin',
-    '6': 'situational',
-    'SIT': 'situational',
-    'S': 'situational'
-  };
-
-  // Map cardId <-> integer ID (1..54) based on card number
-  const CARD_TO_NUM = {};
-  const NUM_TO_CARD = {};
-  MISTAKES.forEach((m, idx) => {
-    const match = m.id.match(/^card-(\d+)/);
-    const num = match ? parseInt(match[1], 10) : (idx + 1);
-    CARD_TO_NUM[m.id] = num;
-    NUM_TO_CARD[num] = m.id;
-  });
-
-  function syncStateToURL() {
-    try {
-      const segments = [];
-      // Deterministic ordering: by Country, then by Tier
-      COUNTRIES.forEach(country => {
-        TIERS.forEach(tier => {
-          const cellKey = getCellKey(country.id, tier.id);
-          const cardIds = matrixState[cellKey];
-          if (cardIds && cardIds.length > 0) {
-            const cCode = COUNTRY_TO_CODE[country.id];
-            const tNum = TIER_TO_NUM[tier.id];
-            const cardNums = cardIds
-              .map(id => CARD_TO_NUM[id])
-              .filter(Boolean)
-              .join(',');
-            if (cardNums.length > 0) {
-              segments.push(`${cCode}:${tNum}:${cardNums}`);
-            }
-          }
-        });
-      });
-
-      if (segments.length === 0) {
-        window.history.replaceState({}, '', window.location.pathname);
-      } else {
-        const compactStr = segments.join('|');
-        window.history.replaceState({}, '', `${window.location.pathname}?m=${compactStr}`);
-      }
-    } catch (err) {
-      console.error('URL serialization error:', err);
-    }
-  }
-
-  function loadStateFromURL() {
-    try {
-      const urlParams = new URLSearchParams(window.location.search);
-      const compactParam = urlParams.get('m');
-
-      if (compactParam) {
-        const newState = {};
-        const segments = decodeURIComponent(compactParam).split(/[|;]/);
-        for (const seg of segments) {
-          const trimmed = seg.trim();
-          if (!trimmed) continue;
-          const parts = trimmed.split(':');
-          if (parts.length >= 3) {
-            const countryCode = parts[0].toUpperCase();
-            const tierNum = parts[1].toUpperCase();
-            const cardNums = parts[2].split(',');
-
-            const countryId = CODE_TO_COUNTRY[countryCode];
-            const tierId = NUM_TO_TIER[tierNum];
-
-            if (countryId && tierId) {
-              const cellKey = getCellKey(countryId, tierId);
-              const cardIds = cardNums
-                .map(n => parseInt(n.trim(), 10))
-                .filter(n => !isNaN(n) && NUM_TO_CARD[n])
-                .map(n => NUM_TO_CARD[n]);
-
-              if (cardIds.length > 0) {
-                newState[cellKey] = cardIds;
-              }
-            }
-          }
-        }
-
-        if (Object.keys(newState).length > 0) {
-          matrixState = newState;
-          renderAllCells();
-          updateBankUsageCounters();
-          showToast('Тир-лист загружен из ссылки!');
-          return;
-        }
-      }
-
-      // Backward compatibility for legacy ?matrix=... if present
-      const legacyEncoded = urlParams.get('matrix');
-      if (legacyEncoded) {
-        let jsonStr = null;
-        if (window.LZString && typeof window.LZString.decompressFromEncodedURIComponent === 'function') {
-          jsonStr = window.LZString.decompressFromEncodedURIComponent(legacyEncoded);
-        }
-        if (!jsonStr) {
-          try {
-            jsonStr = decodeURIComponent(atob(legacyEncoded));
-          } catch (e) {}
-        }
-        if (jsonStr) {
-          const parsed = JSON.parse(jsonStr);
-          if (parsed && typeof parsed === 'object') {
-            matrixState = parsed;
-            renderAllCells();
-            updateBankUsageCounters();
-            syncStateToURL();
-            showToast('Тир-лист загружен и обновлен!');
-            return;
-          }
-        }
-      }
-    } catch (err) {
-      console.warn('Could not restore state from URL:', err);
-    }
-
-    // Default start state is COMPLETELY EMPTY!
-    matrixState = {};
-    renderAllCells();
-    updateBankUsageCounters();
-  }
-
-  // --- TWO-STEP RESET CONFIRMATION & UNDO ---
+  // --- 17. RESET & UNDO CONTROLLER ---
   let activeConfirmToast = null;
-
-  function hasPlacedCards() {
-    for (const key in matrixState) {
-      if (Array.isArray(matrixState[key]) && matrixState[key].length > 0) {
-        return true;
-      }
-    }
-    return false;
-  }
 
   function requestResetConfirmation() {
     if (!hasPlacedCards()) {
-      showToast('Матрица уже пуста!');
+      showToast('Матрица уже пуста!', 2200, false, 'tip');
       return;
     }
 
@@ -1029,7 +1455,7 @@
         <i class="fa-solid fa-triangle-exclamation"></i>
       </div>
       <div class="toast-content">
-        <span>Сбросить всю матрицу?</span>
+        <span>Сбросить все клетки матрицы?</span>
       </div>
       <div class="toast-actions">
         <button class="toast-btn toast-btn-confirm" id="confirm-reset-action">
@@ -1081,10 +1507,7 @@
     lastResetSnapshot = JSON.parse(JSON.stringify(matrixState));
     matrixState = {};
     renderAllCells();
-    try {
-      window.history.replaceState(null, '', window.location.pathname);
-    } catch (e) {}
-    updateBankUsageCounters();
+    updateBankCardsStatus();
 
     if (undoBtnEl) {
       undoBtnEl.style.display = 'inline-flex';
@@ -1098,55 +1521,33 @@
     matrixState = JSON.parse(JSON.stringify(lastResetSnapshot));
     lastResetSnapshot = null;
     renderAllCells();
-    syncStateToURL();
-    updateBankUsageCounters();
+    updateBankCardsStatus();
 
     if (undoBtnEl) {
       undoBtnEl.style.display = 'none';
     }
 
-    showToast('Матрица полностью восстановлена!');
+    showToast('Матрица восстановлена!', 2500, false, 'success');
   }
 
-  // --- ACTIONS & CONTROLS ---
-  function setupEventListeners() {
-    // Direct and delegated listeners for robust event handling
-    document.addEventListener('click', (e) => {
-      const resetBtn = e.target.closest('#reset-matrix-btn, #reset-btn');
-      if (resetBtn) {
-        e.preventDefault();
+  // --- 18. ACTION LISTENERS ---
+  function setupActionListeners() {
+    if (resetBtnEl) {
+      resetBtnEl.addEventListener('click', (e) => {
         e.stopPropagation();
         requestResetConfirmation();
-        return;
-      }
+      });
+    }
 
-      const undoBtn = e.target.closest('#undo-btn');
-      if (undoBtn) {
-        e.preventDefault();
+    if (undoBtnEl) {
+      undoBtnEl.addEventListener('click', (e) => {
         e.stopPropagation();
         executeUndo();
-        return;
-      }
-
-      // If clicked outside cards and matrix cells, clear card selection
-      if (selectedCardForPlacement) {
-        if (!e.target.closest('.mistake-card') && !e.target.closest('.matrix-cell')) {
-          clearCardSelection();
-        }
-      }
-    });
-
-    // Clicking or dropping on the bottom tray returns selected in-cell card to bank
-    if (bankCardsTrayEl) {
-      bankCardsTrayEl.addEventListener('click', (e) => {
-        if (selectedCardForPlacement && selectedCardForPlacement.sourceCellKey) {
-          e.stopPropagation();
-          const { sourceCellKey, sourceIndex } = selectedCardForPlacement;
-          removeCardFromCell(sourceCellKey, sourceIndex, true);
-          clearCardSelection();
-        }
       });
+    }
 
+    // Drag back to tray to remove card from matrix
+    if (bankCardsTrayEl) {
       bankCardsTrayEl.addEventListener('dragover', (e) => {
         e.preventDefault();
         bankCardsTrayEl.classList.add('drag-over');
@@ -1161,13 +1562,13 @@
         bankCardsTrayEl.classList.remove('drag-over');
 
         if (draggedCardInfo && draggedCardInfo.sourceCellKey) {
-          removeCardFromCell(draggedCardInfo.sourceCellKey, draggedCardInfo.sourceIndex, true);
+          removeCardIdFromCell(draggedCardInfo.sourceCellKey, draggedCardInfo.cardId, true);
         }
       });
     }
   }
 
-  // --- PROMINENT TOAST NOTIFICATIONS ---
+  // --- 19. TOAST NOTIFICATIONS ---
   function showToast(message, arg2 = 3600, arg3 = false, arg4 = 'info') {
     let duration = 3600;
     let showUndo = false;
@@ -1280,7 +1681,7 @@
 
   window.showToast = showToast;
 
-  // Start app
+  // Boot Application
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
