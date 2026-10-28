@@ -1,14 +1,16 @@
 /**
  * Hearts of Iron IV - 2D Matrix Tier List Hub
  * Supports:
- *   1. "Ошибки в HOI4 (trikiwi)"
- *   2. "Фишки и механики (Атом в леггинсах)"
+ *   1. "Ошибки в HOI4" (?list=mistakes)
+ *   2. "Фишки и механики" (?list=features)
  * Features:
- *   - Welcome Screen / Modal Tier-List Selector
- *   - Dynamic Tier-Colored Drag-and-Drop Highlights
- *   - Anti-Duplicate Protection (Streamer Bug Fix)
- *   - Share & Restore State via URL (LZString / Base64)
- *   - Smooth Horizontal Wheel Scrolling & Zoom Control (80%-120% with double-click reset)
+ *   - Three-Zone Matrix Cells (MP / ALL / SP per cell)
+ *   - Censored vs Historical Mode (German WWII flag toggle with localStorage)
+ *   - Dynamic Tier-Colored Drag-and-Drop Sub-Zone Highlights
+ *   - Clean Neutral URLs & Browser History API (Back button support)
+ *   - Deck Zoom Control (50% - 200% with double-click reset)
+ *   - Anti-Duplicate Protection (per-country unique placement)
+ *   - Fullscreen Lightbox with Mechanics Encyclopedia and Forum References
  *   - High-contrast M3 Dark Graphite HOI4 styling
  * Author: @redefinedtgk
  */
@@ -20,7 +22,7 @@
 
   const COUNTRIES = [
     { id: 'all', name: 'ОБЩЕЕ' },
-    { id: 'germany', name: 'ГЕРМАНИЯ', flag: 'assets/flags/germany.svg' },
+    { id: 'germany', name: 'ГЕРМАНИЯ', flag: 'assets/flags/germany-censored.svg' },
     { id: 'ussr', name: 'СССР', flag: 'assets/flags/ussr.svg' },
     { id: 'usa', name: 'США', flag: 'assets/flags/usa.svg' },
     { id: 'uk', name: 'ВЕЛИКОБРИТАНИЯ', flag: 'assets/flags/uk.svg' },
@@ -29,7 +31,7 @@
     { id: 'france', name: 'ФРАНЦИЯ', flag: 'assets/flags/france.svg' }
   ];
 
-  // 30 Curated Mistakes (trikiwi)
+  // 30 Curated Mistakes (trikiwi) - Pure titles without descriptions
   const MISTAKES = [
     { id: 'card-01-rubber-deficit', title: 'НЕТ РЕЗИНЫ', img: 'assets/cards/card-01-rubber-deficit.webp' },
     { id: 'card-02-training-in-war', title: 'ЗАБЫЛ СНЯТЬ С ТРЕНИРОВКИ НУЖНЫЕ ДИВКИ', img: 'assets/cards/card-02-training-in-war.webp' },
@@ -63,43 +65,125 @@
     { id: 'card-55-no-microcontrol', title: 'ОТСУТСТВИЕ МИКРОКОНТРОЛЯ', img: 'assets/cards/card-55-no-microcontrol.webp' }
   ];
 
-  // 30 Curated Mechanics and Tricks (Атом в леггинсах) - All using authentic in-game HOI4 screenshots
+  // Centralized toggle: Switch to false to instantly restore authentic game screenshots in 1 click
+  const USE_AI_PLACEHOLDER_GRAPHICS = true;
+
+  // 18 Curated Mechanics and Tricks (Pure titles, with 1 single authorized description on division spam)
   const MECHANICS = [
-    { id: 'trick-01-radio-rotation', title: 'РОТАЦИЯ ЧЕРЕЗ РАДИО', img: 'assets/cards/card-38-no-radar.webp' },
-    { id: 'trick-02-supply-interception', title: 'ПЕРЕХВАТ СНАБЖЕНИЯ', img: 'assets/cards/card-32-no-trains.webp' },
-    { id: 'trick-03-naval-drops', title: 'МОРСКИЕ ДРОПЫ', img: 'assets/cards/card-17-no-naval-invasion.webp' },
-    { id: 'trick-04-hull-conversion', title: 'КОНВЕРСИЯ КОРПУСОВ', img: 'assets/cards/card-05b-bad-templates-tanks.webp' },
-    { id: 'trick-05-spg-piercing', title: 'ПРОБИТИЕ САУ', img: 'assets/cards/card-05-bad-templates.webp' },
-    { id: 'trick-06-attache-coop', title: 'АТТАШЕ И КООП', img: 'assets/cards/card-07-zero-stability.webp' },
-    { id: 'trick-07-force-attack-cycling', title: 'ЦИКЛИЧНЫЙ FORCE ATTACK', img: 'assets/cards/card-03-no-order.webp' },
-    { id: 'trick-08-cas-logistics-strike', title: 'УДАР ШТУРМОВИКОВ ПО СНАБЖЕНИЮ', img: 'assets/cards/card-13-lost-air.webp' },
-    { id: 'trick-09-air-transports-supply', title: 'СНАБЖЕНИЕ С ВОЗДУХА', img: 'assets/cards/card-18-tanks-no-supply.webp' },
-    { id: 'trick-10-space-marines', title: 'КОСМОДЕСАНТ', img: 'assets/cards/card-40-tanks-in-mountains.webp' },
-    { id: 'trick-11-licence-production', title: 'ЛИЦЕНЗИОННОЕ ПРОИЗВОДСТВО', img: 'assets/cards/card-04-forgot-building.webp' },
-    { id: 'trick-12-manual-naval-strike', title: 'РУЧНОЙ МОРСКОЙ НАЛЁТ', img: 'assets/cards/card-11-naval-bombers-no-fleet.webp' },
-    { id: 'trick-13-fake-intel-divisions', title: 'ДЕКОЙНЫЕ ДИВИЗИИ (ЛОЖНЫЕ ЦЕЛИ)', img: 'assets/cards/card-06-forgot-agency.webp' },
-    { id: 'trick-14-motorized-supply-hub', title: 'МОТОРИЗАЦИЯ ХАБОВ', img: 'assets/cards/card-23-horse-logistics.webp' },
-    { id: 'trick-15-collaborators-govt', title: 'КОЛЛАБОРАЦИОНИСТЫ', img: 'assets/cards/card-42-no-decryption.webp' },
-    { id: 'trick-16-scorch-earth-retreat', title: 'ВЫЖЖЕННАЯ ЗЕМЛЯ', img: 'assets/cards/card-52-fort-line-flanked.webp' },
-    { id: 'trick-17-paradrop-victory-points', title: 'ДРОП В ПОБЕДНЫЕ ОЧКИ', img: 'assets/cards/card-45-lost-capital-paratroopers.webp' },
-    { id: 'trick-18-refit-cruiser-armor', title: 'РЕФИТ КРЕЙСЕРОВ', img: 'assets/cards/card-27-no-dockyards-repair.webp' },
-    { id: 'trick-19-carrier-overcrowding', title: 'ПЕРЕГРУЗ АВИАНОСЦЕВ', img: 'assets/cards/card-05c-bad-templates-air.webp' },
-    { id: 'trick-20-tank-speed-matching', title: 'СИНХРОНИЗАЦИЯ СКОРОСТИ', img: 'assets/cards/card-29-width-too-big.webp' },
-    { id: 'trick-21-sniping-supply-depot', title: 'СНАЙПИНГ СКЛАДОВ', img: 'assets/cards/card-14-uncovered-front.webp' },
-    { id: 'trick-22-sub-pack-tactics', title: 'ВОЛЧЬИ СТАИ НА МЕЛКОВОДЬЕ', img: 'assets/cards/card-56-no-sub-repair.webp' },
-    { id: 'trick-23-entrenchment-stacking', title: 'СТАКАНИЕ ОКАПЫВАНИЯ', img: 'assets/cards/card-31-attack-river-forts.webp' },
-    { id: 'trick-24-doctrine-xp-boost', title: 'ФАРМ ОПЫТА НА ПОЛИГОНЕ', img: 'assets/cards/card-28-zero-doctrines.webp' },
-    { id: 'trick-25-puppet-manpower', title: 'МЕНПАВЕР МАРИОНЕТОК', img: 'assets/cards/card-12-no-manpower.webp' },
-    { id: 'trick-26-railway-guns-barrage', title: 'АРТОБСТРЕЛ Ж/Д ОРУДИЙ', img: 'assets/cards/card-15-guns-deficit.webp' },
-    { id: 'trick-27-midget-sub-mines', title: 'МИННЫЕ ПОЛЯ В ПРОЛИВАХ', img: 'assets/cards/card-48-english-channel-convoy.webp' },
-    { id: 'trick-28-armor-meme-slicing', title: 'СРЕЗ БРОНИ ПОД ПРОБИТИЕ', img: 'assets/cards/card-34-generals-no-traits.webp' },
-    { id: 'trick-29-anti-air-piercing', title: 'ПВО ВМЕСТО ПТ', img: 'assets/cards/card-05d-bad-templates-navy.webp' },
-    { id: 'trick-30-volunteer-air-wing', title: 'ДОБРОВОЛЬЧЕСКАЯ АВИАЦИЯ', img: 'assets/cards/card-19-no-focus.webp' }
+    {
+      id: 'trick-03-naval-drops',
+      title: 'МОРСКИЕ ДРОПЫ',
+      nativeImg: 'assets/cards/card-17-no-naval-invasion.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-03-naval-drops.svg'
+    },
+    {
+      id: 'trick-04-hull-conversion',
+      title: 'КОНВЕРСИЯ',
+      nativeImg: 'assets/cards/card-05b-bad-templates-tanks.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-04-hull-conversion.svg'
+    },
+    {
+      id: 'trick-06-attache-coop',
+      title: 'АТТАШЕ',
+      nativeImg: 'assets/cards/card-07-zero-stability.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-06-attache.svg'
+    },
+    {
+      id: 'trick-09-air-transports-supply',
+      title: 'СНАБЖЕНИЕ С ВОЗДУХА',
+      nativeImg: 'assets/cards/card-18-tanks-no-supply.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-09-air-transports-supply.svg'
+    },
+    {
+      id: 'trick-10-space-marines',
+      title: 'КОСМОДЕСАНТ',
+      nativeImg: 'assets/cards/card-40-tanks-in-mountains.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-10-space-marines.svg'
+    },
+    {
+      id: 'trick-11-licence-production',
+      title: 'ЛИЦЕНЗИИ',
+      nativeImg: 'assets/cards/card-04-forgot-building.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-11-licence-production.svg'
+    },
+    {
+      id: 'trick-12-manual-naval-strike',
+      title: 'МОРБОБРЫ',
+      nativeImg: 'assets/cards/card-11-naval-bombers-no-fleet.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-12-manual-naval-strike.svg'
+    },
+    {
+      id: 'trick-13-fake-intel-divisions',
+      title: 'КУЧУ ДИВИЗИЙ С ОДНОГО БАТАЛЬОНА ДЛЯ НЕКОТОРЫХ МЕХАНИК',
+      nativeImg: 'assets/cards/card-06-forgot-agency.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-13-fake-intel-divisions.svg',
+      desc: 'Например, для быстрого аншлюза или чтобы больше добровольческих дивизий в Испанию отправить.'
+    },
+    {
+      id: 'trick-16-scorch-earth-retreat',
+      title: 'ВЫЖЖЕННАЯ ЗЕМЛЯ',
+      nativeImg: 'assets/cards/card-52-fort-line-flanked.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-16-scorch-earth-retreat.svg'
+    },
+    {
+      id: 'trick-17-paradrop-victory-points',
+      title: 'ДРОП В ПОБЕДНЫЕ ОЧКИ',
+      nativeImg: 'assets/cards/card-45-lost-capital-paratroopers.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-17-paradrop-victory-points.svg'
+    },
+    {
+      id: 'trick-18-refit-cruiser-armor',
+      title: 'МОДЕРНИЗАЦИЯ ФЛОТА',
+      nativeImg: 'assets/cards/card-27-no-dockyards-repair.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-18-refit-cruiser-armor.svg'
+    },
+    {
+      id: 'trick-19-carrier-overcrowding',
+      title: 'ПЕРЕГРУЗ АВИАНОСЦЕВ',
+      nativeImg: 'assets/cards/card-05c-bad-templates-air.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-19-carrier-overcrowding.svg',
+      locked: true
+    },
+    {
+      id: 'trick-22-sub-pack-tactics',
+      title: 'ВОЛЧЬИ СТАИ НА МЕЛКОВОДЬЕ',
+      nativeImg: 'assets/cards/card-56-no-sub-repair.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-22-sub-pack-tactics.svg'
+    },
+    {
+      id: 'trick-26-railway-guns-barrage',
+      title: 'ЮЗАНИЕ ОРУДИЙ НАПОДОБИЕ ДОРЫ',
+      nativeImg: 'assets/cards/card-15-guns-deficit.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-26-railway-guns-barrage.svg'
+    },
+    {
+      id: 'trick-27-midget-sub-mines',
+      title: 'МИННЫЕ ПОЛЯ В ПРОЛИВАХ',
+      nativeImg: 'assets/cards/card-48-english-channel-convoy.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-27-midget-sub-mines.svg'
+    },
+    {
+      id: 'trick-29-anti-air-piercing',
+      title: 'ПВО ВМЕСТО ПТ',
+      nativeImg: 'assets/cards/card-05d-bad-templates-navy.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-29-anti-air-piercing.svg'
+    },
+    {
+      id: 'trick-30-volunteer-air-wing',
+      title: 'ДОБРОВОЛЬЧЕСКАЯ АВИАЦИЯ',
+      nativeImg: 'assets/cards/card-19-no-focus.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-30-volunteer-air-wing.svg'
+    }
   ];
 
+  // Resolve active image based on centralized toggle
+  MECHANICS.forEach(card => {
+    card.img = (USE_AI_PLACEHOLDER_GRAPHICS && card.placeholderImg) ? card.placeholderImg : card.nativeImg;
+  });
+
   const TIER_LISTS = {
-    trikiwi: {
-      id: 'trikiwi',
+    mistakes: {
+      id: 'mistakes',
       title: 'ОШИБКИ В HOI 4',
       author: 'trikiwi',
       trayTitle: 'КОЛОДА ОШИБОК',
@@ -116,8 +200,8 @@
       ],
       cards: MISTAKES
     },
-    atom: {
-      id: 'atom',
+    features: {
+      id: 'features',
       title: 'ФИШКИ И МЕХАНИКИ',
       author: 'Атом в леггинсах',
       trayTitle: 'КОЛОДА ФИШЕК',
@@ -136,6 +220,11 @@
     }
   };
 
+  // Backward compatibility aliases
+  TIER_LISTS.trikiwi = TIER_LISTS.mistakes;
+  TIER_LISTS.atom = TIER_LISTS.features;
+  TIER_LISTS.mechanics = TIER_LISTS.features;
+
   // Wallpapers gallery
   const WALLPAPERS = [
     { id: 'bg-1', name: 'ИС-3 и горничные', src: 'assets/wallpapers/bg-1.webp' },
@@ -147,8 +236,17 @@
   let currentWpIndex = 0;
 
   // --- 2. APPLICATION STATE ---
-  let currentTierListId = 'trikiwi'; // 'trikiwi' or 'atom'
-  let matrixState = {}; // { [cellKey]: [cardId] }
+  let currentTierListId = 'mistakes'; // 'mistakes' or 'features'
+  let currentCensorshipMode = 'censored'; // 'historical' or 'censored'
+
+  // Per-tierlist matrix state: [listId] -> { [zoneKey]: [cardId, ...] }
+  // zoneKey format: `${countryId}__${tierId}__${zone}` (zone is 'mp', 'all', or 'sp')
+  const listStates = {
+    mistakes: {},
+    features: {}
+  };
+
+  let matrixState = {}; // active list state pointer
   let lastResetSnapshot = null;
 
   // Drag Tracking
@@ -168,6 +266,9 @@
   let confirmLeaveBtnEl = null;
   let brandTitleEl = null;
   let shareBtnEl = null;
+
+  let censorBtnHistoricalEl = null;
+  let censorBtnCensoredEl = null;
 
   let matrixHeaderRowEl = null;
   let matrixBoardEl = null;
@@ -190,10 +291,12 @@
   let lightboxCloseBtnEl = null;
   let lightboxImgEl = null;
   let lightboxTitleEl = null;
+  let lightboxDescEl = null;
+  let lightboxForumLinksEl = null;
 
   // --- 3. HELPER LOOKUPS ---
   function getCurrentTierList() {
-    return TIER_LISTS[currentTierListId] || TIER_LISTS.trikiwi;
+    return TIER_LISTS[currentTierListId] || TIER_LISTS.mistakes;
   }
 
   function getCurrentCards() {
@@ -205,41 +308,34 @@
     return list.cards.find(c => c.id === cardId) || null;
   }
 
-  function getCellKey(countryId, tierId) {
-    return `${countryId}__${tierId}`;
+  function getZoneKey(countryId, tierId, zone) {
+    return `${countryId}__${tierId}__${zone}`;
   }
 
-  function getCardCountries(cardId) {
-    const countrySet = new Set();
+  function isCardInZone(zoneKey, cardId) {
+    return Array.isArray(matrixState[zoneKey]) && matrixState[zoneKey].includes(cardId);
+  }
+
+  function getCardPlacementCount(cardId) {
+    let count = 0;
     for (const key in matrixState) {
       if (Array.isArray(matrixState[key]) && matrixState[key].includes(cardId)) {
-        const [countryId] = key.split('__');
-        if (countryId) countrySet.add(countryId);
+        count++;
       }
     }
-    return countrySet;
+    return count;
   }
 
-  function findCardCellInCountry(cardId, countryId) {
+  function getTotalPossibleSubZones() {
     const list = getCurrentTierList();
-    for (const tier of list.tiers) {
-      const cellKey = getCellKey(countryId, tier.id);
-      if (Array.isArray(matrixState[cellKey])) {
-        const idx = matrixState[cellKey].indexOf(cardId);
-        if (idx !== -1) {
-          return { cellKey, tierId: tier.id, index: idx };
-        }
-      }
-    }
-    return null;
-  }
-
-  function isCardPlacedInCountry(cardId, countryId) {
-    return findCardCellInCountry(cardId, countryId) !== null;
+    const tierCount = (list && list.tiers) ? list.tiers.length : 6;
+    return COUNTRIES.length * tierCount * 3;
   }
 
   function isCardFullyPlaced(cardId) {
-    return getCardCountries(cardId).size >= COUNTRIES.length;
+    const cardData = getCardById(cardId);
+    if (cardData && cardData.locked) return true;
+    return getCardPlacementCount(cardId) >= getTotalPossibleSubZones();
   }
 
   function isCardPlacedOnBoard(cardId) {
@@ -277,6 +373,9 @@
     brandTitleEl = document.getElementById('brand-title');
     shareBtnEl = document.getElementById('share-btn');
 
+    censorBtnHistoricalEl = document.getElementById('censor-btn-historical');
+    censorBtnCensoredEl = document.getElementById('censor-btn-censored');
+
     matrixHeaderRowEl = document.getElementById('matrix-header-row');
     matrixBoardEl = document.getElementById('matrix-board');
     bankCardsTrayEl = document.getElementById('bank-cards-tray');
@@ -298,6 +397,8 @@
     lightboxCloseBtnEl = document.getElementById('lightbox-close-btn');
     lightboxImgEl = document.getElementById('lightbox-img');
     lightboxTitleEl = document.getElementById('lightbox-title');
+    lightboxDescEl = document.getElementById('lightbox-desc');
+    lightboxForumLinksEl = document.getElementById('lightbox-forum-links');
   }
 
   // --- 5. INITIALIZATION ---
@@ -306,13 +407,17 @@
       console.log('--- Initializing HOI4 2D Matrix Hub ---');
       initElements();
       initWallpaper();
+      initCensorshipMode();
       initTrayScale();
+      initDeckOffsetObserver();
       setupWelcomeAndNavListeners();
+      setupCensorshipListeners();
       setupTrayScaleListeners();
       setupTrayWheelScroll();
       setupLightboxListeners();
       setupWallpaperListeners();
       setupActionListeners();
+      setupHistoryListener();
 
       // Check if URL has state/list parameters
       const urlLoadResult = loadStateFromURL();
@@ -341,28 +446,36 @@
   }
 
   function selectTierList(listId, skipUrlUpdate = false) {
-    if (!TIER_LISTS[listId]) listId = 'trikiwi';
+    if (listId === 'trikiwi') listId = 'mistakes';
+    if (listId === 'atom' || listId === 'mechanics') listId = 'features';
+    if (!TIER_LISTS[listId]) listId = 'mistakes';
+
     currentTierListId = listId;
     const list = TIER_LISTS[listId];
+
+    if (!listStates[listId]) {
+      listStates[listId] = {};
+    }
 
     // Update UI headers
     if (brandTitleEl) brandTitleEl.textContent = list.title;
     if (trayTitleTextEl) trayTitleTextEl.textContent = list.trayTitle;
 
-    // Reset matrix & build
-    matrixState = {};
+    matrixState = listStates[listId] || {};
     lastResetSnapshot = null;
     if (undoBtnEl) undoBtnEl.style.display = 'none';
 
     buildMatrixGrid();
     renderBankCards();
+    renderAllCells();
     updateBankCardsStatus();
 
     hideWelcomeScreen();
 
     if (!skipUrlUpdate) {
       try {
-        window.history.pushState({}, '', `${window.location.pathname}?list=${listId}`);
+        const url = `${window.location.pathname}?list=${listId}`;
+        window.history.pushState({ screen: 'tierlist', list: listId }, '', url);
       } catch (e) {}
     }
   }
@@ -381,32 +494,33 @@
     if (leaveConfirmModalEl) {
       leaveConfirmModalEl.classList.remove('is-active');
     }
+    listStates[currentTierListId] = {};
     matrixState = {};
     lastResetSnapshot = null;
     clearCardSelection();
     try {
-      window.history.pushState({}, '', window.location.pathname);
+      window.history.pushState({ screen: 'welcome' }, '', window.location.pathname);
     } catch (e) {}
     showWelcomeScreen();
   }
 
   function setupWelcomeAndNavListeners() {
     if (selectTrikiwiCardEl) {
-      selectTrikiwiCardEl.addEventListener('click', () => selectTierList('trikiwi'));
+      selectTrikiwiCardEl.addEventListener('click', () => selectTierList('mistakes'));
       selectTrikiwiCardEl.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          selectTierList('trikiwi');
+          selectTierList('mistakes');
         }
       });
     }
 
     if (selectAtomCardEl) {
-      selectAtomCardEl.addEventListener('click', () => selectTierList('atom'));
+      selectAtomCardEl.addEventListener('click', () => selectTierList('features'));
       selectAtomCardEl.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          selectTierList('atom');
+          selectTierList('features');
         }
       });
     }
@@ -438,7 +552,83 @@
     }
   }
 
-  // --- 7. URL PERSISTENCE & SHARING (LZ-STRING / BASE64) ---
+  // Native Browser History (Back / Forward)
+  function setupHistoryListener() {
+    window.addEventListener('popstate', (e) => {
+      const state = e.state;
+      if (state && state.screen === 'tierlist' && state.list) {
+        selectTierList(state.list, true);
+      } else {
+        clearCardSelection();
+        showWelcomeScreen();
+      }
+    });
+  }
+
+  // --- 7. CENSORSHIP TOGGLE (HISTORICAL / CENSORED) ---
+  function initCensorshipMode() {
+    try {
+      const saved = localStorage.getItem('hoi4_censorship_mode');
+      if (saved === 'historical' || saved === 'censored') {
+        currentCensorshipMode = saved;
+      }
+    } catch (e) {}
+    setCensorshipMode(currentCensorshipMode, false);
+  }
+
+  function setCensorshipMode(mode, save = true) {
+    if (mode !== 'historical' && mode !== 'censored') mode = 'censored';
+    currentCensorshipMode = mode;
+
+    const gerCountry = COUNTRIES.find(c => c.id === 'germany');
+    if (gerCountry) {
+      gerCountry.flag = mode === 'historical'
+        ? 'assets/flags/germany-historical.svg'
+        : 'assets/flags/germany-censored.svg';
+    }
+
+    // Live update Germany flag in matrix if currently displayed
+    const gerImg = document.querySelector('.country-col-header[data-country="germany"] img');
+    if (gerImg && gerCountry) {
+      gerImg.src = gerCountry.flag;
+    }
+
+    if (censorBtnHistoricalEl && censorBtnCensoredEl) {
+      if (mode === 'historical') {
+        censorBtnHistoricalEl.classList.add('is-active');
+        censorBtnCensoredEl.classList.remove('is-active');
+      } else {
+        censorBtnCensoredEl.classList.add('is-active');
+        censorBtnHistoricalEl.classList.remove('is-active');
+      }
+    }
+
+    if (save) {
+      try {
+        localStorage.setItem('hoi4_censorship_mode', mode);
+      } catch (e) {}
+      const modeLabel = mode === 'historical' ? 'Исторический (1933–1945)' : 'Цензурный';
+      showToast(`Режим символики: ${modeLabel}`, 2500, false, 'info');
+    }
+  }
+
+  function setupCensorshipListeners() {
+    if (censorBtnHistoricalEl) {
+      censorBtnHistoricalEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setCensorshipMode('historical');
+      });
+    }
+
+    if (censorBtnCensoredEl) {
+      censorBtnCensoredEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setCensorshipMode('censored');
+      });
+    }
+  }
+
+  // --- 8. URL PERSISTENCE & SHARING (LZ-STRING / BASE64) ---
   function encodeStatePayload(stateObj) {
     const jsonStr = JSON.stringify(stateObj);
     if (window.LZString && typeof window.LZString.compressToEncodedURIComponent === 'function') {
@@ -480,15 +670,21 @@
 
   async function copyShareLink() {
     try {
-      const stateObj = {
+      syncActiveListState();
+
+      const fullStateObj = {
+        v: 3,
         l: currentTierListId,
-        m: matrixState
+        matrix: matrixState
       };
-      const encoded = encodeStatePayload(stateObj);
-      const shareUrl = `${window.location.origin}${window.location.pathname}?state=${encoded}`;
+
+      const encodedFull = encodeStatePayload(fullStateObj);
+
+      // Clean neutral query parameter (?list=mistakes or ?list=features)
+      const shareUrl = `${window.location.origin}${window.location.pathname}?list=${currentTierListId}&state=${encodedFull}`;
 
       // Update address bar
-      window.history.replaceState({}, '', shareUrl);
+      window.history.replaceState({ screen: 'tierlist', list: currentTierListId }, '', shareUrl);
 
       // Copy to clipboard
       let copied = false;
@@ -512,7 +708,7 @@
         ta.remove();
       }
 
-      showToast('Ссылка скопирована! Открыв её, откроется ваш заполненный тир-лист', 4200, false, 'success');
+      showToast('Ссылка скопирована! Все зоны (MP/ALL/SP) сохранены', 4200, false, 'success');
     } catch (err) {
       console.error('Failed to copy share link:', err);
       showToast('Не удалось скопировать ссылку в буфер обмена', 3000, false, 'danger');
@@ -523,6 +719,9 @@
     try {
       const urlParams = new URLSearchParams(window.location.search);
       let stateParam = urlParams.get('state');
+      const listParam = urlParams.get('list');
+      const mpParam = urlParams.get('mp');
+      const spParam = urlParams.get('sp');
 
       // Check hash #state=... or #data=...
       if (!stateParam && window.location.hash) {
@@ -531,37 +730,110 @@
         stateParam = hashParams.get('state') || hashParams.get('data');
       }
 
+      let loaded = false;
+      let targetListId = 'mistakes';
+
+      if (listParam) {
+        if (listParam === 'trikiwi' || listParam === 'mistakes') targetListId = 'mistakes';
+        else if (listParam === 'atom' || listParam === 'features' || listParam === 'mechanics') targetListId = 'features';
+      }
+
+      if (!listStates[targetListId]) {
+        listStates[targetListId] = {};
+      }
+
+      const targetMatrix = {};
+
       if (stateParam) {
         const payload = decodeStatePayload(stateParam);
         if (payload && typeof payload === 'object') {
-          const listId = payload.l || payload.list || 'trikiwi';
-          const matrix = payload.m || payload.matrix || {};
+          if (payload.l) {
+            if (payload.l === 'trikiwi' || payload.l === 'mistakes') targetListId = 'mistakes';
+            else if (payload.l === 'atom' || payload.l === 'features' || payload.l === 'mechanics') targetListId = 'features';
+          }
 
-          selectTierList(listId, true);
-          matrixState = matrix;
-          renderAllCells();
-          updateBankCardsStatus();
-          showToast('Тир-лист загружен из ссылки!', 3500, false, 'success');
-          return true;
+          // Format v3: { v: 3, matrix: { 'country__tier__zone': [...] } }
+          if (payload.matrix && typeof payload.matrix === 'object') {
+            for (const key in payload.matrix) {
+              if (Array.isArray(payload.matrix[key])) {
+                if (key.split('__').length === 3) {
+                  targetMatrix[key] = payload.matrix[key];
+                } else {
+                  targetMatrix[`${key}__all`] = payload.matrix[key];
+                }
+              }
+            }
+            loaded = true;
+          }
+
+          // Format v2: { v: 2, mp: {...}, sp: {...} }
+          if (payload.mp && typeof payload.mp === 'object') {
+            for (const key in payload.mp) {
+              if (Array.isArray(payload.mp[key])) {
+                targetMatrix[`${key}__mp`] = payload.mp[key];
+              }
+            }
+            loaded = true;
+          }
+          if (payload.sp && typeof payload.sp === 'object') {
+            for (const key in payload.sp) {
+              if (Array.isArray(payload.sp[key])) {
+                targetMatrix[`${key}__sp`] = payload.sp[key];
+              }
+            }
+            loaded = true;
+          }
+
+          // Legacy format v1 fallback
+          if (!payload.matrix && !payload.mp && (payload.m || typeof payload === 'object')) {
+            const rawObj = payload.m || payload;
+            for (const key in rawObj) {
+              if (Array.isArray(rawObj[key])) {
+                if (key.split('__').length === 3) {
+                  targetMatrix[key] = rawObj[key];
+                } else {
+                  targetMatrix[`${key}__all`] = rawObj[key];
+                }
+                loaded = true;
+              }
+            }
+          }
         }
       }
 
-      // Check list param: ?list=trikiwi or ?list=atom
-      const listParam = urlParams.get('list');
-      if (listParam && TIER_LISTS[listParam]) {
-        selectTierList(listParam, true);
-        const legacyM = urlParams.get('m');
-        if (legacyM) {
-          parseLegacyCompactParam(legacyM);
+      if (mpParam) {
+        const decodedMp = decodeStatePayload(mpParam);
+        if (decodedMp && typeof decodedMp === 'object') {
+          for (const key in decodedMp) {
+            if (Array.isArray(decodedMp[key])) {
+              targetMatrix[`${key}__mp`] = decodedMp[key];
+            }
+          }
+          loaded = true;
         }
-        return true;
       }
 
-      // Legacy parameter ?m=...
-      const legacyM = urlParams.get('m');
-      if (legacyM) {
-        selectTierList('trikiwi', true);
-        parseLegacyCompactParam(legacyM);
+      if (spParam) {
+        const decodedSp = decodeStatePayload(spParam);
+        if (decodedSp && typeof decodedSp === 'object') {
+          for (const key in decodedSp) {
+            if (Array.isArray(decodedSp[key])) {
+              targetMatrix[`${key}__sp`] = decodedSp[key];
+            }
+          }
+          loaded = true;
+        }
+      }
+
+      if (loaded || listParam) {
+        listStates[targetListId] = targetMatrix;
+        selectTierList(targetListId, true);
+        matrixState = listStates[targetListId] || {};
+        renderAllCells();
+        updateBankCardsStatus();
+        if (loaded) {
+          showToast('Тир-лист успешно загружен!', 3500, false, 'success');
+        }
         return true;
       }
     } catch (e) {
@@ -570,52 +842,7 @@
     return false;
   }
 
-  function parseLegacyCompactParam(compactStr) {
-    try {
-      const list = getCurrentTierList();
-      const codeToCountry = {
-        GER: 'germany', SOV: 'ussr', USA: 'usa', ENG: 'uk', JAP: 'japan', ITA: 'italy', FRA: 'france', ALL: 'all', GEN: 'all'
-      };
-      const numToTier = {
-        '1': list.tiers[0]?.id,
-        '2': list.tiers[1]?.id,
-        '3': list.tiers[2]?.id,
-        '4': list.tiers[3]?.id,
-        '5': list.tiers[4]?.id,
-        '6': list.tiers[5]?.id
-      };
-      const numToCard = {};
-      list.cards.forEach((c, idx) => {
-        const match = c.id.match(/^card-(\d+)/) || c.id.match(/^trick-(\d+)/);
-        const num = match ? parseInt(match[1], 10) : (idx + 1);
-        numToCard[num] = c.id;
-      });
-
-      const segments = decodeURIComponent(compactStr).split(/[|;]/);
-      for (const seg of segments) {
-        const parts = seg.trim().split(':');
-        if (parts.length >= 3) {
-          const countryId = codeToCountry[parts[0].toUpperCase()];
-          const tierId = numToTier[parts[1].toUpperCase()];
-          const cardNums = parts[2].split(',');
-          if (countryId && tierId) {
-            const cellKey = getCellKey(countryId, tierId);
-            const cardIds = cardNums
-              .map(n => parseInt(n.trim(), 10))
-              .filter(n => !isNaN(n) && numToCard[n])
-              .map(n => numToCard[n]);
-            if (cardIds.length > 0) {
-              matrixState[cellKey] = cardIds;
-            }
-          }
-        }
-      }
-      renderAllCells();
-      updateBankCardsStatus();
-    } catch (e) {}
-  }
-
-  // --- 8. MATRIX GRID BUILDING ---
+  // --- 9. MATRIX GRID BUILDING (THREE-ZONE ARCHITECTURE) ---
   function buildMatrixGrid() {
     if (matrixHeaderRowEl) matrixHeaderRowEl.innerHTML = '';
     if (matrixBoardEl) matrixBoardEl.innerHTML = '';
@@ -639,6 +866,7 @@
     COUNTRIES.forEach(country => {
       const colEl = document.createElement('div');
       colEl.className = 'country-col-header';
+      colEl.dataset.country = country.id;
       if (country.flag) {
         colEl.innerHTML = `
           <div class="flag-box country-flag-box">
@@ -657,7 +885,7 @@
       headerContainer.appendChild(colEl);
     });
 
-    // 3. Rows: 6 Tiers x 8 Columns
+    // 3. Rows: 6 Tiers x 8 Columns with 3 Sub-Zones per Cell
     list.tiers.forEach(tier => {
       const rowHeaderEl = document.createElement('div');
       rowHeaderEl.className = `tier-row-header ${tier.className}`;
@@ -668,26 +896,46 @@
       matrixBoardEl.appendChild(rowHeaderEl);
 
       COUNTRIES.forEach(country => {
-        const cellKey = getCellKey(country.id, tier.id);
+        const cellKey = `${country.id}__${tier.id}`;
         const cellEl = document.createElement('div');
-        cellEl.className = 'matrix-cell cell-empty';
+        cellEl.className = 'matrix-cell';
         cellEl.dataset.cellKey = cellKey;
         cellEl.dataset.country = country.id;
         cellEl.dataset.tier = tier.id;
 
-        cellEl.innerHTML = `
-          <div class="cell-placeholder-hint">
-            <i class="fa-solid fa-plus"></i>
-          </div>
-        `;
+        const subZones = [
+          { id: 'mp', name: 'МП', title: 'МП (Мультиплеер)', className: 'cell-zone-mp' },
+          { id: 'all', name: 'ОБЩ', title: 'ОБЩЕЕ (актуально везде)', className: 'cell-zone-all' },
+          { id: 'sp', name: 'СП', title: 'СП (Одиночная игра)', className: 'cell-zone-sp' }
+        ];
 
-        setupCellDragEvents(cellEl, tier);
+        subZones.forEach(z => {
+          const zoneKey = getZoneKey(country.id, tier.id, z.id);
+          const zoneEl = document.createElement('div');
+          zoneEl.className = `cell-sub-zone ${z.className}`;
+          zoneEl.dataset.zone = z.id;
+          zoneEl.dataset.zoneKey = zoneKey;
+          zoneEl.dataset.country = country.id;
+          zoneEl.dataset.tier = tier.id;
+          zoneEl.title = z.title;
+
+          zoneEl.innerHTML = `
+            <div class="zone-badge">
+              <span class="zone-label">${z.name}</span>
+            </div>
+            <div class="zone-cards"></div>
+          `;
+
+          setupSubZoneDragEvents(zoneEl, tier);
+          cellEl.appendChild(zoneEl);
+        });
+
         matrixBoardEl.appendChild(cellEl);
       });
     });
   }
 
-  // --- 9. TRAY & CARD BANK RENDERING ---
+  // --- 10. TRAY & CARD BANK RENDERING ---
   function renderBankCards() {
     if (!bankCardsTrayEl) return;
     bankCardsTrayEl.innerHTML = '';
@@ -701,25 +949,21 @@
     updateBankCardsStatus();
   }
 
-  // Multi-Country Matrix Logic: Update status and placement counters of all cards in tray
   function updateBankCardsStatus() {
     const cards = getCurrentCards();
-    const totalCountries = COUNTRIES.length; // 8
+    const totalSubZones = getTotalPossibleSubZones();
 
-    // Map each cardId to the Set of countryIds where it is placed
-    const cardCountriesMap = new Map();
-    cards.forEach(c => cardCountriesMap.set(c.id, new Set()));
+    const cardPlacementCounts = new Map();
+    cards.forEach(c => cardPlacementCounts.set(c.id, 0));
 
     let totalPlacements = 0;
 
     for (const key in matrixState) {
       if (Array.isArray(matrixState[key])) {
-        const [countryId] = key.split('__');
         matrixState[key].forEach(cId => {
           totalPlacements++;
-          const set = cardCountriesMap.get(cId);
-          if (set && countryId) {
-            set.add(countryId);
+          if (cardPlacementCounts.has(cId)) {
+            cardPlacementCounts.set(cId, cardPlacementCounts.get(cId) + 1);
           }
         });
       }
@@ -731,15 +975,23 @@
       const trayCards = bankCardsTrayEl.querySelectorAll('.mistake-card');
       trayCards.forEach(cardEl => {
         const cId = cardEl.dataset.cardId;
-        const placedCountriesSet = cardCountriesMap.get(cId) || new Set();
-        const count = placedCountriesSet.size;
-        const isFullyPlaced = count >= totalCountries;
+        const cardData = getCardById(cId);
+
+        if (cardData && cardData.locked) {
+          cardEl.classList.add('is-locked');
+          cardEl.classList.remove('is-placed', 'is-partial');
+          cardEl.draggable = false;
+          cardEl.setAttribute('aria-disabled', 'true');
+          return;
+        }
+
+        const count = cardPlacementCounts.get(cId) || 0;
+        const isFullyPlaced = count >= totalSubZones;
 
         if (isFullyPlaced) {
           fullyPlacedCount++;
         }
 
-        // Clean existing badges
         const oldPlacedBadge = cardEl.querySelector('.card-placed-badge');
         if (oldPlacedBadge) oldPlacedBadge.remove();
         const oldCounterBadge = cardEl.querySelector('.card-counter-badge');
@@ -753,7 +1005,7 @@
 
           const badge = document.createElement('div');
           badge.className = 'card-placed-badge';
-          badge.innerHTML = `<i class="fa-solid fa-check"></i><span>${count}/${totalCountries} стран</span>`;
+          badge.innerHTML = `<i class="fa-solid fa-check"></i><span>${count}</span>`;
           cardEl.appendChild(badge);
         } else if (count > 0) {
           cardEl.classList.remove('is-placed');
@@ -763,8 +1015,8 @@
 
           const badge = document.createElement('div');
           badge.className = 'card-counter-badge';
-          badge.title = `Размещено в ${count} из ${totalCountries} стран`;
-          badge.innerHTML = `<i class="fa-solid fa-flag"></i><span>${count}/${totalCountries}</span>`;
+          badge.title = `Размещено в подсекциях: ${count}`;
+          badge.innerHTML = `<i class="fa-solid fa-layer-group"></i><span>${count}</span>`;
           cardEl.appendChild(badge);
         } else {
           cardEl.classList.remove('is-placed', 'is-partial');
@@ -774,50 +1026,18 @@
       });
     }
 
-    // Update Counter: available cards / total cards
+    // Counter: available / total
     const totalCount = cards.length;
-    const availableCount = totalCount - fullyPlacedCount;
+    const lockedCount = cards.filter(c => c.locked).length;
+    const availableCount = totalCount - fullyPlacedCount - lockedCount;
     if (trayCardsCountEl) {
       trayCardsCountEl.textContent = `${availableCount} / ${totalCount}`;
-      trayCardsCountEl.title = `Доступно в колоде: ${availableCount} из ${totalCount} (всего на доске: ${totalPlacements})`;
+      trayCardsCountEl.title = `Доступно в колоде: ${availableCount} из ${totalCount} (всего на доске: ${totalPlacements}${lockedCount ? ', заблокировано: ' + lockedCount : ''})`;
     }
   }
 
-  function formatCardCaption(title) {
-    if (!title) return '';
-    if (title.length <= 34) return title;
-    const words = title.split(/\s+/);
-    if (words.length <= 3) {
-      const half = 12;
-      return `${title.slice(0, half).trim()}... ${title.slice(-half).trim()}`;
-    }
-    let head = [];
-    let tail = [];
-    let i = 0;
-    let j = words.length - 1;
-    let len = 4;
-    while (i < j) {
-      const nHead = words[i].length + (head.length > 0 ? 1 : 0);
-      const nTail = words[j].length + (tail.length > 0 ? 1 : 0);
-      if (head.length <= tail.length && len + nHead <= 26) {
-        head.push(words[i]);
-        len += nHead;
-        i++;
-      } else if (len + nTail <= 26) {
-        tail.unshift(words[j]);
-        len += nTail;
-        j--;
-      } else {
-        break;
-      }
-    }
-    if (head.length === 0) head.push(words[0]);
-    if (tail.length === 0) tail.unshift(words[words.length - 1]);
-    return `${head.join(' ')}... ${tail.join(' ')}`;
-  }
-
-  // --- 10. CREATE CARD ELEMENT ---
-  function createCardElement(cardId, isInCell = false, cellKey = null, itemIndex = null) {
+  // --- 11. CREATE CARD ELEMENT ---
+  function createCardElement(cardId, isInCell = false, zoneKey = null, itemIndex = null) {
     const cardData = getCardById(cardId);
     if (!cardData) return document.createElement('div');
 
@@ -828,19 +1048,38 @@
 
     if (isInCell) {
       card.dataset.inCell = 'true';
-      card.dataset.cellKey = cellKey;
+      card.dataset.zoneKey = zoneKey;
       card.dataset.itemIndex = itemIndex;
     } else {
       card.dataset.inCell = 'false';
     }
 
+    const isLocked = Boolean(cardData.locked);
+    if (isLocked) {
+      card.classList.add('is-locked');
+      card.draggable = false;
+      card.setAttribute('aria-disabled', 'true');
+    }
+
+    const isLongTitle = Boolean(cardData.title && cardData.title.length > 25);
+    const captionClass = isLongTitle ? 'card-caption card-caption-long' : 'card-caption';
+
+    let tooltipHtml = '';
+    if (isLocked) {
+      tooltipHtml = `<div class="card-tooltip"><span>${cardData.title}</span><small class="card-tooltip-desc" style="color:#ff8a80;">Временно заблокировано</small></div>`;
+    } else if (isInCell) {
+      tooltipHtml = `<div class="card-tooltip"><span>${cardData.title}</span>${cardData.desc ? '<small class="card-tooltip-desc">' + cardData.desc + '</small>' : ''}</div><button class="card-remove-btn" title="Убрать из ячейки"><i class="fa-solid fa-xmark"></i></button>`;
+    } else if (cardData.desc) {
+      tooltipHtml = `<div class="card-tooltip card-tooltip-desc-only"><small class="card-tooltip-desc">${cardData.desc}</small></div>`;
+    }
+
     card.innerHTML = `
       <div class="card-art-box">
         <img class="card-img" src="${cardData.img}" alt="${cardData.title}" loading="lazy" decoding="async" />
+        ${isLocked ? '<div class="card-lock-badge" title="Временно недоступно"><i class="fa-solid fa-lock"></i></div>' : ''}
       </div>
-      <div class="card-caption" title="${cardData.title}">${cardData.title}</div>
-      <div class="card-tooltip">${cardData.title}</div>
-      ${isInCell ? '<button class="card-remove-btn" title="Убрать из ячейки"><i class="fa-solid fa-xmark"></i></button>' : ''}
+      <div class="${captionClass}">${cardData.title}</div>
+      ${tooltipHtml}
     `;
 
     // Remove button in cell
@@ -849,17 +1088,19 @@
       if (removeBtn) {
         removeBtn.addEventListener('click', (e) => {
           e.stopPropagation();
-          removeCardFromCell(cellKey, itemIndex);
-          if (selectedCardForPlacement && selectedCardForPlacement.sourceCellKey === cellKey && selectedCardForPlacement.sourceIndex === itemIndex) {
-            clearCardSelection();
-          }
+          removeCardIdFromZone(zoneKey, cardId);
         });
       }
     }
 
     // Dragstart
     card.addEventListener('dragstart', (e) => {
-      // If card in tray is already placed across all countries, cancel drag
+      if (isLocked) {
+        e.preventDefault();
+        showToast('Карточка «' + cardData.title + '» временно заблокирована!', 2500, false, 'warning');
+        return;
+      }
+
       if (!isInCell && isCardFullyPlaced(cardId)) {
         e.preventDefault();
         return;
@@ -868,7 +1109,7 @@
       isDraggingFlag = true;
       draggedCardInfo = {
         cardId: cardId,
-        sourceCellKey: isInCell ? cellKey : null,
+        sourceZoneKey: isInCell ? zoneKey : null,
         sourceIndex: isInCell ? itemIndex : null
       };
       card.classList.add('is-dragging');
@@ -892,6 +1133,7 @@
     let touchGhost = null;
 
     card.addEventListener('touchstart', (e) => {
+      if (isLocked) return;
       if (!isInCell && isCardFullyPlaced(cardId)) return;
       if (e.touches.length !== 1) return;
       const touch = e.touches[0];
@@ -901,6 +1143,7 @@
     }, { passive: true });
 
     card.addEventListener('touchmove', (e) => {
+      if (isLocked) return;
       if (!isInCell && isCardFullyPlaced(cardId)) return;
       if (e.touches.length !== 1) return;
       const touch = e.touches[0];
@@ -912,7 +1155,7 @@
         isDraggingFlag = true;
         draggedCardInfo = {
           cardId: cardId,
-          sourceCellKey: isInCell ? cellKey : null,
+          sourceZoneKey: isInCell ? zoneKey : null,
           sourceIndex: isInCell ? itemIndex : null
         };
 
@@ -931,9 +1174,11 @@
 
         clearAllDragOverStyles();
         const elemBelow = document.elementFromPoint(touch.clientX, touch.clientY);
-        const targetCell = elemBelow?.closest('.matrix-cell');
-        if (targetCell) {
-          applyCellDragOverHighlight(targetCell);
+        const targetZone = elemBelow?.closest('.cell-sub-zone');
+        if (targetZone) {
+          const list = getCurrentTierList();
+          const tier = list.tiers.find(t => t.id === targetZone.dataset.tier);
+          applyZoneDragOverHighlight(targetZone, tier);
         }
       }
     }, { passive: false });
@@ -947,14 +1192,14 @@
 
         const touch = e.changedTouches[0];
         const elemBelow = document.elementFromPoint(touch.clientX, touch.clientY);
-        const targetCell = elemBelow?.closest('.matrix-cell');
+        const targetZone = elemBelow?.closest('.cell-sub-zone');
 
         clearAllDragOverStyles();
 
-        if (targetCell && draggedCardInfo) {
-          const targetCellKey = targetCell.dataset.cellKey;
-          const { cardId: dCardId, sourceCellKey } = draggedCardInfo;
-          handleCardDrop(targetCellKey, dCardId, sourceCellKey);
+        if (targetZone && draggedCardInfo) {
+          const targetZoneKey = targetZone.dataset.zoneKey;
+          const { cardId: dCardId, sourceZoneKey } = draggedCardInfo;
+          handleCardDrop(targetZoneKey, dCardId, sourceZoneKey);
         }
 
         draggedCardInfo = null;
@@ -965,12 +1210,16 @@
       }
     }, { passive: true });
 
-    // Click handler: Lightbox Zoom or Tap-to-Place
+    // Click handler: Lightbox Zoom
     card.addEventListener('click', (e) => {
       if (isDraggingFlag || isTouchDragging) return;
       e.stopPropagation();
 
-      // If in tray and placed in all countries: inform user
+      if (isLocked) {
+        showToast('Карточка «' + cardData.title + '» временно заблокирована!', 2500, false, 'warning');
+        return;
+      }
+
       if (!isInCell && isCardFullyPlaced(cardId)) {
         showToast('Карточка уже выставлена во всех странах!', 2500, false, 'tip');
         return;
@@ -982,134 +1231,132 @@
     return card;
   }
 
-  // --- 11. DYNAMIC COLOR DRAG-AND-DROP (REQUIREMENT 3.1) ---
-  function applyCellDragOverHighlight(cellEl) {
-    const list = getCurrentTierList();
-    const tierId = cellEl.dataset.tier;
-    const tier = list.tiers.find(t => t.id === tierId);
-
+  // --- 12. DYNAMIC COLOR DRAG-AND-DROP FOR SUB-ZONES ---
+  function applyZoneDragOverHighlight(zoneEl, tier) {
     if (tier) {
-      cellEl.style.setProperty('--cell-drag-color', tier.color);
-      cellEl.style.setProperty('--cell-drag-glow', tier.glow);
-      cellEl.style.setProperty('--cell-drag-bg', tier.bg);
+      zoneEl.style.setProperty('--cell-drag-color', tier.color);
+      zoneEl.style.setProperty('--cell-drag-glow', tier.glow);
+      zoneEl.style.setProperty('--cell-drag-bg', tier.bg);
     }
-    cellEl.classList.add('drag-over');
+    zoneEl.classList.add('drag-over');
   }
 
-  function clearCellDragOverHighlight(cellEl) {
-    cellEl.classList.remove('drag-over');
-    cellEl.style.removeProperty('--cell-drag-color');
-    cellEl.style.removeProperty('--cell-drag-glow');
-    cellEl.style.removeProperty('--cell-drag-bg');
+  function clearZoneDragOverHighlight(zoneEl) {
+    zoneEl.classList.remove('drag-over');
+    zoneEl.style.removeProperty('--cell-drag-color');
+    zoneEl.style.removeProperty('--cell-drag-glow');
+    zoneEl.style.removeProperty('--cell-drag-bg');
   }
 
   function clearAllDragOverStyles() {
-    document.querySelectorAll('.matrix-cell.drag-over').forEach(el => clearCellDragOverHighlight(el));
+    document.querySelectorAll('.cell-sub-zone.drag-over').forEach(el => clearZoneDragOverHighlight(el));
     if (bankCardsTrayEl) bankCardsTrayEl.classList.remove('drag-over');
   }
 
-  // Setup Cell Drag & Drop
-  function setupCellDragEvents(cellEl, tier) {
-    const cellKey = cellEl.dataset.cellKey;
+  function setupSubZoneDragEvents(zoneEl, tier) {
+    const zoneKey = zoneEl.dataset.zoneKey;
 
-    cellEl.addEventListener('dragover', (e) => {
+    zoneEl.addEventListener('dragover', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       e.dataTransfer.dropEffect = 'move';
-      applyCellDragOverHighlight(cellEl);
+      applyZoneDragOverHighlight(zoneEl, tier);
     });
 
-    cellEl.addEventListener('dragleave', (e) => {
-      if (!cellEl.contains(e.relatedTarget)) {
-        clearCellDragOverHighlight(cellEl);
+    zoneEl.addEventListener('dragleave', (e) => {
+      e.stopPropagation();
+      if (!zoneEl.contains(e.relatedTarget)) {
+        clearZoneDragOverHighlight(zoneEl);
       }
     });
 
-    cellEl.addEventListener('drop', (e) => {
+    zoneEl.addEventListener('drop', (e) => {
       e.preventDefault();
-      clearCellDragOverHighlight(cellEl);
+      e.stopPropagation();
+      clearAllDragOverStyles();
 
       let cardId = null;
-      let sourceCellKey = null;
+      let sourceZoneKey = null;
 
       if (draggedCardInfo) {
         cardId = draggedCardInfo.cardId;
-        sourceCellKey = draggedCardInfo.sourceCellKey;
+        sourceZoneKey = draggedCardInfo.sourceZoneKey;
       } else {
         cardId = e.dataTransfer.getData('text/plain');
       }
 
       if (!cardId || !getCardById(cardId)) return;
 
-      handleCardDrop(cellKey, cardId, sourceCellKey);
+      handleCardDrop(zoneKey, cardId, sourceZoneKey);
     });
   }
 
-  // Multi-Country Matrix Drop Handler
-  function handleCardDrop(targetCellKey, cardId, sourceCellKey = null) {
-    if (!targetCellKey || !cardId) return;
-
-    const [targetCountryId] = targetCellKey.split('__');
-    if (!targetCountryId) return;
-
-    // 1. Dragged from another cell on the board
-    if (sourceCellKey) {
-      if (sourceCellKey === targetCellKey) return;
-
-      const [sourceCountryId] = sourceCellKey.split('__');
-
-      // If moving within the same country to another tier
-      if (sourceCountryId === targetCountryId) {
-        removeCardIdFromCell(sourceCellKey, cardId, false);
-        addCardToCell(targetCellKey, cardId);
-        return;
-      }
-
-      // If moving between different countries:
-      // Remove any existing copy in targetCountry to prevent duplicate in target country
-      removeCardFromCountry(targetCountryId, cardId, false);
-      // Remove from source cell
-      removeCardIdFromCell(sourceCellKey, cardId, false);
-      // Add to target cell
-      addCardToCell(targetCellKey, cardId);
+  // Drop Handler strictly targeting the chosen sub-zone
+  function handleCardDrop(targetZoneKey, cardId, sourceZoneKey = null) {
+    if (!targetZoneKey || !cardId) return;
+    const cardData = getCardById(cardId);
+    if (cardData && cardData.locked) {
+      showToast('Карточка «' + cardData.title + '» временно заблокирована!', 2500, false, 'warning');
       return;
     }
 
-    // 2. Dragged from the bottom tray
-    const existingPlacement = findCardCellInCountry(cardId, targetCountryId);
-    if (existingPlacement) {
-      if (existingPlacement.cellKey === targetCellKey) {
-        showToast('Карточка уже находится в этой ячейке', 2000, false, 'tip');
+    // 1. Dragged from another sub-zone on the board
+    if (sourceZoneKey) {
+      if (sourceZoneKey === targetZoneKey) {
+        // Dropped inside the exact same sub-zone - keep position
         return;
       }
-      // Move within the country to the new tier
-      removeCardIdFromCell(existingPlacement.cellKey, cardId, false);
-      addCardToCell(targetCellKey, cardId);
+
+      // If already present in target sub-zone: prevent duplicate in this specific sub-zone
+      if (isCardInZone(targetZoneKey, cardId)) {
+        showToast('Карточка уже находится в этой подсекции', 2000, false, 'tip');
+        return;
+      }
+
+      // Move card from source sub-zone to target sub-zone
+      removeCardIdFromZone(sourceZoneKey, cardId, false);
+      addCardToZone(targetZoneKey, cardId);
       return;
     }
 
-    // New placement in this country
-    addCardToCell(targetCellKey, cardId);
+    // 2. Dragged from bottom deck
+    if (isCardInZone(targetZoneKey, cardId)) {
+      showToast('Карточка уже находится в этой подсекции', 2000, false, 'tip');
+      return;
+    }
+
+    // New placement in this independent sub-zone
+    addCardToZone(targetZoneKey, cardId);
   }
 
-  // --- 12. STATE MUTATION & CELL SCALING ---
-  function addCardToCell(cellKey, cardId) {
-    if (!matrixState[cellKey]) {
-      matrixState[cellKey] = [];
+  // --- 13. STATE MUTATION & SUB-ZONE RENDERING ---
+  function syncActiveListState() {
+    if (!listStates[currentTierListId]) {
+      listStates[currentTierListId] = {};
     }
-    matrixState[cellKey].push(cardId);
-    renderCell(cellKey);
+    listStates[currentTierListId] = matrixState;
+  }
+
+  function addCardToZone(zoneKey, cardId) {
+    if (!matrixState[zoneKey]) {
+      matrixState[zoneKey] = [];
+    }
+    matrixState[zoneKey].push(cardId);
+    syncActiveListState();
+    renderZone(zoneKey);
     updateBankCardsStatus();
   }
 
-  function removeCardIdFromCell(cellKey, cardId, shouldUpdateStatus = true) {
-    if (!matrixState[cellKey]) return;
-    const idx = matrixState[cellKey].indexOf(cardId);
+  function removeCardIdFromZone(zoneKey, cardId, shouldUpdateStatus = true) {
+    if (!matrixState[zoneKey]) return;
+    const idx = matrixState[zoneKey].indexOf(cardId);
     if (idx !== -1) {
-      matrixState[cellKey].splice(idx, 1);
-      if (matrixState[cellKey].length === 0) {
-        delete matrixState[cellKey];
+      matrixState[zoneKey].splice(idx, 1);
+      if (matrixState[zoneKey].length === 0) {
+        delete matrixState[zoneKey];
       }
-      renderCell(cellKey);
+      syncActiveListState();
+      renderZone(zoneKey);
       if (shouldUpdateStatus) {
         updateBankCardsStatus();
       }
@@ -1117,17 +1364,17 @@
   }
 
   function removeCardFromCountry(countryId, cardId, shouldUpdateStatus = true) {
-    const list = getCurrentTierList();
-    for (const tier of list.tiers) {
-      const cellKey = getCellKey(countryId, tier.id);
-      if (Array.isArray(matrixState[cellKey])) {
-        const idx = matrixState[cellKey].indexOf(cardId);
+    for (const key in matrixState) {
+      const [cId] = key.split('__');
+      if (cId === countryId && Array.isArray(matrixState[key])) {
+        const idx = matrixState[key].indexOf(cardId);
         if (idx !== -1) {
-          matrixState[cellKey].splice(idx, 1);
-          if (matrixState[cellKey].length === 0) {
-            delete matrixState[cellKey];
+          matrixState[key].splice(idx, 1);
+          if (matrixState[key].length === 0) {
+            delete matrixState[key];
           }
-          renderCell(cellKey);
+          syncActiveListState();
+          renderZone(key);
           if (shouldUpdateStatus) {
             updateBankCardsStatus();
           }
@@ -1137,63 +1384,54 @@
     }
   }
 
-  function removeCardFromCell(cellKey, itemIndex, shouldUpdateStatus = true) {
-    if (!matrixState[cellKey]) return;
-    matrixState[cellKey].splice(itemIndex, 1);
-    if (matrixState[cellKey].length === 0) {
-      delete matrixState[cellKey];
-    }
-    renderCell(cellKey);
-    if (shouldUpdateStatus) {
-      updateBankCardsStatus();
-    }
-  }
+  function renderZone(zoneKey) {
+    const zoneEl = document.querySelector(`.cell-sub-zone[data-zone-key="${zoneKey}"]`);
+    if (!zoneEl) return;
 
-  function renderCell(cellKey) {
-    const cellEl = document.querySelector(`.matrix-cell[data-cell-key="${cellKey}"]`);
-    if (!cellEl) return;
+    const cardsContainer = zoneEl.querySelector('.zone-cards');
+    if (!cardsContainer) return;
 
-    const cardsInCell = matrixState[cellKey] || [];
-    const count = cardsInCell.length;
-    cellEl.innerHTML = '';
+    const cardsInZone = matrixState[zoneKey] || [];
+    cardsContainer.innerHTML = '';
 
-    if (count === 0) {
-      cellEl.classList.add('cell-empty');
-      cellEl.classList.remove('cell-has-items');
-      cellEl.removeAttribute('data-count');
-      cellEl.innerHTML = `
-        <div class="cell-placeholder-hint">
-          <i class="fa-solid fa-plus"></i>
-        </div>
-      `;
+    if (cardsInZone.length === 0) {
+      zoneEl.classList.remove('has-cards');
     } else {
-      cellEl.classList.remove('cell-empty');
-      cellEl.classList.add('cell-has-items');
-      cellEl.dataset.count = count;
-
-      cardsInCell.forEach((cId, idx) => {
-        const cardEl = createCardElement(cId, true, cellKey, idx);
-        cellEl.appendChild(cardEl);
+      zoneEl.classList.add('has-cards');
+      cardsInZone.forEach((cId, idx) => {
+        const cardEl = createCardElement(cId, true, zoneKey, idx);
+        cardsContainer.appendChild(cardEl);
       });
     }
   }
 
-  function renderAllCells() {
-    const cells = document.querySelectorAll('.matrix-cell');
-    cells.forEach(cell => {
-      renderCell(cell.dataset.cellKey);
+  function renderCell(cellKey) {
+    const [countryId, tierId] = cellKey.split('__');
+    ['mp', 'all', 'sp'].forEach(z => {
+      renderZone(getZoneKey(countryId, tierId, z));
     });
   }
 
-  // --- 13. TRAY SCALE & SMOOTH HORIZONTAL SCROLL ---
-  let currentTrayScale = 100; // in percent (80 to 120)
+  function renderAllCells() {
+    const list = getCurrentTierList();
+    COUNTRIES.forEach(country => {
+      list.tiers.forEach(tier => {
+        ['mp', 'all', 'sp'].forEach(z => {
+          renderZone(getZoneKey(country.id, tier.id, z));
+        });
+      });
+    });
+  }
+
+  // --- 14. TRAY SCALE (50% TO 200%) & SMOOTH HORIZONTAL SCROLL ---
+  let currentTrayScale = 100; // in percent (50 to 200)
 
   function initTrayScale() {
     try {
-      const saved = localStorage.getItem('hoi4_tray_scale_v2');
+      const saved = localStorage.getItem('hoi4_tray_scale_v3');
       if (saved !== null) {
         const val = parseInt(saved, 10);
-        if (!isNaN(val) && val >= 80 && val <= 120) {
+        if (!isNaN(val) && val >= 50 && val <= 200) {
           currentTrayScale = val;
         }
       }
@@ -1201,8 +1439,34 @@
     applyTrayScale(currentTrayScale, false);
   }
 
+  function updateDeckOffset() {
+    const deckEl = document.querySelector('.bank-cards-strip-container');
+    if (deckEl) {
+      const deckHeight = Math.ceil(deckEl.getBoundingClientRect().height);
+      if (deckHeight > 0) {
+        document.documentElement.style.setProperty('--deck-height', `${deckHeight}px`);
+      }
+    }
+  }
+
+  function initDeckOffsetObserver() {
+    updateDeckOffset();
+
+    const deckEl = document.querySelector('.bank-cards-strip-container');
+    if (deckEl && window.ResizeObserver) {
+      try {
+        const ro = new ResizeObserver(() => {
+          updateDeckOffset();
+        });
+        ro.observe(deckEl);
+      } catch (e) {}
+    }
+
+    window.addEventListener('resize', updateDeckOffset);
+  }
+
   function applyTrayScale(percent, save = true) {
-    percent = Math.max(80, Math.min(120, Math.round(percent / 5) * 5));
+    percent = Math.max(50, Math.min(200, Math.round(percent / 5) * 5));
     currentTrayScale = percent;
 
     const scaleFactor = (percent / 100).toFixed(2);
@@ -1214,9 +1478,11 @@
     if (sliderEl) sliderEl.value = percent;
     if (valueEl) valueEl.textContent = `${percent}%`;
 
+    requestAnimationFrame(updateDeckOffset);
+
     if (save) {
       try {
-        localStorage.setItem('hoi4_tray_scale_v2', percent);
+        localStorage.setItem('hoi4_tray_scale_v3', percent);
       } catch (e) {}
     }
   }
@@ -1225,7 +1491,6 @@
     const sliderEl = document.getElementById('tray-scale-slider');
     const downBtn = document.getElementById('tray-scale-down');
     const upBtn = document.getElementById('tray-scale-up');
-    const resetBtn = document.getElementById('tray-scale-reset');
     const valueEl = document.getElementById('tray-scale-value');
 
     if (sliderEl) {
@@ -1251,13 +1516,6 @@
       });
     }
 
-    if (resetBtn) {
-      resetBtn.addEventListener('click', () => {
-        applyTrayScale(100);
-        showToast('Масштаб колоды сброшен на 100%', 2000, false, 'info');
-      });
-    }
-
     if (valueEl) {
       valueEl.addEventListener('click', () => {
         applyTrayScale(100);
@@ -1280,14 +1538,14 @@
     }, { passive: false });
   }
 
-  // --- 14. TAP-TO-PLACE SELECTION LOGIC ---
+  // --- 15. SELECTION CLEANUP ---
   function clearCardSelection() {
     selectedCardForPlacement = null;
     document.querySelectorAll('.mistake-card.is-selected').forEach(el => el.classList.remove('is-selected'));
     document.body.classList.remove('card-selection-active');
   }
 
-  // --- 15. LIGHTBOX MODAL ---
+  // --- 16. LIGHTBOX MODAL ---
   function openLightbox(cardId) {
     const cardData = getCardById(cardId);
     if (!cardData || !lightboxModalEl) return;
@@ -1298,6 +1556,33 @@
     }
     if (lightboxTitleEl) {
       lightboxTitleEl.textContent = cardData.title;
+    }
+
+    if (lightboxDescEl) {
+      if (cardData.desc) {
+        lightboxDescEl.textContent = cardData.desc;
+        lightboxDescEl.style.display = 'block';
+      } else {
+        lightboxDescEl.style.display = 'none';
+      }
+    }
+
+    if (lightboxForumLinksEl) {
+      lightboxForumLinksEl.innerHTML = '';
+      if (cardData.links && Array.isArray(cardData.links) && cardData.links.length > 0) {
+        cardData.links.forEach(linkItem => {
+          const btn = document.createElement('a');
+          btn.href = linkItem.url;
+          btn.target = '_blank';
+          btn.rel = 'noopener noreferrer';
+          btn.className = 'forum-link-btn';
+          btn.innerHTML = `<i class="fa-solid fa-arrow-up-right-from-square"></i><span>${linkItem.title}</span>`;
+          lightboxForumLinksEl.appendChild(btn);
+        });
+        lightboxForumLinksEl.style.display = 'flex';
+      } else {
+        lightboxForumLinksEl.style.display = 'none';
+      }
     }
 
     lightboxModalEl.classList.add('is-active');
@@ -1339,7 +1624,7 @@
     });
   }
 
-  // --- 16. WALLPAPERS CONTROLLER ---
+  // --- 17. WALLPAPERS CONTROLLER ---
   function initWallpaper() {
     try {
       const saved = localStorage.getItem('hoi4_tier_wp');
@@ -1434,7 +1719,7 @@
     });
   }
 
-  // --- 17. RESET & UNDO CONTROLLER ---
+  // --- 18. RESET & UNDO CONTROLLER ---
   let activeConfirmToast = null;
 
   function requestResetConfirmation() {
@@ -1449,7 +1734,7 @@
     }
 
     const toast = document.createElement('div');
-    toast.className = 'toast toast-danger show';
+    toast.className = 'toast toast-danger';
     toast.innerHTML = `
       <div class="toast-icon-badge">
         <i class="fa-solid fa-triangle-exclamation"></i>
@@ -1470,6 +1755,7 @@
     `;
 
     toastContainerEl.appendChild(toast);
+    requestAnimationFrame(() => toast.classList.add('show'));
     activeConfirmToast = toast;
 
     let autoCloseTimer = setTimeout(() => {
@@ -1506,6 +1792,9 @@
   function executeReset() {
     lastResetSnapshot = JSON.parse(JSON.stringify(matrixState));
     matrixState = {};
+    if (listStates[currentTierListId]) {
+      listStates[currentTierListId] = {};
+    }
     renderAllCells();
     updateBankCardsStatus();
 
@@ -1519,6 +1808,9 @@
   function executeUndo() {
     if (!lastResetSnapshot) return;
     matrixState = JSON.parse(JSON.stringify(lastResetSnapshot));
+    if (listStates[currentTierListId]) {
+      listStates[currentTierListId] = matrixState;
+    }
     lastResetSnapshot = null;
     renderAllCells();
     updateBankCardsStatus();
@@ -1530,7 +1822,7 @@
     showToast('Матрица восстановлена!', 2500, false, 'success');
   }
 
-  // --- 18. ACTION LISTENERS ---
+  // --- 19. ACTION LISTENERS ---
   function setupActionListeners() {
     if (resetBtnEl) {
       resetBtnEl.addEventListener('click', (e) => {
@@ -1561,14 +1853,14 @@
         e.preventDefault();
         bankCardsTrayEl.classList.remove('drag-over');
 
-        if (draggedCardInfo && draggedCardInfo.sourceCellKey) {
-          removeCardIdFromCell(draggedCardInfo.sourceCellKey, draggedCardInfo.cardId, true);
+        if (draggedCardInfo && draggedCardInfo.sourceZoneKey) {
+          removeCardIdFromZone(draggedCardInfo.sourceZoneKey, draggedCardInfo.cardId, true);
         }
       });
     }
   }
 
-  // --- 19. TOAST NOTIFICATIONS ---
+  // --- 20. TOAST NOTIFICATIONS ---
   function showToast(message, arg2 = 3600, arg3 = false, arg4 = 'info') {
     let duration = 3600;
     let showUndo = false;
@@ -1664,7 +1956,7 @@
     }
 
     toastContainerEl.appendChild(toast);
-    toast.classList.add('show');
+    requestAnimationFrame(() => toast.classList.add('show'));
 
     const timer = setTimeout(() => {
       dismissToast(toast);
@@ -1674,7 +1966,7 @@
       clearTimeout(timer);
       if (el && el.parentNode) {
         el.classList.remove('show');
-        setTimeout(() => el.remove(), 220);
+        setTimeout(() => el.remove(), 240);
       }
     }
   }

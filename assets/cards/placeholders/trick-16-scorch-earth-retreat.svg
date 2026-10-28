@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg-grad-trick-16-scorch-earth-retreat" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0e14" />
+      <stop offset="50%" stop-color="#141a24" />
+      <stop offset="100%" stop-color="#900" stop-opacity="0.6" />
+    </linearGradient>
+    <radialGradient id="glow-trick-16-scorch-earth-retreat" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#ff3d00" stop-opacity="0.35" />
+      <stop offset="70%" stop-color="#ff3d00" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#ff3d00" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-trick-16-scorch-earth-retreat" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="400" fill="url(#bg-grad-trick-16-scorch-earth-retreat)" />
+  <rect width="400" height="400" fill="url(#grid-trick-16-scorch-earth-retreat)" />
+
+  <!-- Tactical Glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#glow-trick-16-scorch-earth-retreat)" />
+
+  <!-- Outer HUD Ring & Crossbars -->
+  <circle cx="200" cy="200" r="145" fill="none" stroke="#ff3d00" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="8 6"/>
+  <circle cx="200" cy="200" r="125" fill="none" stroke="#ff3d00" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="200" y1="20" x2="200" y2="45" stroke="#ff3d00" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="200" y1="355" x2="200" y2="380" stroke="#ff3d00" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="20" y1="200" x2="45" y2="200" stroke="#ff3d00" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="355" y1="200" x2="380" y2="200" stroke="#ff3d00" stroke-width="2" stroke-opacity="0.6"/>
+
+  <!-- Icon Graphic -->
+  <g transform="translate(0, 30)">
+    
+      <!-- Railway Track -->
+      <line x1="100" y1="210" x2="300" y2="210" stroke="#ff3d00" stroke-width="4"/>
+      <line x1="130" y1="195" x2="130" y2="225" stroke="#ff3d00" stroke-width="4"/>
+      <line x1="170" y1="195" x2="170" y2="225" stroke="#ff3d00" stroke-width="4"/>
+      <line x1="230" y1="195" x2="230" y2="225" stroke="#ff3d00" stroke-width="4"/>
+      <line x1="270" y1="195" x2="270" y2="225" stroke="#ff3d00" stroke-width="4"/>
+      <!-- Detonated Center Gap -->
+      <polygon points="190,205 200,195 210,215 200,225" fill="#0f172a"/>
+      <!-- Explosion Flames -->
+      <path d="M 170 190 Q 200 90 200 130 Q 220 80 230 190 Z" fill="#ff3d00"/>
+      <path d="M 185 190 Q 200 120 205 150 Q 215 110 220 190 Z" fill="#ffea00"/>
+    
+  </g>
+
+  </svg>

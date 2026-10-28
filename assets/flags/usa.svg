@@ -1,1 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1235" height="650" viewBox="0 0 36.1 19"><defs><g id="b"><use xlink:href="#a" x=".902" y=".85"/><use xlink:href="#a" x="2.708" y=".85"/><use xlink:href="#a" x="4.513" y=".85"/><use xlink:href="#a" x="6.317" y=".85"/><use xlink:href="#a" x="8.123" y=".85"/><use xlink:href="#a" x="9.928" y=".85"/><use xlink:href="#a" x="11.732" y=".85"/><use xlink:href="#a" x="13.537" y=".85"/></g><g id="c"><use xlink:href="#b"/><use xlink:href="#b" y="1.705"/><use xlink:href="#b" y="3.41"/><use xlink:href="#b" y="5.115"/><use xlink:href="#b" y="6.82"/><use xlink:href="#b" y="8.525"/></g><path id="a" transform="scale(.58515)" fill="#fff" d="M0-1 .588.809-.952-.309H.952L-.588.809z"/></defs><path fill="#bf0a30" d="M0 0h36.1v19H0z"/><path stroke="#FFF" stroke-width="1.462" d="M0 2.192h36.1M0 5.115h36.1M0 8.038h36.1M0 10.961h36.1M0 13.884h36.1M0 16.807h36.1"/><path fill="#00205B" d="M0 0h14.44v10.23H0z"/><use xlink:href="#c"/></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1900 1000" width="1900" height="1000">
+  <defs>
+    <polygon id="star48" fill="#ffffff" points="0,-22 6.79,-6.47 23.41,-6.47 9.92,3.34 15.08,18.73 0,9.24 -15.08,18.73 -9.92,3.34 -23.41,-6.47 -6.79,-6.47"/>
+    <g id="star-row">
+      <use xlink:href="#star48" x="47.5"/>
+      <use xlink:href="#star48" x="142.5"/>
+      <use xlink:href="#star48" x="237.5"/>
+      <use xlink:href="#star48" x="332.5"/>
+      <use xlink:href="#star48" x="427.5"/>
+      <use xlink:href="#star48" x="522.5"/>
+      <use xlink:href="#star48" x="617.5"/>
+      <use xlink:href="#star48" x="712.5"/>
+    </g>
+  </defs>
+  <!-- 13 Stripes -->
+  <rect width="1900" height="1000" fill="#b22234"/>
+  <rect y="76.92" width="1900" height="76.92" fill="#ffffff"/>
+  <rect y="230.77" width="1900" height="76.92" fill="#ffffff"/>
+  <rect y="384.62" width="1900" height="76.92" fill="#ffffff"/>
+  <rect y="538.46" width="1900" height="76.92" fill="#ffffff"/>
+  <rect y="692.31" width="1900" height="76.92" fill="#ffffff"/>
+  <rect y="846.15" width="1900" height="76.92" fill="#ffffff"/>
+  <!-- Canton (Blue Field) -->
+  <rect width="760" height="538.46" fill="#3c3b6e"/>
+  <!-- 48 Stars in 6 Rows of 8 -->
+  <g>
+    <use xlink:href="#star-row" y="44.87"/>
+    <use xlink:href="#star-row" y="134.61"/>
+    <use xlink:href="#star-row" y="224.36"/>
+    <use xlink:href="#star-row" y="314.10"/>
+    <use xlink:href="#star-row" y="403.85"/>
+    <use xlink:href="#star-row" y="493.59"/>
+  </g>
+</svg>

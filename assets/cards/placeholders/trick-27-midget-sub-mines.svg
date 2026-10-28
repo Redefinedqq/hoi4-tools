@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg-grad-trick-27-midget-sub-mines" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0e14" />
+      <stop offset="50%" stop-color="#141a24" />
+      <stop offset="100%" stop-color="#4a0007" stop-opacity="0.6" />
+    </linearGradient>
+    <radialGradient id="glow-trick-27-midget-sub-mines" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#ff1744" stop-opacity="0.35" />
+      <stop offset="70%" stop-color="#ff1744" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#ff1744" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-trick-27-midget-sub-mines" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="400" fill="url(#bg-grad-trick-27-midget-sub-mines)" />
+  <rect width="400" height="400" fill="url(#grid-trick-27-midget-sub-mines)" />
+
+  <!-- Tactical Glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#glow-trick-27-midget-sub-mines)" />
+
+  <!-- Outer HUD Ring & Crossbars -->
+  <circle cx="200" cy="200" r="145" fill="none" stroke="#ff1744" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="8 6"/>
+  <circle cx="200" cy="200" r="125" fill="none" stroke="#ff1744" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="200" y1="20" x2="200" y2="45" stroke="#ff1744" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="200" y1="355" x2="200" y2="380" stroke="#ff1744" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="20" y1="200" x2="45" y2="200" stroke="#ff1744" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="355" y1="200" x2="380" y2="200" stroke="#ff1744" stroke-width="2" stroke-opacity="0.6"/>
+
+  <!-- Icon Graphic -->
+  <g transform="translate(0, 30)">
+    
+      <!-- Naval Mine with Spikes -->
+      <circle cx="200" cy="150" r="45" fill="#1e293b" stroke="#ff1744" stroke-width="4"/>
+      <!-- Spikes / Horns -->
+      <line x1="200" y1="105" x2="200" y2="85" stroke="#ff1744" stroke-width="6" stroke-linecap="round"/>
+      <line x1="200" y1="195" x2="200" y2="215" stroke="#ff1744" stroke-width="6" stroke-linecap="round"/>
+      <line x1="155" y1="150" x2="135" y2="150" stroke="#ff1744" stroke-width="6" stroke-linecap="round"/>
+      <line x1="245" y1="150" x2="265" y2="150" stroke="#ff1744" stroke-width="6" stroke-linecap="round"/>
+      <line x1="168" y1="118" x2="154" y2="104" stroke="#ff1744" stroke-width="6" stroke-linecap="round"/>
+      <line x1="232" y1="182" x2="246" y2="196" stroke="#ff1744" stroke-width="6" stroke-linecap="round"/>
+      <line x1="168" y1="182" x2="154" y2="196" stroke="#ff1744" stroke-width="6" stroke-linecap="round"/>
+      <line x1="232" y1="118" x2="246" y2="104" stroke="#ff1744" stroke-width="6" stroke-linecap="round"/>
+      <!-- Warning Skull / Symbol in Center -->
+      <circle cx="200" cy="150" r="14" fill="#ff1744"/>
+    
+  </g>
+
+  </svg>

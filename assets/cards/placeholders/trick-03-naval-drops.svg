@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg-grad-trick-03-naval-drops" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0e14" />
+      <stop offset="50%" stop-color="#141a24" />
+      <stop offset="100%" stop-color="#005b9f" stop-opacity="0.6" />
+    </linearGradient>
+    <radialGradient id="glow-trick-03-naval-drops" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.35" />
+      <stop offset="70%" stop-color="#00e5ff" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#00e5ff" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-trick-03-naval-drops" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="400" fill="url(#bg-grad-trick-03-naval-drops)" />
+  <rect width="400" height="400" fill="url(#grid-trick-03-naval-drops)" />
+
+  <!-- Tactical Glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#glow-trick-03-naval-drops)" />
+
+  <!-- Outer HUD Ring & Crossbars -->
+  <circle cx="200" cy="200" r="145" fill="none" stroke="#00e5ff" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="8 6"/>
+  <circle cx="200" cy="200" r="125" fill="none" stroke="#00e5ff" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="200" y1="20" x2="200" y2="45" stroke="#00e5ff" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="200" y1="355" x2="200" y2="380" stroke="#00e5ff" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="20" y1="200" x2="45" y2="200" stroke="#00e5ff" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="355" y1="200" x2="380" y2="200" stroke="#00e5ff" stroke-width="2" stroke-opacity="0.6"/>
+
+  <!-- Icon Graphic -->
+  <g transform="translate(0, 30)">
+    
+      <!-- Wave & Landing Craft -->
+      <path d="M 40 220 C 80 200, 120 230, 160 210 C 200 190, 240 230, 280 210 C 310 195, 340 215, 360 210 L 360 270 L 40 270 Z" fill="#005b9f" opacity="0.6"/>
+      <path d="M 30 235 C 70 215, 110 245, 150 225 C 190 205, 230 245, 270 225 C 310 205, 350 235, 370 225 L 370 270 L 30 270 Z" fill="#00e5ff" opacity="0.4"/>
+      <!-- Landing Craft -->
+      <polygon points="100,190 130,130 270,130 300,190 260,200 140,200" fill="#1e293b" stroke="#00e5ff" stroke-width="4"/>
+      <line x1="130" y1="130" x2="270" y2="130" stroke="#00e5ff" stroke-width="3"/>
+      <!-- Arrow Landing -->
+      <path d="M 200 60 L 200 120 M 175 100 L 200 125 L 225 100" fill="none" stroke="#00e5ff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    
+  </g>
+
+  </svg>
