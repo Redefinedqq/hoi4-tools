@@ -317,6 +317,11 @@ body::before {
   line-height: 1;
   box-sizing: border-box;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  vertical-align: middle;
 }
 
 .btn-back {
@@ -330,22 +335,21 @@ body::before {
   line-height: 1;
   box-sizing: border-box;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  vertical-align: middle;
 }
 
-.btn-back i,
-.btn-back svg {
-  position: relative;
-  top: 1px;
-}
-
-.header-actions .btn i,
-.header-actions .btn svg {
-  position: relative;
-  top: 1px;
-}
-
-/* Global Font Awesome icon centering and currentColor inheritance */
+/* Strict font awesome icon centering and vertical alignment (Fix for 2K / 1440p) */
 .btn i,
+.btn svg,
+button i.fa-solid,
+.header-actions .btn i,
+.header-actions .btn svg,
+.btn-back i,
+.btn-back svg,
 .toast-btn i,
 .welcome-card-btn i,
 .tray-scale-title i,
@@ -353,10 +357,20 @@ body::before {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  vertical-align: middle;
+  line-height: 0;
+  vertical-align: 0;
+  margin: 0;
   color: currentColor;
-  line-height: 1;
   flex-shrink: 0;
+  position: static;
+}
+
+.btn span,
+.btn-back span,
+.censor-segment-title {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
 }
 
 .btn {
@@ -370,6 +384,8 @@ body::before {
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.4px;
+  line-height: 1;
+  vertical-align: middle;
   cursor: pointer;
   border: 1px solid var(--md-sys-color-outline-variant);
   background-color: var(--md-sys-color-surface-container);
@@ -630,14 +646,16 @@ body::before {
   width: 100%;
   max-width: 100%;
   font-family: var(--font-accent);
-  font-size: clamp(8px, 0.75vw, 10px);
-  line-height: 1.1;
+  font-size: clamp(7.5px, 0.72vw, 9.5px);
+  line-height: 1.15;
   font-weight: 800;
   letter-spacing: 0.2px;
   text-transform: uppercase;
-  word-break: break-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  word-break: normal;
   overflow-wrap: break-word;
-  hyphens: none;
   padding: 0;
   margin: 0;
 }
@@ -1045,6 +1063,32 @@ body::before {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
 }
 
+/* Card Description / Info Indicator */
+.card-desc-indicator {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: calc(11px * var(--tray-scale, 1));
+  color: rgba(255, 255, 255, 0.7);
+  pointer-events: none;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
+  transition: color var(--m3-duration) var(--m3-timing);
+}
+
+.mistake-card:hover .card-desc-indicator {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.cell-sub-zone .card-desc-indicator,
+.matrix-cell .card-desc-indicator {
+  display: none !important;
+}
+
 .card-placed-badge {
   position: absolute;
   inset: 0;
@@ -1176,6 +1220,8 @@ body::before {
   word-break: normal;
   overflow-wrap: break-word;
   hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
 }
 
 .card-remove-btn {
@@ -1363,8 +1409,6 @@ body.card-selection-active .matrix-cell:hover {
 .tray-scale-title i {
   color: #39ff14;
   font-size: 0.85rem;
-  position: relative;
-  top: 1px;
 }
 
 .tray-scale-btn {
@@ -1750,52 +1794,6 @@ body.card-selection-active .matrix-cell:hover {
   text-align: center;
 }
 
-.welcome-card-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin: -4px auto 8px;
-  padding: 6px 16px;
-  border-radius: 9999px;
-  font-family: var(--font-accent);
-  font-size: 0.85rem;
-  letter-spacing: 0.5px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  color: #e3e3e8;
-  position: relative;
-  z-index: 2;
-  transition: all var(--m3-duration) var(--m3-timing);
-  user-select: none;
-}
-
-#select-trikiwi-card .welcome-card-badge {
-  border-color: rgba(255, 82, 82, 0.35);
-  background: rgba(255, 82, 82, 0.12);
-  color: #ff8a80;
-}
-
-#select-trikiwi-card:hover .welcome-card-badge {
-  border-color: rgba(255, 82, 82, 0.6);
-  background: rgba(255, 82, 82, 0.22);
-  color: #ffffff;
-  box-shadow: 0 0 16px rgba(255, 82, 82, 0.35);
-}
-
-#select-atom-card .welcome-card-badge {
-  border-color: rgba(0, 206, 201, 0.35);
-  background: rgba(0, 206, 201, 0.12);
-  color: #80deea;
-}
-
-#select-atom-card:hover .welcome-card-badge {
-  border-color: rgba(0, 206, 201, 0.6);
-  background: rgba(0, 206, 201, 0.22);
-  color: #ffffff;
-  box-shadow: 0 0 16px rgba(0, 206, 201, 0.35);
-}
-
 .welcome-card-previews {
   display: flex;
   align-items: center;
@@ -1803,8 +1801,75 @@ body.card-selection-active .matrix-cell:hover {
   gap: 18px;
   position: relative;
   z-index: 2;
-  padding: 6px 0;
+  padding: 8px 0;
   margin-bottom: 6px;
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.welcome-card-badge {
+  position: absolute;
+  top: -12px;
+  right: -2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-family: var(--font-accent);
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.85);
+  z-index: 10;
+  pointer-events: none;
+  user-select: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  transition: all 180ms ease;
+}
+
+.welcome-card-badge i {
+  font-size: 10px;
+  line-height: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
+.welcome-card-badge span {
+  display: inline-block;
+  line-height: 1;
+}
+
+#select-trikiwi-card .welcome-card-badge {
+  border-color: rgba(255, 82, 82, 0.35);
+  color: #ffcdd2;
+}
+
+#select-trikiwi-card:hover .welcome-card-badge {
+  border-color: rgba(255, 82, 82, 0.65);
+  background: rgba(255, 82, 82, 0.2);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(255, 82, 82, 0.4);
+}
+
+#select-atom-card .welcome-card-badge {
+  border-color: rgba(0, 206, 201, 0.35);
+  color: #b2ebf2;
+}
+
+#select-atom-card:hover .welcome-card-badge {
+  border-color: rgba(0, 206, 201, 0.65);
+  background: rgba(0, 206, 201, 0.2);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(0, 206, 201, 0.4);
 }
 
 .preview-thumb {

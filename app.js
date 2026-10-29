@@ -217,12 +217,12 @@
       axisH: 'НАПРАВЛЕНИЯ',
       axisV: 'КРИТИЧНОСТЬ',
       tiers: [
-        { id: 'meta', name: 'ПОЛОЖИТЕЛЬНО', className: 'tier-meta', color: '#2e7d32', glow: 'rgba(46, 125, 50, 0.45)', bg: 'rgba(46, 125, 50, 0.15)' },
+        { id: 'meta', name: 'ПО&shy;ЛО&shy;ЖИ&shy;ТЕЛЬ&shy;НО', className: 'tier-meta', color: '#2e7d32', glow: 'rgba(46, 125, 50, 0.45)', bg: 'rgba(46, 125, 50, 0.15)' },
         { id: 'whatever', name: 'БЕЗ РАЗНИЦЫ', className: 'tier-whatever', color: '#8bc34a', glow: 'rgba(139, 195, 74, 0.45)', bg: 'rgba(139, 195, 74, 0.15)' },
-        { id: 'noob', name: 'НЕПРИЯТНЕНЬКО', className: 'tier-noob', color: '#fbc02d', glow: 'rgba(251, 192, 45, 0.45)', bg: 'rgba(251, 192, 45, 0.15)' },
+        { id: 'noob', name: 'НЕ&shy;ПРИ&shy;ЯТ&shy;НЕНЬ&shy;КО', className: 'tier-noob', color: '#fbc02d', glow: 'rgba(251, 192, 45, 0.45)', bg: 'rgba(251, 192, 45, 0.15)' },
         { id: 'serious', name: 'СЕРЬЁЗНАЯ ОШИБКА', className: 'tier-serious', color: '#f57c00', glow: 'rgba(245, 124, 0, 0.45)', bg: 'rgba(245, 124, 0, 0.15)' },
         { id: 'ruin', name: 'РУИНА', className: 'tier-ruin', color: '#c62828', glow: 'rgba(198, 40, 40, 0.45)', bg: 'rgba(198, 40, 40, 0.15)' },
-        { id: 'situational', name: 'СИТУАТИВНО', className: 'tier-situational', color: '#f5f5f7', glow: 'rgba(245, 245, 247, 0.45)', bg: 'rgba(245, 245, 247, 0.15)' }
+        { id: 'situational', name: 'СИ&shy;ТУ&shy;А&shy;ТИВ&shy;НО', className: 'tier-situational', color: '#f5f5f7', glow: 'rgba(245, 245, 247, 0.45)', bg: 'rgba(245, 245, 247, 0.15)' }
       ],
       cards: MISTAKES
     },
@@ -238,8 +238,8 @@
         { id: 'must_have', name: 'МАСТ-ХЭВ', className: 'tier-meta', color: '#2e7d32', glow: 'rgba(46, 125, 50, 0.45)', bg: 'rgba(46, 125, 50, 0.15)' },
         { id: 'strong', name: 'ОЧЕНЬ СИЛЬНО', className: 'tier-whatever', color: '#8bc34a', glow: 'rgba(139, 195, 74, 0.45)', bg: 'rgba(139, 195, 74, 0.15)' },
         { id: 'useful', name: 'ПОЛЕЗНО', className: 'tier-noob', color: '#fbc02d', glow: 'rgba(251, 192, 45, 0.45)', bg: 'rgba(251, 192, 45, 0.15)' },
-        { id: 'situational', name: 'СИТУАТИВНО', className: 'tier-situational', color: '#f5f5f7', glow: 'rgba(245, 245, 247, 0.45)', bg: 'rgba(245, 245, 247, 0.15)' },
-        { id: 'weak', name: 'СОМНИТЕЛЬНО', className: 'tier-serious', color: '#f57c00', glow: 'rgba(245, 124, 0, 0.45)', bg: 'rgba(245, 124, 0, 0.15)' },
+        { id: 'situational', name: 'СИ&shy;ТУ&shy;А&shy;ТИВ&shy;НО', className: 'tier-situational', color: '#f5f5f7', glow: 'rgba(245, 245, 247, 0.45)', bg: 'rgba(245, 245, 247, 0.15)' },
+        { id: 'weak', name: 'СОМ&shy;НИ&shy;ТЕЛЬ&shy;НО', className: 'tier-serious', color: '#f57c00', glow: 'rgba(245, 124, 0, 0.45)', bg: 'rgba(245, 124, 0, 0.15)' },
         { id: 'useless', name: 'Ммм... Хуета', className: 'tier-ruin', color: '#c62828', glow: 'rgba(198, 40, 40, 0.45)', bg: 'rgba(198, 40, 40, 0.15)' }
       ],
       cards: MECHANICS
@@ -474,12 +474,12 @@
 
     if (trikiwiBadge && TIER_LISTS.mistakes) {
       const count = TIER_LISTS.mistakes.cards.length;
-      trikiwiBadge.innerHTML = `<i class="fa-solid fa-layer-group"></i><span>${getCardCountLabel(count)}</span>`;
+      trikiwiBadge.innerHTML = `<i class="fa-solid fa-layer-group"></i><span>${count}</span>`;
     }
 
     if (atomBadge && TIER_LISTS.features) {
       const count = TIER_LISTS.features.cards.length;
-      atomBadge.innerHTML = `<i class="fa-solid fa-layer-group"></i><span>${getCardCountLabel(count)}</span>`;
+      atomBadge.innerHTML = `<i class="fa-solid fa-layer-group"></i><span>${count}</span>`;
     }
   }
 
@@ -1125,10 +1125,13 @@
       tooltipHtml = `<div class="card-tooltip card-tooltip-desc-only"><small class="card-tooltip-desc">${cardData.desc}</small></div>`;
     }
 
+    const hasDesc = Boolean(cardData.desc);
+
     card.innerHTML = `
       <div class="card-art-box">
         <img class="card-img" src="${cardData.img}" alt="${cardData.title}" loading="lazy" decoding="async" />
         ${isLocked ? '<div class="card-lock-badge" title="Временно недоступно"><i class="fa-solid fa-lock"></i></div>' : ''}
+        ${hasDesc && !isLocked ? '<div class="card-desc-indicator" title="Есть описание"><i class="fa-solid fa-circle-info"></i></div>' : ''}
       </div>
       <div class="${captionClass}">${cardData.title}</div>
       ${tooltipHtml}
