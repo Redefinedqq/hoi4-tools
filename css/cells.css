@@ -1,0 +1,212 @@
+/* ==========================================================================
+   DYNAMIC THREE-ZONE CELL CONTAINER (MP / ALL / SP) & DRAG-AND-DROP
+   ========================================================================== */
+.matrix-cell {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 98px;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3px;
+  padding: 3px;
+  background-color: rgba(20, 24, 30, 0.45);
+  border-radius: var(--m3-radius-cell);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  overflow: visible;
+  transition: background-color var(--m3-duration) var(--m3-timing),
+              border-color var(--m3-duration) var(--m3-timing);
+}
+
+.matrix-cell:hover {
+  background-color: rgba(28, 33, 42, 0.60);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+/* Sub-Zones inside each cell: MP (Left), ALL (Center), SP (Right) */
+.cell-sub-zone {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 90px;
+  height: 100%;
+  padding: 3px 2px;
+  border-radius: 8px;
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+  background-color: rgba(255, 255, 255, 0.02);
+  transition: all var(--m3-duration) var(--m3-timing);
+  cursor: pointer;
+  user-select: none;
+}
+
+.cell-sub-zone:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+/* Zone Specific Subtle Accents */
+.cell-sub-zone.cell-zone-mp {
+  border-color: rgba(168, 199, 250, 0.15);
+  background-color: rgba(168, 199, 250, 0.02);
+}
+.cell-sub-zone.cell-zone-mp:hover {
+  background-color: rgba(168, 199, 250, 0.07);
+  border-color: rgba(168, 199, 250, 0.35);
+}
+
+.cell-sub-zone.cell-zone-all {
+  border-color: rgba(255, 255, 255, 0.12);
+  background-color: rgba(255, 255, 255, 0.025);
+}
+.cell-sub-zone.cell-zone-all:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.30);
+}
+
+.cell-sub-zone.cell-zone-sp {
+  border-color: rgba(251, 192, 45, 0.15);
+  background-color: rgba(251, 192, 45, 0.02);
+}
+.cell-sub-zone.cell-zone-sp:hover {
+  background-color: rgba(251, 192, 45, 0.07);
+  border-color: rgba(251, 192, 45, 0.35);
+}
+
+/* Zone Badge / Indicator - Pure Centered Text */
+.zone-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-family: var(--font-accent);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--md-sys-color-on-surface-variant);
+  opacity: 0.38;
+  padding: 2px 0;
+  margin-bottom: 2px;
+  pointer-events: none;
+  text-align: center;
+  transition: opacity var(--m3-duration) var(--m3-timing),
+              color var(--m3-duration) var(--m3-timing);
+}
+
+.cell-sub-zone:hover .zone-badge {
+  opacity: 0.75;
+}
+
+.cell-sub-zone.has-cards .zone-badge {
+  opacity: 0.25;
+}
+
+.cell-sub-zone.has-cards:hover .zone-badge {
+  opacity: 0.65;
+}
+
+.cell-zone-mp .zone-badge {
+  color: #a8c7fa;
+}
+.cell-zone-all .zone-badge {
+  color: #e3e3e8;
+}
+.cell-zone-sp .zone-badge {
+  color: #fbc02d;
+}
+
+.zone-label {
+  font-size: 0.58rem;
+  line-height: 1;
+  text-align: center;
+  user-select: none;
+}
+
+/* Dynamic Drag Over State - Matches Tier Criticality Color on the active sub-zone */
+.cell-sub-zone.drag-over {
+  border-width: 2px !important;
+  border-style: solid !important;
+  border-color: var(--cell-drag-color, var(--md-sys-color-primary)) !important;
+  box-shadow: 0 0 16px var(--cell-drag-glow, rgba(168, 199, 250, 0.55)) !important;
+  background-color: var(--cell-drag-bg, rgba(168, 199, 250, 0.20)) !important;
+  transform: scale(1.03);
+  z-index: 5;
+}
+
+.cell-sub-zone.drag-over .zone-badge {
+  opacity: 1 !important;
+  transform: scale(1.1);
+  color: #ffffff !important;
+  font-weight: 800;
+}
+
+/* Explicit fallback selectors for dynamic tier colors */
+.cell-sub-zone[data-tier="ruin"].drag-over,
+.cell-sub-zone[data-tier="useless"].drag-over {
+  --cell-drag-color: #c62828;
+  --cell-drag-glow: rgba(198, 40, 40, 0.65);
+  --cell-drag-bg: rgba(198, 40, 40, 0.22);
+}
+
+.cell-sub-zone[data-tier="serious"].drag-over,
+.cell-sub-zone[data-tier="weak"].drag-over {
+  --cell-drag-color: #f57c00;
+  --cell-drag-glow: rgba(245, 124, 0, 0.65);
+  --cell-drag-bg: rgba(245, 124, 0, 0.22);
+}
+
+.cell-sub-zone[data-tier="noob"].drag-over,
+.cell-sub-zone[data-tier="useful"].drag-over {
+  --cell-drag-color: #fbc02d;
+  --cell-drag-glow: rgba(251, 192, 45, 0.65);
+  --cell-drag-bg: rgba(251, 192, 45, 0.22);
+}
+
+.cell-sub-zone[data-tier="whatever"].drag-over,
+.cell-sub-zone[data-tier="strong"].drag-over {
+  --cell-drag-color: #8bc34a;
+  --cell-drag-glow: rgba(139, 195, 74, 0.65);
+  --cell-drag-bg: rgba(139, 195, 74, 0.22);
+}
+
+.cell-sub-zone[data-tier="meta"].drag-over,
+.cell-sub-zone[data-tier="must_have"].drag-over {
+  --cell-drag-color: #2e7d32;
+  --cell-drag-glow: rgba(46, 125, 50, 0.65);
+  --cell-drag-bg: rgba(46, 125, 50, 0.22);
+}
+
+.cell-sub-zone[data-tier="situational"].drag-over {
+  --cell-drag-color: #f5f5f7;
+  --cell-drag-glow: rgba(245, 245, 247, 0.65);
+  --cell-drag-bg: rgba(245, 245, 247, 0.22);
+}
+
+/* Container for cards inside a sub-zone */
+.zone-cards {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  flex: 1;
+}
+
+.zone-empty-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  min-height: 48px;
+  color: rgba(255, 255, 255, 0.18);
+  font-size: 0.8rem;
+  pointer-events: none;
+  transition: color var(--m3-duration) var(--m3-timing);
+}
+
+.cell-sub-zone:hover .zone-empty-hint {
+  color: rgba(255, 255, 255, 0.45);
+}

@@ -17,6 +17,14 @@ fs.mkdirSync(path.join(dist, '.vercel'), { recursive: true });
   }
 });
 
+// Копирование модулей JS и директорий стилей (js/, css/)
+['js', 'css'].forEach(dir => {
+  const src = path.join(__dirname, dir);
+  if (fs.existsSync(src)) {
+    fs.cpSync(src, path.join(dist, dir), { recursive: true });
+  }
+});
+
 // Копирование ассетов
 if (fs.existsSync(path.join(__dirname, 'assets'))) {
   fs.cpSync(path.join(__dirname, 'assets'), path.join(dist, 'assets'), {

@@ -1,0 +1,109 @@
+/* Responsive */
+@media (max-width: 1024px) {
+  .app-wrapper {
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 12px;
+    padding-bottom: calc(var(--deck-height, 150px) + 60px);
+  }
+  .brand-title {
+    font-size: 1.15rem;
+  }
+  .developer-tag {
+    font-size: calc(1.15rem + 2px);
+    margin-left: 14px;
+  }
+  .welcome-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .header-center {
+    order: 3;
+    width: 100%;
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-wrapper {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 8px;
+    padding-bottom: calc(var(--deck-height, 150px) + 60px);
+    gap: 10px;
+  }
+  .site-header {
+    padding: 8px 12px;
+    gap: 8px;
+    border-radius: 12px;
+  }
+  .mode-segment-btn {
+    padding: 6px 12px;
+    font-size: 0.76rem;
+    gap: 6px;
+  }
+  .brand-title {
+    font-size: 1.0rem;
+    white-space: normal;
+  }
+  .developer-tag {
+    font-size: calc(1.0rem + 2px);
+    margin-left: 10px;
+  }
+  .header-actions {
+    gap: 4px;
+  }
+  .btn {
+    padding: 6px 10px;
+    font-size: 0.78rem;
+    gap: 4px;
+  }
+  .matrix-card-wrapper {
+    padding: 8px;
+    border-radius: 12px;
+  }
+  .bank-cards-strip-container {
+    padding: 6px 10px 8px;
+  }
+  .bank-cards-strip {
+    gap: 8px;
+  }
+  .bank-cards-strip .mistake-card {
+    width: 76px;
+    height: 92px;
+    min-width: 76px;
+    min-height: 92px;
+  }
+  .bank-cards-strip .card-caption {
+    font-size: calc(6.8px * var(--tray-scale, 1));
+    height: calc(26px * var(--tray-scale, 1));
+    min-height: calc(26px * var(--tray-scale, 1));
+    max-height: calc(26px * var(--tray-scale, 1));
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .toast-container {
+    top: 12px;
+    right: 12px;
+    gap: 8px;
+    max-width: calc(100vw - 24px);
+  }
+  .toast {
+    max-width: 100%;
+    padding: 8px 12px;
+    font-size: 0.80rem;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  /* Touch devices - ensure action buttons are visible */
+  .mistake-card .card-remove-btn {
+    opacity: 0.85;
+  }
+  .mistake-card .card-zoom-btn {
+    opacity: 0.85;
+  }
+}

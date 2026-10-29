@@ -1,0 +1,277 @@
+/* ==========================================================================
+   FULLSCREEN WELCOME SCREEN / TIER-LIST SELECTOR
+   ========================================================================== */
+.welcome-screen-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: radial-gradient(circle at 50% 20%, #1a1e28 0%, #0d0f14 85%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 240ms cubic-bezier(0.2, 0, 0, 1),
+              visibility 240ms cubic-bezier(0.2, 0, 0, 1);
+  overflow-y: auto;
+}
+
+.welcome-screen-overlay.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.welcome-container {
+  max-width: 1680px;
+  width: 92vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+  margin: auto;
+}
+
+.welcome-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.welcome-title {
+  font-family: var(--font-accent);
+  font-size: clamp(2.4rem, 4.2vw, 4.2rem);
+  letter-spacing: 2px;
+  color: #ffffff;
+  text-shadow: 0 6px 30px rgba(0, 0, 0, 0.75);
+  line-height: 1.15;
+}
+
+.welcome-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(460px, 1fr));
+  gap: 40px;
+  width: 100%;
+  max-width: 1600px;
+}
+
+.welcome-card {
+  position: relative;
+  background: #141720;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 28px;
+  padding: 38px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  cursor: pointer;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.welcome-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
+}
+
+#select-trikiwi-card:hover {
+  border-color: #ff5252;
+}
+
+#select-atom-card:hover {
+  border-color: #00cec9;
+}
+
+.welcome-card-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  transition: opacity 180ms ease;
+}
+
+.welcome-card:hover .welcome-card-glow {
+  opacity: 0.32;
+}
+
+.welcome-card-glow-red {
+  background: radial-gradient(circle at 80% 20%, #ff5252 0%, transparent 60%);
+}
+
+.welcome-card-glow-cyan {
+  background: radial-gradient(circle at 80% 20%, #00cec9 0%, transparent 60%);
+}
+
+.welcome-card-title {
+  font-family: var(--font-accent);
+  font-size: clamp(1.8rem, 2.4vw, 2.6rem);
+  color: #ffffff;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.welcome-card-previews {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  position: relative;
+  z-index: 2;
+  padding: 8px 0;
+  margin-bottom: 6px;
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.welcome-card-badge {
+  position: absolute;
+  top: -12px;
+  right: -2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-family: var(--font-accent);
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.85);
+  z-index: 10;
+  pointer-events: none;
+  user-select: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  transition: all 180ms ease;
+}
+
+.welcome-card-badge i {
+  font-size: 10px;
+  line-height: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
+.welcome-card-badge span {
+  display: inline-block;
+  line-height: 1;
+}
+
+#select-trikiwi-card .welcome-card-badge {
+  border-color: rgba(255, 82, 82, 0.35);
+  color: #ffcdd2;
+}
+
+#select-trikiwi-card:hover .welcome-card-badge {
+  border-color: rgba(255, 82, 82, 0.65);
+  background: rgba(255, 82, 82, 0.2);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(255, 82, 82, 0.4);
+}
+
+#select-atom-card .welcome-card-badge {
+  border-color: rgba(0, 206, 201, 0.35);
+  color: #b2ebf2;
+}
+
+#select-atom-card:hover .welcome-card-badge {
+  border-color: rgba(0, 206, 201, 0.65);
+  background: rgba(0, 206, 201, 0.2);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(0, 206, 201, 0.4);
+}
+
+.preview-thumb {
+  width: 92px;
+  height: 92px;
+  min-width: 92px;
+  min-height: 92px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0f1116;
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+  flex-shrink: 0;
+}
+
+.preview-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.welcome-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+  color: #9aa0a6;
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 18px;
+}
+
+.welcome-card-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.welcome-card-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 18px 36px;
+  border-radius: 16px;
+  font-family: var(--font-accent);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+  border: none;
+  color: #ffffff;
+  position: relative;
+  z-index: 2;
+  transition: all 140ms ease;
+}
+
+.btn-trikiwi {
+  background: linear-gradient(135deg, #c0392b, #e74c3c);
+  box-shadow: 0 4px 16px rgba(231, 76, 60, 0.35);
+}
+
+.btn-trikiwi:hover {
+  background: linear-gradient(135deg, #d63031, #ff7675);
+  box-shadow: 0 6px 22px rgba(231, 76, 60, 0.6);
+}
+
+.btn-atom {
+  background: linear-gradient(135deg, #0984e3, #00cec9);
+  box-shadow: 0 4px 16px rgba(0, 206, 201, 0.35);
+}
+
+.btn-atom:hover {
+  background: linear-gradient(135deg, #00cec9, #81ecec);
+  box-shadow: 0 6px 22px rgba(0, 206, 201, 0.6);
+  color: #0b1e28;
+}
