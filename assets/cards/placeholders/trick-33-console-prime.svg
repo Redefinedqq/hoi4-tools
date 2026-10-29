@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg-grad-trick-33-console-prime" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0e14" />
+      <stop offset="50%" stop-color="#141a24" />
+      <stop offset="100%" stop-color="#00600f" stop-opacity="0.6" />
+    </linearGradient>
+    <radialGradient id="glow-trick-33-console-prime" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#69f0ae" stop-opacity="0.35" />
+      <stop offset="70%" stop-color="#69f0ae" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#69f0ae" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-trick-33-console-prime" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="400" fill="url(#bg-grad-trick-33-console-prime)" />
+  <rect width="400" height="400" fill="url(#grid-trick-33-console-prime)" />
+
+  <!-- Tactical Glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#glow-trick-33-console-prime)" />
+
+  <!-- Outer HUD Ring & Crossbars -->
+  <circle cx="200" cy="200" r="145" fill="none" stroke="#69f0ae" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="8 6"/>
+  <circle cx="200" cy="200" r="125" fill="none" stroke="#69f0ae" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="200" y1="20" x2="200" y2="45" stroke="#69f0ae" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="200" y1="355" x2="200" y2="380" stroke="#69f0ae" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="20" y1="200" x2="45" y2="200" stroke="#69f0ae" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="355" y1="200" x2="380" y2="200" stroke="#69f0ae" stroke-width="2" stroke-opacity="0.6"/>
+
+  <!-- Icon Graphic -->
+  <g transform="translate(0, 30)">
+    <!-- Terminal prompt box -->
+    <rect x="90" y="70" width="220" height="160" rx="10" fill="#0f172a" stroke="#69f0ae" stroke-width="3"/>
+    <rect x="90" y="70" width="220" height="28" fill="#00600f" opacity="0.6"/>
+    <circle cx="108" cy="84" r="5" fill="#ff5252"/>
+    <circle cx="124" cy="84" r="5" fill="#ffd740"/>
+    <circle cx="140" cy="84" r="5" fill="#69f0ae"/>
+    <!-- Terminal prompt >_ -->
+    <path d="M 115 125 L 135 140 L 115 155" fill="none" stroke="#69f0ae" stroke-width="4" stroke-linecap="round"/>
+    <line x1="145" y1="155" x2="175" y2="155" stroke="#69f0ae" stroke-width="4" stroke-linecap="round"/>
+    <!-- Construction crane boom -->
+    <line x1="180" y1="210" x2="270" y2="120" stroke="#ffd740" stroke-width="4"/>
+    <line x1="270" y1="120" x2="270" y2="160" stroke="#ffd740" stroke-width="3" stroke-dasharray="4 4"/>
+    <!-- Gear -->
+    <circle cx="200" cy="250" r="24" fill="#1e293b" stroke="#69f0ae" stroke-width="4"/>
+    <circle cx="200" cy="250" r="10" fill="#69f0ae"/>
+  </g>
+</svg>

@@ -68,37 +68,92 @@
   // Centralized toggle: Switch to false to instantly restore authentic game screenshots in 1 click
   const USE_AI_PLACEHOLDER_GRAPHICS = true;
 
-  // 18 Curated Mechanics and Tricks (Pure titles, with 1 single authorized description on division spam)
+  // 20 Curated Mechanics and Competitive Tricks
   const MECHANICS = [
     {
-      id: 'trick-03-naval-drops',
-      title: 'МОРСКИЕ ДРОПЫ',
-      nativeImg: 'assets/cards/card-17-no-naval-invasion.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-03-naval-drops.svg'
-    },
-    {
-      id: 'trick-04-hull-conversion',
-      title: 'КОНВЕРСИЯ',
-      nativeImg: 'assets/cards/card-05b-bad-templates-tanks.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-04-hull-conversion.svg'
-    },
-    {
-      id: 'trick-06-attache-coop',
-      title: 'АТТАШЕ',
+      id: 'trick-31-gypsy-family',
+      title: '«ЦЫГАНСКАЯ СЕМЬЯ» АЙДИМА',
       nativeImg: 'assets/cards/card-07-zero-stability.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-06-attache.svg'
-    },
-    {
-      id: 'trick-09-air-transports-supply',
-      title: 'СНАБЖЕНИЕ С ВОЗДУХА',
-      nativeImg: 'assets/cards/card-18-tanks-no-supply.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-09-air-transports-supply.svg'
+      placeholderImg: 'assets/cards/placeholders/trick-31-gypsy-family.svg'
     },
     {
       id: 'trick-10-space-marines',
-      title: 'КОСМОДЕСАНТ',
+      title: 'СПЕЙСМАРИНЫ В МУЛЬТИПЛЕЕРЕ',
       nativeImg: 'assets/cards/card-40-tanks-in-mountains.webp',
       placeholderImg: 'assets/cards/placeholders/trick-10-space-marines.svg'
+    },
+    {
+      id: 'trick-32-dnepr-defense',
+      title: 'УХОД В ОБОРОНУ ПО ДНЕПРУ',
+      nativeImg: 'assets/cards/card-31-attack-river-forts.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-32-dnepr-defense.svg'
+    },
+    {
+      id: 'trick-33-console-prime',
+      title: 'СТРОЙБАТЫ И КОНСОЛЬНЫЙ ПРАЙМ',
+      nativeImg: 'assets/cards/card-04-forgot-building.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-33-console-prime.svg'
+    },
+    {
+      id: 'trick-34-single-helmet-spam',
+      title: 'СПАМ 1-КАСОЧНЫХ ДИВИЗИЙ',
+      nativeImg: 'assets/cards/card-14-uncovered-front.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-34-single-helmet-spam.svg'
+    },
+    {
+      id: 'trick-35-trophy-conversion',
+      title: 'КОНВЕРСИЯ ТРОФЕЕВ В САУ',
+      nativeImg: 'assets/cards/card-05b-bad-templates-tanks.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-35-trophy-conversion.svg'
+    },
+    {
+      id: 'trick-27-midget-sub-mines',
+      title: 'БЛОКАДА МИНАМИ НА 1000 МИН',
+      nativeImg: 'assets/cards/card-48-english-channel-convoy.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-27-midget-sub-mines.svg'
+    },
+    {
+      id: 'trick-36-planning-reset',
+      title: 'СБРОС ПЛАНИРОВАНИЯ В МИКРО',
+      nativeImg: 'assets/cards/card-55-no-microcontrol.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-36-planning-reset.svg'
+    },
+    {
+      id: 'trick-37-cas-train-busting',
+      title: 'ВЫБИВАНИЕ ПОЕЗДОВ ЧЕРЕЗ CAS',
+      nativeImg: 'assets/cards/card-32-no-trains.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-37-cas-train-busting.svg'
+    },
+    {
+      id: 'trick-38-puppet-drain',
+      title: 'ПОДСОС РЕСУРСОВ С МАРИОНЕТОК',
+      nativeImg: 'assets/cards/card-33-no-convoys-trade.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-38-puppet-drain.svg'
+    },
+    {
+      id: 'trick-39-destroyer-swarm',
+      title: 'ТОРПЕДНЫЙ РОЙ ЭСМИНЦЕВ',
+      nativeImg: 'assets/cards/card-10-fleet-sunk-one-battle.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-39-destroyer-swarm.svg'
+    },
+    {
+      id: 'trick-40-vdv-rail-cut',
+      title: 'ВДВ НА Ж/Д РАЗВЯЗКИ',
+      nativeImg: 'assets/cards/card-45-lost-capital-paratroopers.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-40-vdv-rail-cut.svg'
+    },
+    {
+      id: 'trick-41-consumer-goods-zero',
+      title: 'РАЗГОН В 0% ТНП (ТОВАРОВ)',
+      nativeImg: 'assets/cards/card-36-early-mobilization.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-41-consumer-goods-zero.svg'
+    },
+    {
+      id: 'trick-13-fake-intel-divisions',
+      title: 'КУЧУ ДИВИЗИЙ С ОДНОГО БАТАЛЬОНА ДЛЯ НЕКОТОРЫХ МЕХАНИК',
+      desc: 'Например, для быстрого аншлюза или чтобы больше добровольческих дивизий в Испанию отправить.',
+      nativeImg: 'assets/cards/card-06-forgot-agency.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-13-fake-intel-divisions.svg'
     },
     {
       id: 'trick-11-licence-production',
@@ -107,60 +162,22 @@
       placeholderImg: 'assets/cards/placeholders/trick-11-licence-production.svg'
     },
     {
+      id: 'trick-04-hull-conversion',
+      title: 'КОНВЕРСИЯ',
+      nativeImg: 'assets/cards/card-05b-bad-templates-tanks.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-04-hull-conversion.svg'
+    },
+    {
+      id: 'trick-06-attache',
+      title: 'АТТАШЕ',
+      nativeImg: 'assets/cards/card-07-zero-stability.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-06-attache.svg'
+    },
+    {
       id: 'trick-12-manual-naval-strike',
       title: 'МОРБОБРЫ',
       nativeImg: 'assets/cards/card-11-naval-bombers-no-fleet.webp',
       placeholderImg: 'assets/cards/placeholders/trick-12-manual-naval-strike.svg'
-    },
-    {
-      id: 'trick-13-fake-intel-divisions',
-      title: 'КУЧУ ДИВИЗИЙ С ОДНОГО БАТАЛЬОНА ДЛЯ НЕКОТОРЫХ МЕХАНИК',
-      nativeImg: 'assets/cards/card-06-forgot-agency.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-13-fake-intel-divisions.svg',
-      desc: 'Например, для быстрого аншлюза или чтобы больше добровольческих дивизий в Испанию отправить.'
-    },
-    {
-      id: 'trick-16-scorch-earth-retreat',
-      title: 'ВЫЖЖЕННАЯ ЗЕМЛЯ',
-      nativeImg: 'assets/cards/card-52-fort-line-flanked.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-16-scorch-earth-retreat.svg'
-    },
-    {
-      id: 'trick-17-paradrop-victory-points',
-      title: 'ДРОП В ПОБЕДНЫЕ ОЧКИ',
-      nativeImg: 'assets/cards/card-45-lost-capital-paratroopers.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-17-paradrop-victory-points.svg'
-    },
-    {
-      id: 'trick-18-refit-cruiser-armor',
-      title: 'МОДЕРНИЗАЦИЯ ФЛОТА',
-      nativeImg: 'assets/cards/card-27-no-dockyards-repair.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-18-refit-cruiser-armor.svg'
-    },
-    {
-      id: 'trick-19-carrier-overcrowding',
-      title: 'ПЕРЕГРУЗ АВИАНОСЦЕВ',
-      nativeImg: 'assets/cards/card-05c-bad-templates-air.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-19-carrier-overcrowding.svg',
-      locked: true
-    },
-    {
-      id: 'trick-22-sub-pack-tactics',
-      title: 'ВОЛЧЬИ СТАИ НА МЕЛКОВОДЬЕ',
-      nativeImg: 'assets/cards/card-56-no-sub-repair.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-22-sub-pack-tactics.svg'
-    },
-    {
-      id: 'trick-26-railway-guns-barrage',
-      title: 'ЮЗАНИЕ ОРУДИЙ НАПОДОБИЕ ДОРЫ',
-      nativeImg: 'assets/cards/card-15-guns-deficit.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-26-railway-guns-barrage.svg'
-    },
-    {
-      id: 'trick-27-midget-sub-mines',
-      title: 'МИННЫЕ ПОЛЯ В ПРОЛИВАХ',
-      nativeImg: 'assets/cards/card-48-english-channel-convoy.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-27-midget-sub-mines.svg'
     },
     {
       id: 'trick-29-anti-air-piercing',
@@ -169,10 +186,11 @@
       placeholderImg: 'assets/cards/placeholders/trick-29-anti-air-piercing.svg'
     },
     {
-      id: 'trick-30-volunteer-air-wing',
-      title: 'ДОБРОВОЛЬЧЕСКАЯ АВИАЦИЯ',
-      nativeImg: 'assets/cards/card-19-no-focus.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-30-volunteer-air-wing.svg'
+      id: 'trick-19-carrier-overcrowding',
+      title: 'ПЕРЕГРУЗ АВИАНОСЦЕВ',
+      nativeImg: 'assets/cards/card-05c-bad-templates-air.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-19-carrier-overcrowding.svg',
+      locked: true
     }
   ];
 
@@ -469,6 +487,7 @@
     renderBankCards();
     renderAllCells();
     updateBankCardsStatus();
+    requestAnimationFrame(updateDeckOffset);
 
     hideWelcomeScreen();
 
@@ -1068,7 +1087,7 @@
     if (isLocked) {
       tooltipHtml = `<div class="card-tooltip"><span>${cardData.title}</span><small class="card-tooltip-desc" style="color:#ff8a80;">Временно заблокировано</small></div>`;
     } else if (isInCell) {
-      tooltipHtml = `<div class="card-tooltip"><span>${cardData.title}</span>${cardData.desc ? '<small class="card-tooltip-desc">' + cardData.desc + '</small>' : ''}</div><button class="card-remove-btn" title="Убрать из ячейки"><i class="fa-solid fa-xmark"></i></button>`;
+      tooltipHtml = `<button class="card-remove-btn" title="Убрать из ячейки"><i class="fa-solid fa-xmark"></i></button>${cardData.desc ? '<div class="card-tooltip card-tooltip-desc-only"><small class="card-tooltip-desc">' + cardData.desc + '</small></div>' : ''}`;
     } else if (cardData.desc) {
       tooltipHtml = `<div class="card-tooltip card-tooltip-desc-only"><small class="card-tooltip-desc">${cardData.desc}</small></div>`;
     }

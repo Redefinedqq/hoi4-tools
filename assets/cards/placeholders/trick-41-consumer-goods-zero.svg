@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg-grad-trick-41-consumer-goods-zero" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0e14" />
+      <stop offset="50%" stop-color="#141a24" />
+      <stop offset="100%" stop-color="#bf360c" stop-opacity="0.6" />
+    </linearGradient>
+    <radialGradient id="glow-trick-41-consumer-goods-zero" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#ffe57f" stop-opacity="0.35" />
+      <stop offset="70%" stop-color="#ffe57f" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#ffe57f" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-trick-41-consumer-goods-zero" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="400" fill="url(#bg-grad-trick-41-consumer-goods-zero)" />
+  <rect width="400" height="400" fill="url(#grid-trick-41-consumer-goods-zero)" />
+
+  <!-- Tactical Glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#glow-trick-41-consumer-goods-zero)" />
+
+  <!-- Outer HUD Ring & Crossbars -->
+  <circle cx="200" cy="200" r="145" fill="none" stroke="#ffe57f" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="8 6"/>
+  <circle cx="200" cy="200" r="125" fill="none" stroke="#ffe57f" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="200" y1="20" x2="200" y2="45" stroke="#ffe57f" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="200" y1="355" x2="200" y2="380" stroke="#ffe57f" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="20" y1="200" x2="45" y2="200" stroke="#ffe57f" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="355" y1="200" x2="380" y2="200" stroke="#ffe57f" stroke-width="2" stroke-opacity="0.6"/>
+
+  <!-- Icon Graphic -->
+  <g transform="translate(0, 30)">
+    <!-- Factory silhouette -->
+    <polygon points="100,250 100,160 140,190 140,160 180,190 180,140 230,140 230,250" fill="#1e293b" stroke="#ffe57f" stroke-width="3"/>
+    <!-- Chimney smoke -->
+    <path d="M 205 135 Q 215 100, 235 90" fill="none" stroke="#ffe57f" stroke-width="3" stroke-dasharray="4 4"/>
+    <!-- Big 0% Badge Overlay -->
+    <rect x="180" y="150" width="130" height="65" rx="10" fill="#bf360c" stroke="#ffe57f" stroke-width="4"/>
+    <!-- "0%" Drawn in vectors -->
+    <!-- Digit 0 -->
+    <rect x="195" y="160" width="30" height="45" rx="12" fill="none" stroke="#ffe57f" stroke-width="6"/>
+    <!-- Percent sign % -->
+    <circle cx="250" cy="168" r="5" fill="#ffe57f"/>
+    <line x1="275" y1="162" x2="242" y2="202" stroke="#ffe57f" stroke-width="4"/>
+    <circle cx="268" cy="196" r="5" fill="#ffe57f"/>
+    <!-- "ТНП" text or gear -->
+    <circle cx="150" cy="220" r="16" fill="#1e293b" stroke="#ffe57f" stroke-width="3"/>
+    <circle cx="150" cy="220" r="6" fill="#ffe57f"/>
+  </g>
+</svg>

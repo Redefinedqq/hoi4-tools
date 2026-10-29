@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg-grad-trick-38-puppet-drain" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0e14" />
+      <stop offset="50%" stop-color="#141a24" />
+      <stop offset="100%" stop-color="#7b1fa2" stop-opacity="0.6" />
+    </linearGradient>
+    <radialGradient id="glow-trick-38-puppet-drain" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#ea80fc" stop-opacity="0.35" />
+      <stop offset="70%" stop-color="#ea80fc" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#ea80fc" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-trick-38-puppet-drain" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="400" fill="url(#bg-grad-trick-38-puppet-drain)" />
+  <rect width="400" height="400" fill="url(#grid-trick-38-puppet-drain)" />
+
+  <!-- Tactical Glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#glow-trick-38-puppet-drain)" />
+
+  <!-- Outer HUD Ring & Crossbars -->
+  <circle cx="200" cy="200" r="145" fill="none" stroke="#ea80fc" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="8 6"/>
+  <circle cx="200" cy="200" r="125" fill="none" stroke="#ea80fc" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="200" y1="20" x2="200" y2="45" stroke="#ea80fc" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="200" y1="355" x2="200" y2="380" stroke="#ea80fc" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="20" y1="200" x2="45" y2="200" stroke="#ea80fc" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="355" y1="200" x2="380" y2="200" stroke="#ea80fc" stroke-width="2" stroke-opacity="0.6"/>
+
+  <!-- Icon Graphic -->
+  <g transform="translate(0, 30)">
+    <!-- Marionette Crossbar -->
+    <line x1="130" y1="70" x2="270" y2="70" stroke="#ea80fc" stroke-width="6" stroke-linecap="round"/>
+    <line x1="200" y1="45" x2="200" y2="100" stroke="#ea80fc" stroke-width="5" stroke-linecap="round"/>
+    <!-- Strings -->
+    <line x1="140" y1="70" x2="160" y2="170" stroke="#ea80fc" stroke-width="2" stroke-dasharray="6 4"/>
+    <line x1="260" y1="70" x2="240" y2="170" stroke="#ea80fc" stroke-width="2" stroke-dasharray="6 4"/>
+    <line x1="200" y1="100" x2="200" y2="170" stroke="#ea80fc" stroke-width="2" stroke-dasharray="6 4"/>
+    <!-- Small puppet doll in chains -->
+    <circle cx="200" cy="150" r="14" fill="#1e293b" stroke="#ea80fc" stroke-width="3"/>
+    <line x1="200" y1="164" x2="200" y2="205" stroke="#ea80fc" stroke-width="4"/>
+    <!-- Resource extraction siphon (Oil barrels & Steel bars) -->
+    <rect x="120" y="215" width="36" height="46" rx="4" fill="#7b1fa2" stroke="#ea80fc" stroke-width="2"/>
+    <rect x="175" y="215" width="50" height="20" rx="3" fill="#37474f" stroke="#ea80fc" stroke-width="2"/>
+    <rect x="245" y="215" width="36" height="46" rx="4" fill="#7b1fa2" stroke="#ea80fc" stroke-width="2"/>
+    <!-- Siphon arrows UP -->
+    <path d="M 138 210 L 138 180 M 130 190 L 138 178 L 146 190" stroke="#ea80fc" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M 263 210 L 263 180 M 255 190 L 263 178 L 271 190" stroke="#ea80fc" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

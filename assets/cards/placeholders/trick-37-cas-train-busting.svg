@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg-grad-trick-37-cas-train-busting" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0e14" />
+      <stop offset="50%" stop-color="#141a24" />
+      <stop offset="100%" stop-color="#b2102f" stop-opacity="0.6" />
+    </linearGradient>
+    <radialGradient id="glow-trick-37-cas-train-busting" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#ff6e40" stop-opacity="0.35" />
+      <stop offset="70%" stop-color="#ff6e40" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#ff6e40" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-trick-37-cas-train-busting" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="400" fill="url(#bg-grad-trick-37-cas-train-busting)" />
+  <rect width="400" height="400" fill="url(#grid-trick-37-cas-train-busting)" />
+
+  <!-- Tactical Glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#glow-trick-37-cas-train-busting)" />
+
+  <!-- Outer HUD Ring & Crossbars -->
+  <circle cx="200" cy="200" r="145" fill="none" stroke="#ff6e40" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="8 6"/>
+  <circle cx="200" cy="200" r="125" fill="none" stroke="#ff6e40" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="200" y1="20" x2="200" y2="45" stroke="#ff6e40" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="200" y1="355" x2="200" y2="380" stroke="#ff6e40" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="20" y1="200" x2="45" y2="200" stroke="#ff6e40" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="355" y1="200" x2="380" y2="200" stroke="#ff6e40" stroke-width="2" stroke-opacity="0.6"/>
+
+  <!-- Icon Graphic -->
+  <g transform="translate(0, 30)">
+    <!-- CAS Stuka/Il-2 diving from top-left -->
+    <g transform="translate(110, 60) rotate(35)">
+      <!-- Plane fuselage -->
+      <path d="M 0 30 L 70 30 L 80 20 L 70 10 L 0 10 Z" fill="#1e293b" stroke="#ff6e40" stroke-width="3"/>
+      <!-- Wings -->
+      <polygon points="35,-20 50,15 40,25 25,-20" fill="#b2102f" stroke="#ff6e40" stroke-width="2"/>
+      <polygon points="35,60 50,25 40,15 25,60" fill="#b2102f" stroke="#ff6e40" stroke-width="2"/>
+    </g>
+    <!-- Diving trajectory line -->
+    <line x1="160" y1="95" x2="230" y2="185" stroke="#ff6e40" stroke-width="3" stroke-dasharray="6 4"/>
+    <!-- Train on tracks -->
+    <line x1="70" y1="260" x2="330" y2="260" stroke="#90a4ae" stroke-width="4"/>
+    <line x1="70" y1="268" x2="330" y2="268" stroke="#90a4ae" stroke-width="4"/>
+    <!-- Sleepers -->
+    <line x1="100" y1="255" x2="100" y2="273" stroke="#90a4ae" stroke-width="3"/>
+    <line x1="150" y1="255" x2="150" y2="273" stroke="#90a4ae" stroke-width="3"/>
+    <line x1="200" y1="255" x2="200" y2="273" stroke="#90a4ae" stroke-width="3"/>
+    <line x1="250" y1="255" x2="250" y2="273" stroke="#90a4ae" stroke-width="3"/>
+    <line x1="300" y1="255" x2="300" y2="273" stroke="#90a4ae" stroke-width="3"/>
+    <!-- Locomotive exploding -->
+    <rect x="210" y="215" width="70" height="42" rx="4" fill="#1e293b" stroke="#ff6e40" stroke-width="3"/>
+    <polygon points="215,200 240,205 235,215 210,215" fill="#ff6e40"/>
+    <!-- Explosion star -->
+    <polygon points="230,175 240,195 260,190 245,205 255,225 235,215 220,230 225,210 205,200 225,195" fill="#ffd600" stroke="#ff3d00" stroke-width="2"/>
+  </g>
+</svg>

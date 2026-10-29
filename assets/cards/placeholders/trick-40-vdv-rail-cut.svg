@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg-grad-trick-40-vdv-rail-cut" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0e14" />
+      <stop offset="50%" stop-color="#141a24" />
+      <stop offset="100%" stop-color="#01579b" stop-opacity="0.6" />
+    </linearGradient>
+    <radialGradient id="glow-trick-40-vdv-rail-cut" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#80d8ff" stop-opacity="0.35" />
+      <stop offset="70%" stop-color="#80d8ff" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#80d8ff" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-trick-40-vdv-rail-cut" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="400" fill="url(#bg-grad-trick-40-vdv-rail-cut)" />
+  <rect width="400" height="400" fill="url(#grid-trick-40-vdv-rail-cut)" />
+
+  <!-- Tactical Glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#glow-trick-40-vdv-rail-cut)" />
+
+  <!-- Outer HUD Ring & Crossbars -->
+  <circle cx="200" cy="200" r="145" fill="none" stroke="#80d8ff" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="8 6"/>
+  <circle cx="200" cy="200" r="125" fill="none" stroke="#80d8ff" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="200" y1="20" x2="200" y2="45" stroke="#80d8ff" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="200" y1="355" x2="200" y2="380" stroke="#80d8ff" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="20" y1="200" x2="45" y2="200" stroke="#80d8ff" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="355" y1="200" x2="380" y2="200" stroke="#80d8ff" stroke-width="2" stroke-opacity="0.6"/>
+
+  <!-- Icon Graphic -->
+  <g transform="translate(0, 30)">
+    <!-- Parachute -->
+    <path d="M 140 100 C 140 50, 260 50, 260 100 Z" fill="#01579b" stroke="#80d8ff" stroke-width="3"/>
+    <path d="M 170 100 C 170 65, 230 65, 230 100 Z" fill="#1e293b" stroke="#80d8ff" stroke-width="2"/>
+    <!-- Shroud lines -->
+    <line x1="140" y1="100" x2="200" y2="155" stroke="#80d8ff" stroke-width="1.5"/>
+    <line x1="170" y1="100" x2="200" y2="155" stroke="#80d8ff" stroke-width="1.5"/>
+    <line x1="230" y1="100" x2="200" y2="155" stroke="#80d8ff" stroke-width="1.5"/>
+    <line x1="260" y1="100" x2="200" y2="155" stroke="#80d8ff" stroke-width="1.5"/>
+    <!-- Paratrooper silhouette -->
+    <circle cx="200" cy="158" r="6" fill="#80d8ff"/>
+    <rect x="194" y="164" width="12" height="18" rx="2" fill="#80d8ff"/>
+    <!-- Railway Crossroads (X switch) below -->
+    <line x1="90" y1="210" x2="310" y2="270" stroke="#90a4ae" stroke-width="4"/>
+    <line x1="90" y1="270" x2="310" y2="210" stroke="#90a4ae" stroke-width="4"/>
+    <!-- Explosion / Sever cut mark -->
+    <circle cx="200" cy="240" r="16" fill="none" stroke="#ff3d00" stroke-width="3"/>
+    <line x1="185" y1="225" x2="215" y2="255" stroke="#ff3d00" stroke-width="3"/>
+    <line x1="215" y1="225" x2="185" y2="255" stroke="#ff3d00" stroke-width="3"/>
+  </g>
+</svg>
