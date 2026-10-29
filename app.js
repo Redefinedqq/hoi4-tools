@@ -68,7 +68,7 @@
   // Centralized toggle: Switch to false to instantly restore authentic game screenshots in 1 click
   const USE_AI_PLACEHOLDER_GRAPHICS = true;
 
-  // 29 Curated Mechanics and Competitive Tricks (17 Classic + 12 Fresh Meta & Community Memes)
+  // 21 Curated Mechanics and Competitive Tricks
   const MECHANICS = [
     {
       id: 'trick-03-naval-drops',
@@ -113,13 +113,6 @@
       placeholderImg: 'assets/cards/placeholders/trick-12-manual-naval-strike.svg'
     },
     {
-      id: 'trick-13-fake-intel-divisions',
-      title: 'КУЧУ ДИВИЗИЙ С ОДНОГО БАТАЛЬОНА ДЛЯ НЕКОТОРЫХ МЕХАНИК',
-      desc: 'Например, для быстрого аншлюза или чтобы больше добровольческих дивизий в Испанию отправить',
-      nativeImg: 'assets/cards/card-06-forgot-agency.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-13-fake-intel-divisions.svg'
-    },
-    {
       id: 'trick-16-scorch-earth-retreat',
       title: 'ВЫЖЖЕННАЯ ЗЕМЛЯ',
       nativeImg: 'assets/cards/card-52-fort-line-flanked.webp',
@@ -147,6 +140,7 @@
     {
       id: 'trick-22-sub-pack-tactics',
       title: 'ВОЛЧЬИ СТАИ НА МЕЛКОВОДЬЕ',
+      desc: 'Спам дешёвых подлодок на мелководье (типа Ла-Манша или Балтики), где штраф к скрытности не важен из-за мгновенного перехвата конвоев и огромного урона торпедами.',
       nativeImg: 'assets/cards/card-56-no-sub-repair.webp',
       placeholderImg: 'assets/cards/placeholders/trick-22-sub-pack-tactics.svg'
     },
@@ -169,32 +163,15 @@
       placeholderImg: 'assets/cards/placeholders/trick-29-anti-air-piercing.svg'
     },
     {
-      id: 'trick-30-volunteer-air-wing',
-      title: 'ДОБРОВОЛЬЧЕСКАЯ АВИАЦИЯ',
-      nativeImg: 'assets/cards/card-19-no-focus.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-30-volunteer-air-wing.svg'
-    },
-    {
       id: 'trick-31-gypsy-family',
       title: '«ЦЫГАНСКАЯ СЕМЬЯ» АЙДИМА',
+      desc: 'Ультимативный шаблон на 22 каски пехоты с огромным запасом HP и 700 софт-атаки, продавливающий фронт за счёт чистой массы без техники.',
       nativeImg: 'assets/cards/card-07-zero-stability.webp',
       placeholderImg: 'assets/cards/placeholders/trick-31-gypsy-family.svg'
     },
     {
-      id: 'trick-42-space-marines',
-      title: 'СПЕЙСМАРИНЫ',
-      nativeImg: 'assets/cards/card-40-tanks-in-mountains.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-42-space-marines.svg'
-    },
-    {
-      id: 'trick-32-dnepr-defense',
-      title: 'ОБОРОНА ПО ДНЕПРУ',
-      nativeImg: 'assets/cards/card-31-attack-river-forts.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-32-dnepr-defense.svg'
-    },
-    {
       id: 'trick-33-console-prime',
-      title: 'СТРОЙБАТЫ И КОНСОЛЬНЫЙ ПРАЙМ',
+      title: 'СТРОЙБАТЫ',
       nativeImg: 'assets/cards/card-04-forgot-building.webp',
       placeholderImg: 'assets/cards/placeholders/trick-33-console-prime.svg'
     },
@@ -205,32 +182,8 @@
       placeholderImg: 'assets/cards/placeholders/trick-34-single-helmet-spam.svg'
     },
     {
-      id: 'trick-35-trophy-conversion',
-      title: 'КОНВЕРСИЯ ТРОФЕЕВ В САУ',
-      nativeImg: 'assets/cards/card-05b-bad-templates-tanks.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-35-trophy-conversion.svg'
-    },
-    {
-      id: 'trick-36-planning-reset',
-      title: 'СБРОС ПЛАНИРОВАНИЯ В МИКРО',
-      nativeImg: 'assets/cards/card-55-no-microcontrol.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-36-planning-reset.svg'
-    },
-    {
-      id: 'trick-37-cas-train-busting',
-      title: 'ВЫБИВАНИЕ ПОЕЗДОВ ЧЕРЕЗ CAS',
-      nativeImg: 'assets/cards/card-32-no-trains.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-37-cas-train-busting.svg'
-    },
-    {
-      id: 'trick-38-puppet-drain',
-      title: 'ПОДСОС РЕСУРСОВ С МАРИОНЕТОК',
-      nativeImg: 'assets/cards/card-33-no-convoys-trade.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-38-puppet-drain.svg'
-    },
-    {
       id: 'trick-39-destroyer-swarm',
-      title: 'ТОРПЕДНЫЙ РОЙ ЭСМИНЦЕВ',
+      title: 'ДЕЛАТЬ ВЕСЬ ФЛОТ ТОЛЬКО ИЗ ТОРПЕДНЫХ ЭСМИНЦЕВ',
       nativeImg: 'assets/cards/card-10-fleet-sunk-one-battle.webp',
       placeholderImg: 'assets/cards/placeholders/trick-39-destroyer-swarm.svg'
     },
@@ -241,10 +194,11 @@
       placeholderImg: 'assets/cards/placeholders/trick-40-vdv-rail-cut.svg'
     },
     {
-      id: 'trick-41-consumer-goods-zero',
-      title: 'РАЗГОН В 0% ТНП',
-      nativeImg: 'assets/cards/card-36-early-mobilization.webp',
-      placeholderImg: 'assets/cards/placeholders/trick-41-consumer-goods-zero.svg'
+      id: 'trick-43-garrison-law',
+      title: 'ВЫСТАВИТЬ ПРАВИЛЬНО ГАРНИЗОНЫ',
+      desc: 'Принудительный труд ради быстрого выкачивания ресурсов, местная полиция/надзор для заводов, а в 90% остальных случаев — военное губернаторство для минимума потерь.',
+      nativeImg: 'assets/cards/card-41-garrison-cavalry-loss.webp',
+      placeholderImg: 'assets/cards/placeholders/trick-43-garrison-law.svg'
     }
   ];
 

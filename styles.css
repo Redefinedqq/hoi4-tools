@@ -1155,11 +1155,11 @@ body::before {
   max-height: calc(26px * var(--tray-scale, 1));
   flex-shrink: 0;
   margin-top: calc(2px * var(--tray-scale, 1));
-  padding: 0 2px;
+  padding: 0 1px;
   font-family: var(--font-accent);
   font-weight: 700;
   color: #e3e3e8;
-  letter-spacing: 0.1px;
+  letter-spacing: 0;
   text-transform: uppercase;
   box-sizing: border-box;
 
@@ -1171,8 +1171,8 @@ body::before {
   text-overflow: ellipsis;
   text-align: center;
 
-  line-height: 1.15;
-  font-size: calc(6.8px * var(--tray-scale, 1));
+  line-height: 1.12;
+  font-size: calc(6.3px * var(--tray-scale, 1));
   word-break: normal;
   overflow-wrap: break-word;
   hyphens: auto;

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg-grad-trick-43-garrison-law" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0e14" />
+      <stop offset="50%" stop-color="#141a24" />
+      <stop offset="100%" stop-color="#00695c" stop-opacity="0.6" />
+    </linearGradient>
+    <radialGradient id="glow-trick-43-garrison-law" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#26a69a" stop-opacity="0.35" />
+      <stop offset="70%" stop-color="#26a69a" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#26a69a" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-trick-43-garrison-law" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="400" fill="url(#bg-grad-trick-43-garrison-law)" />
+  <rect width="400" height="400" fill="url(#grid-trick-43-garrison-law)" />
+
+  <!-- Tactical Glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#glow-trick-43-garrison-law)" />
+
+  <!-- Outer HUD Ring & Crossbars -->
+  <circle cx="200" cy="200" r="145" fill="none" stroke="#26a69a" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="8 6"/>
+  <circle cx="200" cy="200" r="125" fill="none" stroke="#26a69a" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="200" y1="20" x2="200" y2="45" stroke="#26a69a" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="200" y1="355" x2="200" y2="380" stroke="#26a69a" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="20" y1="200" x2="45" y2="200" stroke="#26a69a" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="355" y1="200" x2="380" y2="200" stroke="#26a69a" stroke-width="2" stroke-opacity="0.6"/>
+
+  <!-- Icon Graphic -->
+  <g transform="translate(0, 30)">
+    <!-- Heavy Garrison Shield -->
+    <path d="M 130 90 L 270 90 L 270 170 C 270 230, 200 270, 200 270 C 200 270, 130 230, 130 170 Z" fill="#1e293b" stroke="#26a69a" stroke-width="4"/>
+    <!-- Inner Shield Inset -->
+    <path d="M 150 110 L 250 110 L 250 170 C 250 215, 200 245, 200 245 C 200 245, 150 215, 150 170 Z" fill="#004d40" opacity="0.6"/>
+    <!-- Police / Military Governor Star -->
+    <polygon points="200,120 209,145 235,145 214,160 222,185 200,170 178,185 186,160 165,145 191,145" fill="#80cbc4" stroke="#26a69a" stroke-width="2"/>
+    <!-- Crossed Baton / Guard Keys -->
+    <line x1="120" y1="230" x2="160" y2="190" stroke="#26a69a" stroke-width="4" stroke-linecap="round"/>
+    <line x1="280" y1="230" x2="240" y2="190" stroke="#26a69a" stroke-width="4" stroke-linecap="round"/>
+  </g>
+</svg>
