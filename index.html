@@ -72,6 +72,10 @@
         <div class="welcome-card" id="select-trikiwi-card" role="button" tabindex="0">
           <div class="welcome-card-glow welcome-card-glow-red"></div>
           <h2 class="welcome-card-title">ОШИБКИ В HOI4</h2>
+          <div class="welcome-card-badge" id="trikiwi-card-count-badge">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>30 карточек</span>
+          </div>
           <div class="welcome-card-previews">
             <div class="preview-thumb"><img src="assets/cards/card-01-rubber-deficit.webp" alt="Нет резины" title="Нет резины" loading="lazy" /></div>
             <div class="preview-thumb"><img src="assets/cards/card-13-lost-air.webp" alt="Красный воздух" title="Красный воздух" loading="lazy" /></div>
@@ -88,9 +92,13 @@
         <div class="welcome-card" id="select-atom-card" role="button" tabindex="0">
           <div class="welcome-card-glow welcome-card-glow-cyan"></div>
           <h2 class="welcome-card-title">ФИШКИ И МЕХАНИКИ</h2>
+          <div class="welcome-card-badge" id="atom-card-count-badge">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>29 карточек</span>
+          </div>
           <div class="welcome-card-previews">
             <div class="preview-thumb"><img src="assets/cards/placeholders/trick-31-gypsy-family.svg" alt="«Цыганская семья» Айдима" title="«Цыганская семья» Айдима" loading="lazy" /></div>
-            <div class="preview-thumb"><img src="assets/cards/placeholders/trick-10-space-marines.svg" alt="Спейсмарины в мультиплеере" title="Спейсмарины в мультиплеере" loading="lazy" /></div>
+            <div class="preview-thumb"><img src="assets/cards/placeholders/trick-10-space-marines.svg" alt="Спейсмарины" title="Спейсмарины" loading="lazy" /></div>
             <div class="preview-thumb"><img src="assets/cards/placeholders/trick-33-console-prime.svg" alt="Стройбаты и консольный прайм" title="Стройбаты и консольный прайм" loading="lazy" /></div>
             <div class="preview-thumb"><img src="assets/cards/placeholders/trick-12-manual-naval-strike.svg" alt="Морбобры" title="Морбобры" loading="lazy" /></div>
           </div>
@@ -198,13 +206,6 @@
 
   <!-- Bottom Cards Strip with Smooth Scroll -->
   <div class="bank-cards-strip-container">
-    <div class="tray-top-bar">
-      <div class="tray-label">
-        <i class="fa-solid fa-layer-group"></i>
-        <span id="tray-title-text">КОЛОДА КАРТОЧЕК</span>
-        <span class="tray-count" id="tray-cards-count">-- / --</span>
-      </div>
-    </div>
     <div id="bank-cards-tray" class="bank-cards-strip">
       <!-- Populated dynamically via app.js -->
     </div>
