@@ -36,8 +36,13 @@
   <!-- LZ-String for Ultra-Compact Shareable URLs (Deferred) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js" defer></script>
 
+  <!-- Anti-Cache for Instant Deploy Updates -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
   <!-- Application Styles (Strict HOI4 Graphite Theme) -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=mvvbakii">
 
   <!-- Structured Data JSON-LD -->
   <script type="application/ld+json">
@@ -266,7 +271,7 @@
           <!-- Country and Corner Headers (Sticky freeze-pane) -->
         </div>
         <div id="matrix-board" class="matrix-board">
-          <!-- Populated dynamically via app.js -->
+          <!-- Populated dynamically via app.js?v=mvvbakii -->
         </div>
       </div>
     </main>
@@ -275,7 +280,7 @@
   <!-- Bottom Cards Strip with Smooth Scroll -->
   <div class="bank-cards-strip-container">
     <div id="bank-cards-tray" class="bank-cards-strip">
-      <!-- Populated dynamically via app.js -->
+      <!-- Populated dynamically via app.js?v=mvvbakii -->
     </div>
   </div>
 
@@ -346,6 +351,6 @@
   <div id="toast-container" class="toast-container" aria-live="polite"></div>
 
   <!-- Application Logic (Modular ES6 Architecture) -->
-  <script type="module" src="app.js"></script>
+  <script type="module" src="app.js?v=mvvbakii"></script>
 </body>
 </html>

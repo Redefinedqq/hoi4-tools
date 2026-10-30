@@ -9,13 +9,21 @@ if (fs.existsSync(dist)) {
 fs.mkdirSync(dist, { recursive: true });
 fs.mkdirSync(path.join(dist, '.vercel'), { recursive: true });
 
-// Копирование ключевых файлов
-['index.html', 'styles.css', 'app.js', 'vercel.json'].forEach(file => {
+// Копирование ключевых файлов с авто-кэшбастингом
+const cacheBuster = Date.now().toString(36);
+['styles.css', 'app.js', 'vercel.json'].forEach(file => {
   const src = path.join(__dirname, file);
   if (fs.existsSync(src)) {
     fs.copyFileSync(src, path.join(dist, file));
   }
 });
+
+if (fs.existsSync(path.join(__dirname, 'index.html'))) {
+  let html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+  html = html.replace(/styles\.css(\?v=[^"']+)?/g, `styles.css?v=${cacheBuster}`);
+  html = html.replace(/app\.js(\?v=[^"']+)?/g, `app.js?v=${cacheBuster}`);
+  fs.writeFileSync(path.join(dist, 'index.html'), html, 'utf8');
+}
 
 // Копирование модулей JS и директорий стилей (js/, css/)
 ['js', 'css'].forEach(dir => {
