@@ -21,8 +21,8 @@ const cacheBuster = Date.now().toString(36);
 // Обновление версионирования в index.html для сброса кэша браузеров и CDN
 if (fs.existsSync(path.join(__dirname, 'index.html'))) {
   let html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
-  html = html.replace(/styles\.css(\?v=[^"']+)?/g, `styles.css?v=${cacheBuster}`);
-  html = html.replace(/app\.js(\?v=[^"']+)?/g, `app.js?v=${cacheBuster}`);
+  html = html.replace(/(<link[^>]+href=["']styles\.css)(\?[^"']*)?(["'])/g, `$1?v=${cacheBuster}$3`);
+  html = html.replace(/(<script[^>]+src=["']app\.js)(\?[^"']*)?(["'])/g, `$1?v=${cacheBuster}$3`);
   fs.writeFileSync(path.join(__dirname, 'index.html'), html, 'utf8');
   fs.writeFileSync(path.join(dist, 'index.html'), html, 'utf8');
 }
