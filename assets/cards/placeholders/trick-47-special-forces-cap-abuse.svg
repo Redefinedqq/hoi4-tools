@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg-grad-trick-47-spec" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0812" />
+      <stop offset="50%" stop-color="#190e24" />
+      <stop offset="100%" stop-color="#6c1d5f" stop-opacity="0.65" />
+    </linearGradient>
+    <radialGradient id="glow-trick-47-spec" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#e84393" stop-opacity="0.45" />
+      <stop offset="70%" stop-color="#e84393" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#e84393" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-trick-47-spec" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="400" fill="url(#bg-grad-trick-47-spec)" />
+  <rect width="400" height="400" fill="url(#grid-trick-47-spec)" />
+
+  <!-- Tactical Glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#glow-trick-47-spec)" />
+
+  <!-- HUD Ring & Crossbars -->
+  <circle cx="200" cy="200" r="145" fill="none" stroke="#e84393" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="8 6"/>
+  <circle cx="200" cy="200" r="125" fill="none" stroke="#e84393" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="200" y1="20" x2="200" y2="45" stroke="#e84393" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="200" y1="355" x2="200" y2="380" stroke="#e84393" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="20" y1="200" x2="45" y2="200" stroke="#e84393" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="355" y1="200" x2="380" y2="200" stroke="#e84393" stroke-width="2" stroke-opacity="0.6"/>
+
+  <!-- Graphic: Special Forces Commando Dagger + Multiplier Cap Overflow Badge -->
+  <g transform="translate(0, 10)">
+    <!-- Commando Wings Background -->
+    <path d="M 90 150 C 130 110, 170 140, 200 160 C 230 140, 270 110, 310 150 C 270 170, 230 170, 200 190 C 170 170, 130 170, 90 150 Z" fill="#2d133b" stroke="#e84393" stroke-width="2.5" opacity="0.8"/>
+
+    <!-- Parachute Ribs / Cap Expansion Arc -->
+    <path d="M 120 120 C 120 70, 280 70, 280 120 Z" fill="none" stroke="#fd79a8" stroke-width="3"/>
+    <line x1="120" y1="120" x2="200" y2="160" stroke="#fd79a8" stroke-width="1.5" stroke-opacity="0.5"/>
+    <line x1="160" y1="80" x2="200" y2="160" stroke="#fd79a8" stroke-width="1.5" stroke-opacity="0.5"/>
+    <line x1="240" y1="80" x2="200" y2="160" stroke="#fd79a8" stroke-width="1.5" stroke-opacity="0.5"/>
+    <line x1="280" y1="120" x2="200" y2="160" stroke="#fd79a8" stroke-width="1.5" stroke-opacity="0.5"/>
+
+    <!-- Elite Commando Fairbairn Dagger -->
+    <g transform="translate(0, 5)">
+      <!-- Blade -->
+      <polygon points="195,120 205,120 202,230 200,245 198,230" fill="#f1f2f6" stroke="#e84393" stroke-width="1.5"/>
+      <line x1="200" y1="125" x2="200" y2="235" stroke="#a4b0be" stroke-width="1"/>
+      <!-- Crossguard -->
+      <rect x="180" y="115" width="40" height="6" rx="2" fill="#d63031" stroke="#fd79a8" stroke-width="1"/>
+      <!-- Grip -->
+      <rect x="194" y="80" width="12" height="35" rx="2" fill="#2d3436" stroke="#636e72" stroke-width="1"/>
+      <!-- Pommel -->
+      <circle cx="200" cy="78" r="6" fill="#e84393"/>
+    </g>
+
+    <!-- Overflow Multiplier Badge (+999% CAP ABUSE) -->
+    <rect x="125" y="255" width="150" height="30" rx="8" fill="#190e24" stroke="#fd79a8" stroke-width="2"/>
+    <text x="200" y="275" font-family="sans-serif" font-weight="900" font-size="14" fill="#fd79a8" text-anchor="middle" letter-spacing="1">CAP x999%</text>
+  </g>
+</svg>

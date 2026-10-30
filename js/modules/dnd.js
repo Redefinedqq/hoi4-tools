@@ -4,7 +4,7 @@
 
 import { state, getCardById, isCardInZone, getCurrentTierList } from './state.js';
 import { showToast } from './toast.js';
-import { addCardToZone, removeCardIdFromZone } from './matrix.js';
+import { addCardToZone, removeCardIdFromZone, removeCardFromCountry } from './matrix.js';
 
 export function applyZoneDragOverHighlight(zoneEl, tier) {
   if (tier) {
@@ -74,31 +74,31 @@ export function handleCardDrop(targetZoneKey, cardId, sourceZoneKey = null) {
     return;
   }
 
-  // 1. Dragged from another sub-zone on the board
-  if (sourceZoneKey) {
-    if (sourceZoneKey === targetZoneKey) {
-      // Dropped inside the exact same sub-zone - keep position
-      return;
-    }
+  const [targetCountryId] = targetZoneKey.split('__');
 
-    // If already present in target sub-zone: prevent duplicate in this specific sub-zone
-    if (isCardInZone(targetZoneKey, cardId)) {
-      showToast('Карточка уже находится в этой подсекции', 2000, false, 'tip');
-      return;
-    }
-
-    // Move card from source sub-zone to target sub-zone
-    removeCardIdFromZone(sourceZoneKey, cardId, false);
-    addCardToZone(targetZoneKey, cardId);
+  // If dropped into the exact same sub-zone - no-op
+  if (sourceZoneKey && sourceZoneKey === targetZoneKey) {
     return;
   }
 
-  // 2. Dragged from bottom deck
+  // If already present in this exact target sub-zone
   if (isCardInZone(targetZoneKey, cardId)) {
-    showToast('Карточка уже находится в этой подсекции', 2000, false, 'tip');
+    showToast('Карточка уже находится в этой категории', 2000, false, 'tip');
     return;
   }
 
-  // New placement in this independent sub-zone
+  // If dragged from another country on the board, remove from that country first
+  if (sourceZoneKey) {
+    const [sourceCountryId] = sourceZoneKey.split('__');
+    if (sourceCountryId !== targetCountryId) {
+      removeCardIdFromZone(sourceZoneKey, cardId, false);
+    }
+  }
+
+  // Anti-double-standard rule: In one country, a card cannot exist in multiple tiers!
+  // If card was already placed in this country in another tier or sub-zone, move it cleanly
+  removeCardFromCountry(targetCountryId, cardId, false);
+
+  // Add to target zone
   addCardToZone(targetZoneKey, cardId);
 }

@@ -43,15 +43,40 @@ if (fs.existsSync(path.join(__dirname, '.vercel', 'project.json'))) {
 
 console.log('✅ Бандл собран. Быстрый деплой на Vercel (Production)...');
 try {
-  execSync('npx vercel deploy dist --prod --yes', { stdio: 'inherit' });
+  execSync('npx vercel deploy dist --prod --yes', { stdio: 'inherit', cwd: __dirname });
   console.log('✅ Vercel деплой успешно завершен!');
 } catch (e) {
   console.error('❌ Ошибка деплоя Vercel:', e.message);
 }
 
-console.log('🚀 Синхронизация с GitHub Pages (ветка gh-pages)...');
+console.log('🚀 Синхронизация с GitHub (ветки main и gh-pages)...');
 try {
-  execSync('git push origin HEAD:gh-pages --force', { stdio: 'inherit' });
+  let gitCmd = 'git';
+  const gitPaths = [
+    'git',
+    'C:\\Program Files\\Git\\cmd\\git.exe',
+    'C:\\Program Files\\Git\\bin\\git.exe'
+  ];
+  for (const p of gitPaths) {
+    try {
+      execSync(`"${p}" --version`, { stdio: 'ignore' });
+      gitCmd = `"${p}"`;
+      break;
+    } catch (_) {}
+  }
+  
+  // Автоматическая фиксация всех изменений
+  execSync(`${gitCmd} add -A`, { stdio: 'inherit', cwd: __dirname });
+  try {
+    const commitMsg = `feat: update site, header redesign, deck sync (${new Date().toISOString().replace('T', ' ').substring(0, 19)})`;
+    execSync(`${gitCmd} commit -m "${commitMsg}"`, { stdio: 'inherit', cwd: __dirname });
+    console.log('✅ Изменения закоммичены в git.');
+  } catch (_) {
+    console.log('ℹ️ Нет новых изменений для коммита.');
+  }
+
+  execSync(`${gitCmd} push origin main`, { stdio: 'inherit', cwd: __dirname });
+  execSync(`${gitCmd} push origin HEAD:gh-pages --force`, { stdio: 'inherit', cwd: __dirname });
   console.log('✅ GitHub Pages успешно обновлен!');
 } catch (e) {
   console.error('❌ Ошибка синхронизации с GitHub Pages:', e.message);

@@ -1,28 +1,140 @@
-/* Responsive */
+/* ==========================================================================
+   HEARTS OF IRON IV - RESPONSIVE DESIGN SYSTEM
+   Design System: Google Material Design 3 (M3 Dark Graphite)
+   Typography: Anime Ace (var(--font-accent)) across headers & controls
+   Viewport Range: 4K / 2K -> 1440px -> 1200px -> 1024px -> 768px -> 480px / 375px
+   Author: @redefinedtgk
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. LAPTOPS & DESKTOPS (<= 1440px)
+   Toolbar spacing compaction and button padding reduction
+   -------------------------------------------------------------------------- */
+@media (max-width: 1440px) {
+  :root {
+    --header-padding-x: 10px;
+    --header-gap: 6px;
+  }
+
+  .site-header {
+    gap: 8px;
+    padding: 6px 12px;
+  }
+
+  .header-actions {
+    gap: 5px;
+  }
+
+  .header-actions .btn {
+    padding: 0 10px;
+  }
+
+  .tray-scale-control {
+    padding: 0 8px;
+    gap: 5px;
+  }
+
+  .tray-scale-slider {
+    width: 50px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. SMALL DESKTOPS / COMPACT LAPTOPS (<= 1200px)
+   Sleek single-line fit with micro-spacing (Zero jitter, no split)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1200px) {
+  .site-header {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+
+  .header-left {
+    gap: 8px;
+  }
+
+  .header-actions {
+    gap: 4px;
+  }
+
+  .header-actions .btn {
+    padding: 0 8px;
+    font-size: 0.65rem;
+  }
+
+  .tray-scale-control {
+    padding: 0 6px;
+    gap: 4px;
+  }
+
+  .tray-scale-slider {
+    width: 45px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. TABLETS LANDSCAPE & PORTRAIT (<= 1024px)
+   Strict PROJECT_CONTEXT.md branding typography & Welcome screen cards
+   -------------------------------------------------------------------------- */
 @media (max-width: 1024px) {
+  html,
+  body {
+    overflow-x: hidden !important;
+  }
+
   .app-wrapper {
     padding-left: 14px;
     padding-right: 14px;
     padding-top: 12px;
     padding-bottom: calc(var(--deck-height, 150px) + 60px);
   }
+
   .brand-title {
     font-size: 1.15rem;
   }
+
   .developer-tag {
     font-size: calc(1.15rem + 2px);
     margin-left: 14px;
   }
+
+  /* Welcome Screen Cards Grid Adaptation */
+  .welcome-container {
+    width: 94vw;
+    gap: 28px;
+  }
+
+  .welcome-title {
+    font-size: clamp(2rem, 3.8vw, 3.2rem);
+  }
+
   .welcome-cards-grid {
     grid-template-columns: 1fr;
+    max-width: 620px;
+    gap: 24px;
+    margin-left: auto;
+    margin-right: auto;
   }
-  .header-center {
-    order: 3;
-    width: 100%;
-    margin-top: 4px;
+
+  .welcome-card {
+    padding: 30px 26px;
+    border-radius: 24px;
+  }
+
+  .welcome-card-title {
+    font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+  }
+
+  .preview-thumb {
+    width: 80px;
+    height: 100px;
   }
 }
 
+/* --------------------------------------------------------------------------
+   4. MOBILE STANDARD (<= 768px)
+   Structured 3-line header, touch-scrolling matrix, modal safety padding
+   -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
   .app-wrapper {
     padding-left: 8px;
@@ -30,67 +142,257 @@
     padding-top: 8px;
     padding-bottom: calc(var(--deck-height, 150px) + 60px);
     gap: 10px;
+    width: 100%;
+    max-width: 100vw;
   }
+
+  /* Structured 3-Line Header Layout */
   .site-header {
-    padding: 8px 12px;
+    padding: 10px 12px;
     gap: 8px;
-    border-radius: 12px;
+    border-radius: 14px;
+    display: flex;
+    flex-wrap: wrap;
   }
-  .mode-segment-btn {
-    padding: 6px 12px;
-    font-size: 0.76rem;
-    gap: 6px;
+
+  /* Line 1: Back Button + Branding */
+  .header-left {
+    width: 100%;
+    flex: 1 0 100%;
+    order: 1;
+    justify-content: flex-start;
+    gap: 10px;
   }
+
+  .header-branding {
+    gap: 10px;
+  }
+
   .brand-title {
     font-size: 1.0rem;
-    white-space: normal;
+    white-space: nowrap;
   }
+
   .developer-tag {
     font-size: calc(1.0rem + 2px);
     margin-left: 10px;
   }
+
+  .btn-back {
+    padding: 0 12px;
+    height: 34px;
+    font-size: 0.74rem;
+  }
+
+  .censorship-segmented-control {
+    display: inline-flex;
+    height: 28px;
+    padding: 2px;
+  }
+
+  .censor-segment-btn {
+    padding: 0 8px;
+    font-size: 0.66rem;
+    height: 24px;
+    gap: 4px;
+  }
+
+  /* Action Buttons, Censorship Toggle & Deck Zoom Control */
   .header-actions {
-    gap: 4px;
+    width: 100%;
+    flex: 1 0 100%;
+    justify-content: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    padding-top: 6px;
+    margin-top: 2px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
+
   .btn {
-    padding: 6px 10px;
-    font-size: 0.78rem;
+    padding: 0 8px;
+    font-size: 0.66rem;
+    gap: 4px;
+    height: 28px;
+  }
+
+  .tray-scale-control {
+    height: 28px;
+    padding: 0 6px;
     gap: 4px;
   }
+
+  .tray-scale-slider {
+    width: 55px;
+  }
+
+  .tray-scale-title {
+    font-size: 0.66rem;
+    gap: 4px;
+  }
+
+  .tray-scale-btn {
+    width: 22px;
+    height: 22px;
+    font-size: 0.65rem;
+  }
+
+  .tray-scale-value {
+    font-size: 0.68rem;
+    min-width: 32px;
+  }
+
+  /* Matrix: Touch Momentum & Horizontal Isolation */
   .matrix-card-wrapper {
-    padding: 8px;
-    border-radius: 12px;
+    padding: 8px 6px;
+    border-radius: 14px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
   }
+
+  /* Bottom Cards Strip Container */
   .bank-cards-strip-container {
-    padding: 6px 10px 8px;
+    padding: 6px 8px 8px;
   }
+
   .bank-cards-strip {
+    width: 100%;
+    max-width: 100vw;
     gap: 8px;
+    padding-left: 6px;
+    padding-right: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
   }
+
   .bank-cards-strip .mistake-card {
     width: 76px;
     height: 92px;
     min-width: 76px;
     min-height: 92px;
   }
+
   .bank-cards-strip .card-caption {
     font-size: calc(6.8px * var(--tray-scale, 1));
     height: calc(26px * var(--tray-scale, 1));
     min-height: calc(26px * var(--tray-scale, 1));
     max-height: calc(26px * var(--tray-scale, 1));
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    line-clamp: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     overflow: hidden;
-    text-overflow: ellipsis;
   }
+
+  /* Welcome Screen (768px) */
+  .welcome-container {
+    width: 100%;
+    max-width: 100vw;
+    padding: 0 10px;
+    gap: 20px;
+  }
+
+  .welcome-title {
+    font-size: clamp(1.8rem, 4.5vw, 2.5rem);
+  }
+
+  .welcome-cards-grid {
+    gap: 18px;
+    max-width: 520px;
+  }
+
+  .welcome-card {
+    padding: 22px 18px;
+    border-radius: 20px;
+    gap: 16px;
+  }
+
+  .welcome-card-title {
+    font-size: 1.4rem;
+  }
+
+  .welcome-card-previews {
+    gap: 10px;
+  }
+
+  .preview-thumb {
+    width: 70px;
+    height: 88px;
+    border-radius: 10px;
+  }
+
+  /* Modals: Safe zones and touch margins */
+  .confirm-modal-overlay {
+    padding: 14px;
+  }
+
+  .confirm-modal-card {
+    padding: 22px 18px;
+    border-radius: 18px;
+    max-width: 420px;
+  }
+
+  .confirm-modal-title {
+    font-size: 1.05rem;
+  }
+
+  .confirm-modal-desc {
+    font-size: 0.84rem;
+  }
+
+  .confirm-modal-actions .btn {
+    padding: 8px 12px;
+    font-size: 0.74rem;
+  }
+
+  .lightbox-modal {
+    padding: 12px 8px;
+  }
+
+  .lightbox-container {
+    max-width: 96vw;
+    max-height: 94vh;
+    padding: 12px 8px;
+    gap: 12px;
+  }
+
+  .lightbox-close-btn {
+    top: 4px;
+    right: 4px;
+    width: 36px;
+    height: 36px;
+    font-size: 1.0rem;
+  }
+
+  .lightbox-image-frame {
+    max-width: 94vw;
+    max-height: 48vh;
+  }
+
+  .lightbox-img {
+    max-height: 48vh;
+  }
+
+  .lightbox-caption-card {
+    font-size: 0.95rem;
+    padding: 6px 16px;
+  }
+
+  .lightbox-desc {
+    font-size: 0.85rem;
+    padding: 10px 14px;
+  }
+
+  /* Toasts */
   .toast-container {
     top: 12px;
     right: 12px;
     gap: 8px;
     max-width: calc(100vw - 24px);
   }
+
   .toast {
     max-width: 100%;
     padding: 8px 12px;
@@ -98,8 +400,235 @@
   }
 }
 
+/* --------------------------------------------------------------------------
+   5. ULTRA-COMPACT MOBILE (<= 480px & 375px)
+   Compact badges, collapsed text, ultra-safe controls
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .site-header {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+
+  /* Header Branding */
+  .header-branding {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .brand-title {
+    font-size: 0.90rem;
+  }
+
+  .developer-tag {
+    font-size: calc(0.90rem + 2px);
+    margin-left: 6px;
+    padding: 3px 8px;
+  }
+
+  .btn-back {
+    padding: 0 10px;
+    height: 32px;
+    font-size: 0.70rem;
+  }
+
+  /* Censorship segmented control */
+  .header-center {
+    margin: 2px 0;
+  }
+
+  .censor-segment-btn {
+    padding: 0 8px;
+    font-size: 0.68rem;
+    height: 30px;
+  }
+
+  /* Action Buttons Collapse Mode */
+  .header-actions {
+    gap: 5px;
+    padding-top: 6px;
+  }
+
+  .btn {
+    padding: 0 8px;
+    height: 32px;
+    font-size: 0.70rem;
+    gap: 4px;
+  }
+
+  #share-btn .btn-text-full {
+    display: none !important;
+  }
+
+  #share-btn .btn-text-short {
+    display: inline-flex !important;
+  }
+
+  /* Tray Zoom Control: Icon only label + compact slider */
+  .tray-scale-control {
+    height: 32px;
+    padding: 0 6px;
+    gap: 4px;
+  }
+
+  .tray-scale-label {
+    display: none !important;
+  }
+
+  .tray-scale-slider {
+    width: 46px;
+  }
+
+  .tray-scale-value {
+    font-size: 0.65rem;
+    min-width: 28px;
+  }
+
+  .tray-scale-btn {
+    width: 20px;
+    height: 20px;
+    font-size: 0.60rem;
+  }
+
+  /* Floating Wallpaper Control Bar */
+  .wallpaper-control-bar {
+    top: 14px;
+    padding: 6px 10px;
+    gap: 6px;
+    max-width: calc(100vw - 16px);
+    width: auto;
+    border-radius: 9999px;
+  }
+
+  .wp-title-text {
+    font-size: 0.72rem;
+    padding: 0 2px;
+  }
+
+  .wallpaper-control-bar .toast-btn {
+    padding: 6px 8px;
+    font-size: 0.72rem;
+  }
+
+  /* Welcome Screen on <= 480px */
+  .welcome-container {
+    padding: 0 6px;
+    gap: 14px;
+  }
+
+  .welcome-title {
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+  }
+
+  .welcome-cards-grid {
+    max-width: 100%;
+    gap: 14px;
+  }
+
+  .welcome-card {
+    padding: 18px 12px;
+    border-radius: 16px;
+    gap: 12px;
+  }
+
+  .welcome-card-title {
+    font-size: 1.2rem;
+  }
+
+  .welcome-card-previews {
+    gap: 6px;
+    padding: 2px 0;
+  }
+
+  .preview-thumb {
+    width: 58px;
+    height: 74px;
+    border-radius: 8px;
+  }
+
+  .welcome-card-badge {
+    top: -8px;
+    right: -2px;
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+
+  .welcome-card-btn {
+    padding: 10px 12px;
+    font-size: 0.76rem;
+  }
+
+  /* Modals on <= 480px */
+  .confirm-modal-card {
+    padding: 16px 12px;
+    gap: 12px;
+  }
+
+  .confirm-modal-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+  }
+
+  .confirm-modal-title {
+    font-size: 0.95rem;
+  }
+
+  .confirm-modal-desc {
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .confirm-modal-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .confirm-modal-actions .btn {
+    width: 100%;
+    justify-content: center;
+    height: 36px;
+  }
+
+  .lightbox-container {
+    padding: 8px 4px;
+    gap: 8px;
+  }
+
+  .lightbox-close-btn {
+    top: 2px;
+    right: 2px;
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+
+  .lightbox-image-frame {
+    max-height: 42vh;
+  }
+
+  .lightbox-img {
+    max-height: 42vh;
+  }
+
+  .lightbox-caption-card {
+    font-size: 0.82rem;
+    padding: 4px 12px;
+  }
+
+  .lightbox-desc {
+    font-size: 0.76rem;
+    padding: 8px 10px;
+    line-height: 1.35;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. TOUCH DEVICES (Pointer: coarse / Hover: none)
+   Persistent touch-friendly visibility for card actions
+   -------------------------------------------------------------------------- */
 @media (hover: none), (pointer: coarse) {
-  /* Touch devices - ensure action buttons are visible */
   .mistake-card .card-remove-btn {
     opacity: 0.85;
   }

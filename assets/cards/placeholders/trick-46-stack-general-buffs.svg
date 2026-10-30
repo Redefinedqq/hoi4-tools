@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg-grad-trick-46-gen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c0a06" />
+      <stop offset="50%" stop-color="#181309" />
+      <stop offset="100%" stop-color="#7c3a00" stop-opacity="0.65" />
+    </linearGradient>
+    <radialGradient id="glow-trick-46-gen" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.45" />
+      <stop offset="70%" stop-color="#f59e0b" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-trick-46-gen" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="400" fill="url(#bg-grad-trick-46-gen)" />
+  <rect width="400" height="400" fill="url(#grid-trick-46-gen)" />
+
+  <!-- Tactical Glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#glow-trick-46-gen)" />
+
+  <!-- HUD Ring & Crossbars -->
+  <circle cx="200" cy="200" r="145" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="8 6"/>
+  <circle cx="200" cy="200" r="125" fill="none" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="200" y1="20" x2="200" y2="45" stroke="#f59e0b" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="200" y1="355" x2="200" y2="380" stroke="#f59e0b" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="20" y1="200" x2="45" y2="200" stroke="#f59e0b" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="355" y1="200" x2="380" y2="200" stroke="#f59e0b" stroke-width="2" stroke-opacity="0.6"/>
+
+  <!-- Graphic: General Stars + Stacking Upward Buff Arrows + Swords -->
+  <g transform="translate(0, 15)">
+    <!-- Crossed Swords in Background -->
+    <g stroke="#d97706" stroke-width="4" stroke-linecap="round" opacity="0.45">
+      <line x1="120" y1="120" x2="280" y2="280"/>
+      <line x1="280" y1="120" x2="120" y2="280"/>
+      <line x1="105" y1="135" x2="135" y2="105"/>
+      <line x1="265" y1="105" x2="295" y2="135"/>
+    </g>
+
+    <!-- Stacking Buff Chevrons (Triple Attack Boost) -->
+    <path d="M 140 240 L 200 190 L 260 240" fill="none" stroke="#f59e0b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 140 200 L 200 150 L 260 200" fill="none" stroke="#fbbf24" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 140 160 L 200 110 L 260 160" fill="none" stroke="#fef08a" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- General Field Marshal Star Cluster -->
+    <!-- Center Top Star -->
+    <polygon points="200,60 208,82 232,82 213,97 220,120 200,105 180,120 187,97 168,82 192,82" fill="#fbbf24" stroke="#d97706" stroke-width="2"/>
+    <!-- Left Star -->
+    <polygon points="135,90 141,107 160,107 144,119 150,137 135,125 120,137 126,119 110,107 129,107" fill="#f59e0b" stroke="#b45309" stroke-width="1.5"/>
+    <!-- Right Star -->
+    <polygon points="265,90 271,107 290,107 274,119 280,137 265,125 250,137 256,119 240,107 259,107" fill="#f59e0b" stroke="#b45309" stroke-width="1.5"/>
+
+    <!-- Command Power Multiplier Badge -->
+    <rect x="130" y="255" width="140" height="30" rx="8" fill="#181309" stroke="#fbbf24" stroke-width="2"/>
+    <text x="200" y="275" font-family="sans-serif" font-weight="900" font-size="14" fill="#fbbf24" text-anchor="middle" letter-spacing="1">BUFF x STACK</text>
+  </g>
+</svg>

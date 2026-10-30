@@ -210,3 +210,39 @@
 .cell-sub-zone:hover .zone-empty-hint {
   color: rgba(255, 255, 255, 0.45);
 }
+
+/* ==========================================================================
+   UNIFIED CELL MODE (MP / SP DIVISION DISABLED BY DEFAULT)
+   ========================================================================== */
+.mpsp-disabled .matrix-cell {
+  grid-template-columns: 1fr !important;
+  padding: 3px !important;
+}
+
+.mpsp-disabled .cell-sub-zone.cell-zone-mp,
+.mpsp-disabled .cell-sub-zone.cell-zone-sp {
+  display: none !important;
+}
+
+.mpsp-disabled .cell-sub-zone.cell-zone-all {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 84px !important;
+  border: 1px dashed rgba(255, 255, 255, 0.12) !important;
+  padding: 4px !important;
+}
+
+.mpsp-disabled .cell-sub-zone.cell-zone-all .zone-badge {
+  display: none !important;
+}
+
+.mpsp-disabled .cell-sub-zone.cell-zone-all .zone-cards {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  width: 100% !important;
+  height: 100% !important;
+}

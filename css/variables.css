@@ -134,10 +134,10 @@ body::before {
   margin-right: auto;
   padding-left: 0.5vw;
   padding-right: 0.5vw;
-  padding-top: 14px;
+  padding-top: 6px;
   padding-bottom: calc(var(--deck-height, 150px) + 60px);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 6px;
   box-sizing: border-box;
 }

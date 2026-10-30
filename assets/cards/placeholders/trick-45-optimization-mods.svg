@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg-grad-trick-45-opt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080c10" />
+      <stop offset="50%" stop-color="#0e171d" />
+      <stop offset="100%" stop-color="#006266" stop-opacity="0.65" />
+    </linearGradient>
+    <radialGradient id="glow-trick-45-opt" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#00b894" stop-opacity="0.45" />
+      <stop offset="70%" stop-color="#00b894" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#00b894" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-trick-45-opt" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="400" fill="url(#bg-grad-trick-45-opt)" />
+  <rect width="400" height="400" fill="url(#grid-trick-45-opt)" />
+
+  <!-- Tactical Glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#glow-trick-45-opt)" />
+
+  <!-- HUD Ring & Crossbars -->
+  <circle cx="200" cy="200" r="145" fill="none" stroke="#00b894" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="8 6"/>
+  <circle cx="200" cy="200" r="125" fill="none" stroke="#00b894" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="200" y1="20" x2="200" y2="45" stroke="#00b894" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="200" y1="355" x2="200" y2="380" stroke="#00b894" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="20" y1="200" x2="45" y2="200" stroke="#00b894" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="355" y1="200" x2="380" y2="200" stroke="#00b894" stroke-width="2" stroke-opacity="0.6"/>
+
+  <!-- Optimization Graphic: High-Speed Speedometer & CPU Lightning -->
+  <g transform="translate(0, 10)">
+    <!-- Speedometer Dial Arc -->
+    <path d="M 100 240 A 115 115 0 1 1 300 240" fill="none" stroke="#1e293b" stroke-width="18" stroke-linecap="round"/>
+    <path d="M 100 240 A 115 115 0 0 1 180 95" fill="none" stroke="#00cec9" stroke-width="18" stroke-linecap="round"/>
+    <path d="M 180 95 A 115 115 0 0 1 300 240" fill="none" stroke="#00b894" stroke-width="18" stroke-linecap="round"/>
+
+    <!-- Dial Tick Marks -->
+    <line x1="108" y1="220" x2="124" y2="212" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+    <line x1="126" y1="165" x2="142" y2="168" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+    <line x1="168" y1="122" x2="178" y2="136" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+    <line x1="222" y1="122" x2="212" y2="136" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+    <line x1="264" y1="165" x2="248" y2="168" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+    <line x1="282" y1="220" x2="266" y2="212" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Center Hub & Needle pinned to Max (Speed) -->
+    <circle cx="200" cy="205" r="22" fill="#0f172a" stroke="#00b894" stroke-width="4"/>
+    <polygon points="196,205 204,205 285,135 275,130" fill="#00b894"/>
+    <circle cx="200" cy="205" r="8" fill="#55efc4"/>
+
+    <!-- Lightning Bolt (Fast FPS) -->
+    <polygon points="196,160 216,160 200,195 220,195 186,245 198,205 182,205" fill="#ffeaa7" stroke="#fdcb6e" stroke-width="1.5"/>
+
+    <!-- FPS / Speed Badge -->
+    <rect x="145" y="255" width="110" height="30" rx="8" fill="#0f172a" stroke="#00b894" stroke-width="2"/>
+    <text x="200" y="275" font-family="sans-serif" font-weight="900" font-size="14" fill="#00b894" text-anchor="middle" letter-spacing="1">MAX FPS</text>
+  </g>
+</svg>

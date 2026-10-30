@@ -5,9 +5,26 @@
 import { COUNTRIES } from '../data/countries.js';
 import { TIER_LISTS } from '../data/tierlists.js';
 
+export function loadSavedVisibleCountryIds() {
+  try {
+    const raw = localStorage.getItem('hoi4_visible_countries');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        const validIds = COUNTRIES.map(c => c.id);
+        const filtered = parsed.filter(id => validIds.includes(id));
+        if (filtered.length > 0) return filtered;
+      }
+    }
+  } catch (e) {}
+  return COUNTRIES.map(c => c.id);
+}
+
 export const state = {
   currentTierListId: 'mistakes', // 'mistakes' or 'features'
   currentCensorshipMode: 'censored', // 'historical' or 'censored'
+  isMpSpSplitEnabled: false, // Default: false (unified cell mode, MP/SP disabled)
+  visibleCountryIds: loadSavedVisibleCountryIds(),
   listStates: {
     mistakes: {},
     features: {}
@@ -18,6 +35,11 @@ export const state = {
   isDraggingFlag: false,
   selectedCardForPlacement: null
 };
+
+export function getVisibleCountries() {
+  const ids = state.visibleCountryIds || [];
+  return COUNTRIES.filter(c => ids.includes(c.id));
+}
 
 export function getCurrentTierList() {
   return TIER_LISTS[state.currentTierListId] || TIER_LISTS.mistakes;
@@ -50,16 +72,18 @@ export function getCardPlacementCount(cardId) {
   return count;
 }
 
+export function getMaxCountryPlacements() {
+  return getVisibleCountries().length;
+}
+
 export function getTotalPossibleSubZones() {
-  const list = getCurrentTierList();
-  const tierCount = (list && list.tiers) ? list.tiers.length : 6;
-  return COUNTRIES.length * tierCount * 3;
+  return getMaxCountryPlacements();
 }
 
 export function isCardFullyPlaced(cardId) {
   const cardData = getCardById(cardId);
   if (cardData && cardData.locked) return true;
-  return getCardPlacementCount(cardId) >= getTotalPossibleSubZones();
+  return getCardPlacementCount(cardId) >= getMaxCountryPlacements();
 }
 
 export function isCardPlacedOnBoard(cardId) {

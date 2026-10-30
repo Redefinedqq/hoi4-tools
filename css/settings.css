@@ -1,0 +1,581 @@
+/* ==========================================================================
+   SETTINGS DROPDOWN & COUNTRY CUSTOMIZATION MODAL
+   Design System: Strict Google Material Design 3 (M3 Dark Graphite)
+   Typography: Anime Ace (var(--font-accent))
+   Icons: Font Awesome 6
+   Author: @redefinedtgk
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. SETTINGS DROPDOWN TRIGGER & WRAPPER
+   -------------------------------------------------------------------------- */
+.settings-dropdown-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  z-index: 120;
+}
+
+.settings-menu-btn {
+  gap: 6px !important;
+}
+
+.settings-menu-btn .settings-chevron {
+  font-size: 0.6rem !important;
+  transition: transform 160ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.settings-menu-btn.is-active .settings-chevron {
+  transform: rotate(180deg);
+}
+
+.settings-menu-btn.is-active {
+  background: rgba(255, 255, 255, 0.14) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  color: #ffffff !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. SETTINGS DROPDOWN POPUP MENU
+   -------------------------------------------------------------------------- */
+.settings-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 300px;
+  max-width: 340px;
+  width: max-content;
+  background: rgba(16, 19, 26, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 500;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-8px) scale(0.97);
+  transition: opacity 160ms cubic-bezier(0.2, 0, 0, 1),
+              transform 160ms cubic-bezier(0.2, 0, 0, 1),
+              visibility 160ms;
+  box-sizing: border-box;
+}
+
+.settings-dropdown-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+/* Menu Group Containers & Section Titles */
+.settings-menu-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.settings-menu-group:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.settings-group-label {
+  font-family: var(--font-accent);
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #9aa0a6;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.settings-group-label i {
+  color: #60a5fa;
+  font-size: 0.68rem;
+}
+
+/* Countries Action Card inside Dropdown */
+.settings-menu-btn-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  color: #ffffff;
+  transition: all 140ms ease;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+.settings-menu-btn-item:hover {
+  background: rgba(37, 99, 235, 0.16);
+  border-color: rgba(96, 165, 250, 0.45);
+  transform: translateX(2px);
+}
+
+.settings-item-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-item-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: rgba(96, 165, 250, 0.15);
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  color: #93c5fd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  flex-shrink: 0;
+}
+
+.settings-item-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+
+.settings-item-title {
+  font-family: var(--font-accent);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: 0.3px;
+}
+
+.settings-item-sub {
+  font-family: var(--font-accent);
+  font-size: 0.58rem;
+  color: #22c55e;
+  line-height: 1;
+}
+
+.settings-item-arrow {
+  font-size: 0.65rem;
+  color: #9aa0a6;
+}
+
+/* Sub-toggle row inside Switchers group */
+.settings-sub-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.settings-toggle-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.settings-toggle-title {
+  font-family: var(--font-accent);
+  font-size: 0.6rem;
+  color: #9aa0a6;
+  letter-spacing: 0.3px;
+  line-height: 1;
+}
+
+.settings-badge-dev {
+  font-family: var(--font-accent);
+  font-size: 0.52rem;
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  padding: 1px 5px;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.censorship-segmented-control.is-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.censorship-segmented-control.is-disabled button {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Full-width segmented control inside menu */
+.settings-segmented-control {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.settings-segmented-control .censor-segment-btn {
+  flex: 1;
+  justify-content: center;
+}
+
+/* Full-width Deck scale control inside menu */
+.settings-scale-control {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.settings-scale-control .tray-scale-slider {
+  flex: 1;
+  min-width: 60px;
+}
+
+/* Wallpaper buttons grid inside menu */
+.settings-btn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  width: 100%;
+}
+
+.settings-grid-btn {
+  width: 100%;
+  padding: 0 8px;
+  height: var(--header-control-height);
+  font-size: 0.64rem;
+}
+
+/* Reset Matrix Full-width button inside menu */
+.settings-danger-btn {
+  width: 100%;
+  justify-content: center;
+  height: 30px;
+  font-size: 0.68rem;
+}
+
+/* --------------------------------------------------------------------------
+   3. COUNTRIES CUSTOMIZATION MODAL
+   -------------------------------------------------------------------------- */
+.countries-modal-card {
+  background: #151821;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 20px;
+  max-width: 580px;
+  width: 100%;
+  padding: 22px 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transform: scale(0.95);
+  transition: transform 160ms cubic-bezier(0.2, 0, 0, 1);
+  box-sizing: border-box;
+}
+
+.confirm-modal-overlay.is-active .countries-modal-card {
+  transform: scale(1);
+}
+
+.countries-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+
+.countries-modal-header-lead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.countries-title-icon {
+  font-size: 1.35rem;
+  color: #60a5fa;
+  text-shadow: 0 0 12px rgba(96, 165, 250, 0.7), 0 0 24px rgba(96, 165, 250, 0.4);
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.countries-modal-title {
+  font-family: var(--font-accent);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.4px;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.countries-modal-close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 120ms ease;
+  flex-shrink: 0;
+}
+
+.countries-modal-close-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+/* Info Banner */
+.countries-modal-info-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(96, 165, 250, 0.08);
+  border: 1px solid rgba(96, 165, 250, 0.22);
+  border-radius: 10px;
+  color: #bfdbfe;
+  font-family: var(--font-accent);
+  font-size: 0.62rem;
+  line-height: 1.35;
+}
+
+.countries-modal-info-banner i {
+  color: #60a5fa;
+  font-size: 0.75rem;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+/* Quick Action Chips */
+.countries-quick-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.countries-quick-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  height: 24px;
+  border-radius: 9999px;
+  font-family: var(--font-accent);
+  font-size: 0.62rem;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: #c4c7d0;
+  cursor: pointer;
+  transition: all 120ms ease;
+  user-select: none;
+}
+
+.countries-quick-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.countries-quick-btn i {
+  font-size: 0.6rem;
+  color: #60a5fa;
+}
+
+/* Countries Checkbox List Grid */
+.countries-checklist-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.country-toggle-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  user-select: none;
+  transition: all 140ms ease;
+  box-sizing: border-box;
+}
+
+.country-toggle-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.country-toggle-card.is-active {
+  background: rgba(37, 99, 235, 0.12);
+  border-color: rgba(96, 165, 250, 0.55);
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.25);
+}
+
+.country-toggle-checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.country-toggle-flag-box {
+  width: 28px;
+  height: 20px;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.country-toggle-flag-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.country-toggle-flag-box.general-toggle-box {
+  background: rgba(255, 255, 255, 0.1);
+  color: #9aa0a6;
+  font-size: 0.72rem;
+}
+
+.country-toggle-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  margin-left: 2px;
+}
+
+.country-toggle-name {
+  font-family: var(--font-accent);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.2px;
+}
+
+.country-toggle-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: #4ade80;
+  font-family: var(--font-accent);
+  font-size: 0.55rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.country-toggle-badge i {
+  font-size: 0.5rem;
+}
+
+/* Switch Toggle Graphic */
+.country-toggle-switch {
+  width: 32px;
+  height: 18px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.15);
+  position: relative;
+  transition: background 160ms ease;
+  flex-shrink: 0;
+}
+
+.country-toggle-slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #9aa0a6;
+  transition: transform 160ms cubic-bezier(0.2, 0, 0, 1), background 160ms ease;
+}
+
+.country-toggle-card.is-active .country-toggle-switch {
+  background: #2563eb;
+}
+
+.country-toggle-card.is-active .country-toggle-slider {
+  transform: translateX(14px);
+  background: #ffffff;
+}
+
+/* Modal Footer */
+.countries-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  width: 100%;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 4px;
+}
+
+.countries-modal-footer .btn {
+  height: 30px;
+  padding: 0 16px;
+  font-size: 0.68rem;
+}
+
+/* Responsive Breakpoints for Settings & Modal */
+@media (max-width: 600px) {
+  .countries-checklist-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .countries-modal-card {
+    padding: 16px;
+  }
+
+  .settings-dropdown-menu {
+    right: auto;
+    left: 0;
+    min-width: 280px;
+  }
+}

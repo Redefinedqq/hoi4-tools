@@ -84,5 +84,8 @@
 
 .confirm-modal-actions .btn {
   flex: 1;
-  padding: 10px 16px;
+  height: 32px;
+  padding: 0 16px;
+  font-size: 0.72rem;
+  border-radius: 9999px;
 }

@@ -15,12 +15,14 @@
  * Author: @redefinedtgk
  */
 
+import { state } from './js/modules/state.js';
 import { updateWelcomeScreenCounts, showWelcomeScreen, selectTierList, setupWelcomeAndNavListeners, setupHistoryListener } from './js/modules/welcome.js';
 import { initWallpaper, setupWallpaperListeners } from './js/modules/wallpaper.js';
 import { initCensorshipMode, setupCensorshipListeners } from './js/modules/censor.js';
 import { initTrayScale, initDeckOffsetObserver, setupTrayScaleListeners, setupTrayWheelScroll } from './js/modules/tray.js';
 import { setupLightboxListeners } from './js/modules/lightbox.js';
 import { setupActionListeners } from './js/modules/reset.js';
+import { initSettings } from './js/modules/settings.js';
 import { loadStateFromURL } from './js/modules/url.js';
 
 // Re-export key modules for browser/console inspection
@@ -31,6 +33,7 @@ export * from './js/modules/tray.js';
 export * from './js/modules/matrix.js';
 export * from './js/modules/censor.js';
 export * from './js/modules/wallpaper.js';
+export * from './js/modules/settings.js';
 
 function init() {
   try {
@@ -40,6 +43,8 @@ function init() {
     initCensorshipMode();
     initTrayScale();
     initDeckOffsetObserver();
+    document.body.classList.toggle('mpsp-disabled', !state.isMpSpSplitEnabled);
+    initSettings();
     setupWelcomeAndNavListeners();
     setupCensorshipListeners();
     setupTrayScaleListeners();

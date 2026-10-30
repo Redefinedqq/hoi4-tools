@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg-grad-trick-44-marine-tanks" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0e14" />
+      <stop offset="50%" stop-color="#141a24" />
+      <stop offset="100%" stop-color="#006266" stop-opacity="0.65" />
+    </linearGradient>
+    <radialGradient id="glow-trick-44-marine-tanks" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#12cbc4" stop-opacity="0.4" />
+      <stop offset="70%" stop-color="#12cbc4" stop-opacity="0.06" />
+      <stop offset="100%" stop-color="#12cbc4" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-trick-44-marine-tanks" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="400" fill="url(#bg-grad-trick-44-marine-tanks)" />
+  <rect width="400" height="400" fill="url(#grid-trick-44-marine-tanks)" />
+
+  <!-- Tactical Glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#glow-trick-44-marine-tanks)" />
+
+  <!-- Outer HUD Ring & Crossbars -->
+  <circle cx="200" cy="200" r="145" fill="none" stroke="#12cbc4" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="8 6"/>
+  <circle cx="200" cy="200" r="125" fill="none" stroke="#12cbc4" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="200" y1="20" x2="200" y2="45" stroke="#12cbc4" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="200" y1="355" x2="200" y2="380" stroke="#12cbc4" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="20" y1="200" x2="45" y2="200" stroke="#12cbc4" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="355" y1="200" x2="380" y2="200" stroke="#12cbc4" stroke-width="2" stroke-opacity="0.6"/>
+
+  <!-- Icon Graphic: Tank + Marine Anchor / River Crossing Waves -->
+  <g transform="translate(0, 10)">
+    <!-- Water Waves -->
+    <path d="M 60 250 C 100 235, 140 265, 180 250 C 220 235, 260 265, 300 250 C 325 240, 345 255, 360 250" fill="none" stroke="#12cbc4" stroke-width="4" stroke-linecap="round" opacity="0.65"/>
+    <path d="M 80 270 C 120 255, 160 285, 200 270 C 240 255, 280 285, 320 270" fill="none" stroke="#12cbc4" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+
+    <!-- Marine Anchor behind Tank -->
+    <circle cx="200" cy="100" r="14" fill="none" stroke="#12cbc4" stroke-width="4"/>
+    <line x1="200" y1="114" x2="200" y2="185" stroke="#12cbc4" stroke-width="5" stroke-linecap="round"/>
+    <line x1="175" y1="130" x2="225" y2="130" stroke="#12cbc4" stroke-width="4" stroke-linecap="round"/>
+    <path d="M 160 170 C 160 215, 240 215, 240 170" fill="none" stroke="#12cbc4" stroke-width="5" stroke-linecap="round"/>
+    <polygon points="152,175 160,160 168,175" fill="#12cbc4"/>
+    <polygon points="232,175 240,160 248,175" fill="#12cbc4"/>
+
+    <!-- Amphibious Tank Chassis -->
+    <!-- Turret & Gun -->
+    <polygon points="160,165 240,165 230,140 170,140" fill="#1e293b" stroke="#12cbc4" stroke-width="3.5"/>
+    <line x1="230" y1="150" x2="295" y2="142" stroke="#12cbc4" stroke-width="5" stroke-linecap="round"/>
+    <rect x="290" y="138" width="10" height="8" rx="2" fill="#12cbc4"/>
+
+    <!-- Tank Hull -->
+    <polygon points="125,200 275,200 260,165 140,165" fill="#0f172a" stroke="#12cbc4" stroke-width="3.5"/>
+
+    <!-- Tracks -->
+    <rect x="110" y="195" width="180" height="34" rx="17" fill="#1e293b" stroke="#12cbc4" stroke-width="3.5"/>
+    <!-- Track Road Wheels -->
+    <circle cx="132" cy="212" r="9" fill="#0f172a" stroke="#12cbc4" stroke-width="2.5"/>
+    <circle cx="160" cy="212" r="9" fill="#0f172a" stroke="#12cbc4" stroke-width="2.5"/>
+    <circle cx="188" cy="212" r="9" fill="#0f172a" stroke="#12cbc4" stroke-width="2.5"/>
+    <circle cx="216" cy="212" r="9" fill="#0f172a" stroke="#12cbc4" stroke-width="2.5"/>
+    <circle cx="244" cy="212" r="9" fill="#0f172a" stroke="#12cbc4" stroke-width="2.5"/>
+    <circle cx="268" cy="212" r="9" fill="#0f172a" stroke="#12cbc4" stroke-width="2.5"/>
+  </g>
+</svg>

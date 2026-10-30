@@ -95,11 +95,11 @@
           <div class="welcome-card-previews">
             <div class="welcome-card-badge" id="atom-card-count-badge">
               <i class="fa-solid fa-layer-group"></i>
-              <span>21</span>
+              <span>24</span>
             </div>
             <div class="preview-thumb"><img src="assets/cards/placeholders/trick-31-gypsy-family.svg" alt="«Цыганская семья» Айдима" title="«Цыганская семья» Айдима" loading="lazy" /></div>
             <div class="preview-thumb"><img src="assets/cards/placeholders/trick-10-space-marines.svg" alt="Космодесант" title="Космодесант" loading="lazy" /></div>
-            <div class="preview-thumb"><img src="assets/cards/placeholders/trick-33-console-prime.svg" alt="Стройбаты" title="Стройбаты" loading="lazy" /></div>
+            <div class="preview-thumb"><img src="assets/cards/placeholders/trick-04-hull-conversion.svg" alt="Конверсия" title="Конверсия" loading="lazy" /></div>
             <div class="preview-thumb"><img src="assets/cards/placeholders/trick-12-manual-naval-strike.svg" alt="Морбобры" title="Морбобры" loading="lazy" /></div>
           </div>
           <button class="welcome-card-btn btn-atom">
@@ -148,47 +148,114 @@
           <a href="https://t.me/redefinedtgk" target="_blank" rel="noopener noreferrer" class="developer-tag" title="Telegram разработчика"><span>dev: @redefinedtgk</span></a>
         </div>
       </div>
-      <!-- Censorship Toggle (Historical / Censored) -->
-      <div class="header-center">
-        <div class="censorship-segmented-control" role="group" aria-label="Режим отображения символики">
-          <button type="button" id="censor-btn-historical" class="censor-segment-btn" data-censor="historical" title="Исторический (Свободный) режим — оригинальная символика периода 1933–1945">
-            <i class="fa-solid fa-landmark"></i>
-            <span class="censor-segment-title">Исторический</span>
-          </button>
-          <button type="button" id="censor-btn-censored" class="censor-segment-btn is-active" data-censor="censored" title="Цензурный режим — нейтральная символика без свастики (для стримов и видео)">
-            <i class="fa-solid fa-shield-halved"></i>
-            <span class="censor-segment-title">Цензурный</span>
-          </button>
-        </div>
-      </div>
       <div class="header-actions">
-        <div class="tray-scale-control" aria-label="Масштаб колоды">
-          <span class="tray-scale-title"><i class="fa-solid fa-magnifying-glass"></i> Масштаб колоды:</span>
-          <button id="tray-scale-down" class="tray-scale-btn" title="Уменьшить масштаб"><i class="fa-solid fa-minus"></i></button>
-          <input type="range" id="tray-scale-slider" min="50" max="200" step="5" value="100" class="tray-scale-slider" title="Ползунок масштаба (двойной клик для сброса на 100%)" />
-          <span id="tray-scale-value" class="tray-scale-value" title="Дважды кликните, чтобы сбросить масштаб на 100%">100%</span>
-          <button id="tray-scale-up" class="tray-scale-btn" title="Увеличить масштаб"><i class="fa-solid fa-plus"></i></button>
-        </div>
         <button id="share-btn" class="btn btn-primary" title="Скопировать ссылку с текущим состоянием тир-листа">
           <i class="fa-solid fa-share-nodes"></i>
-          <span>Сохранить / Поделиться</span>
-        </button>
-        <button id="wallpaper-btn" class="btn btn-tonal" title="Сменить фоновые обои">
-          <i class="fa-solid fa-image"></i>
-          <span>Обои</span>
-        </button>
-        <button id="preview-wallpaper-btn" class="btn btn-tonal" title="Посмотреть обои на весь экран">
-          <i class="fa-solid fa-eye"></i>
-          <span>Просмотр</span>
+          <span class="btn-text-full">Сохранить / Поделиться</span>
+          <span class="btn-text-short">Сохранить</span>
         </button>
         <button id="undo-btn" class="btn btn-secondary" style="display: none;" title="Восстановить матрицу после сброса">
           <i class="fa-solid fa-rotate-left"></i>
           <span>Вернуть</span>
         </button>
-        <button id="reset-matrix-btn" class="btn btn-danger" title="Очистить все клетки матрицы">
-          <i class="fa-solid fa-trash-can"></i>
-          <span>Сброс</span>
-        </button>
+
+        <!-- Settings Dropdown -->
+        <div class="settings-dropdown-wrapper" id="settings-dropdown-wrapper">
+          <button id="settings-menu-btn" class="btn btn-tonal settings-menu-btn" aria-haspopup="true" aria-expanded="false" title="Настройки">
+            <i class="fa-solid fa-gear"></i>
+            <span>Настройки</span>
+            <i class="fa-solid fa-chevron-down settings-chevron"></i>
+          </button>
+
+          <div class="settings-dropdown-menu" id="settings-dropdown-menu" role="menu" aria-label="Параметры и настройки">
+            <!-- 1. Country Customization -->
+            <div class="settings-menu-group">
+              <div class="settings-group-label"><i class="fa-solid fa-earth-americas"></i> <span>МАТРИЦА СТРАН</span></div>
+              <button type="button" id="open-countries-modal-btn" class="settings-menu-btn-item">
+                <div class="settings-item-main">
+                  <div class="settings-item-icon"><i class="fa-solid fa-flag"></i></div>
+                  <div class="settings-item-text">
+                    <span class="settings-item-title">Настроить страны</span>
+                    <span class="settings-item-sub" id="settings-countries-status">Показано: 8 из 8</span>
+                  </div>
+                </div>
+                <i class="fa-solid fa-chevron-right settings-item-arrow"></i>
+              </button>
+            </div>
+
+            <!-- 2. Switchers / Toggles Group -->
+            <div class="settings-menu-group">
+              <div class="settings-group-label"><i class="fa-solid fa-sliders"></i> <span>ПЕРЕКЛЮЧАТЕЛИ</span></div>
+              
+              <!-- Censorship Switch -->
+              <div class="settings-sub-toggle">
+                <span class="settings-toggle-title">Символика:</span>
+                <div class="censorship-segmented-control settings-segmented-control" role="group" aria-label="Режим отображения символики">
+                  <button type="button" id="censor-btn-historical" class="censor-segment-btn" data-censor="historical" title="Исторический (Свободный) режим — 1933–1945">
+                    <i class="fa-solid fa-landmark"></i>
+                    <span class="censor-segment-title">Исторический</span>
+                  </button>
+                  <button type="button" id="censor-btn-censored" class="censor-segment-btn is-active" data-censor="censored" title="Цензурный режим (для стримов и видео)">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span class="censor-segment-title">Цензурный</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- MP / SP Division Toggle (Disabled / Locked in default Off state) -->
+              <div class="settings-sub-toggle">
+                <div class="settings-toggle-header">
+                  <span class="settings-toggle-title">Разделение на MP / SP:</span>
+                  <span class="settings-badge-dev" title="Функция временно заблокирована разработчиком">Скоро</span>
+                </div>
+                <div class="censorship-segmented-control settings-segmented-control is-disabled" role="group" aria-label="Разделение на MP и SP" title="Режим временно заблокирован разработчиком">
+                  <button type="button" id="mpsp-btn-on" class="censor-segment-btn" disabled>
+                    <i class="fa-solid fa-toggle-on"></i>
+                    <span class="censor-segment-title">Вкл</span>
+                  </button>
+                  <button type="button" id="mpsp-btn-off" class="censor-segment-btn is-active" disabled>
+                    <i class="fa-solid fa-toggle-off"></i>
+                    <span class="censor-segment-title">Выкл</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Tray Scale Slider -->
+            <div class="settings-menu-group">
+              <div class="settings-group-label"><i class="fa-solid fa-magnifying-glass"></i> <span>МАСШТАБ КОЛОДЫ</span></div>
+              <div class="tray-scale-control settings-scale-control" aria-label="Масштаб колоды">
+                <button id="tray-scale-down" class="tray-scale-btn" title="Уменьшить масштаб"><i class="fa-solid fa-minus"></i></button>
+                <input type="range" id="tray-scale-slider" min="50" max="200" step="5" value="100" class="tray-scale-slider" title="Ползунок масштаба (двойной клик для сброса на 100%)" />
+                <span id="tray-scale-value" class="tray-scale-value" title="Дважды кликните, чтобы сбросить масштаб на 100%">100%</span>
+                <button id="tray-scale-up" class="tray-scale-btn" title="Увеличить масштаб"><i class="fa-solid fa-plus"></i></button>
+              </div>
+            </div>
+
+            <!-- 4. Wallpapers -->
+            <div class="settings-menu-group">
+              <div class="settings-group-label"><i class="fa-solid fa-palette"></i> <span>ФОН И ОБОИ</span></div>
+              <div class="settings-btn-grid">
+                <button id="wallpaper-btn" class="btn btn-tonal settings-grid-btn" title="Сменить фоновые обои">
+                  <i class="fa-solid fa-image"></i>
+                  <span>Обои</span>
+                </button>
+                <button id="preview-wallpaper-btn" class="btn btn-tonal settings-grid-btn" title="Посмотреть обои на весь экран">
+                  <i class="fa-solid fa-eye"></i>
+                  <span>Просмотр</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 5. Reset Matrix -->
+            <div class="settings-menu-group settings-menu-danger">
+              <button id="reset-matrix-btn" class="btn btn-danger settings-danger-btn" title="Очистить все клетки матрицы">
+                <i class="fa-solid fa-trash-can"></i>
+                <span>Сбросить матрицу</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -226,6 +293,36 @@
         <div id="lightbox-title" class="lightbox-caption-card"></div>
         <div id="lightbox-desc" class="lightbox-desc"></div>
         <div id="lightbox-forum-links" class="lightbox-forum-links"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Country Customization Modal -->
+  <div id="countries-modal" class="confirm-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="countries-modal-card">
+      <div class="countries-modal-header">
+        <div class="countries-modal-header-lead">
+          <i class="fa-solid fa-earth-americas countries-title-icon"></i>
+          <h3 class="countries-modal-title">НАСТРОЙКА СТРАН</h3>
+        </div>
+        <button id="close-countries-modal-btn" class="countries-modal-close-btn" title="Закрыть (Esc)">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="countries-checklist-grid" id="countries-checklist-grid">
+        <!-- Dynamically rendered via settings.js -->
+      </div>
+
+      <div class="countries-modal-footer">
+        <button id="cancel-countries-btn" class="btn btn-secondary">
+          <i class="fa-solid fa-xmark"></i>
+          <span>Отмена</span>
+        </button>
+        <button id="apply-countries-btn" class="btn btn-primary">
+          <i class="fa-solid fa-check"></i>
+          <span>Применить</span>
+        </button>
       </div>
     </div>
   </div>

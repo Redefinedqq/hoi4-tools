@@ -3,7 +3,7 @@
  */
 
 import { COUNTRIES } from '../data/countries.js';
-import { state, getCurrentTierList, getZoneKey, syncActiveListState } from './state.js';
+import { state, getCurrentTierList, getZoneKey, syncActiveListState, getVisibleCountries } from './state.js';
 import { createCardElement } from './cards.js';
 import { setupSubZoneDragEvents } from './dnd.js';
 import { updateBankCardsStatus } from './tray.js';
@@ -16,6 +16,25 @@ export function buildMatrixGrid() {
 
   const list = getCurrentTierList();
   const headerContainer = matrixHeaderRowEl || matrixBoardEl;
+  const visibleCountries = getVisibleCountries();
+  const colCount = visibleCountries.length;
+
+  // Dynamic Grid Template Columns & Container Min-Width
+  const gridCols = `90px repeat(${colCount}, minmax(145px, 1fr))`;
+  const minWidthPx = Math.max(800, 90 + colCount * 148 + 10);
+
+  if (matrixHeaderRowEl) {
+    matrixHeaderRowEl.style.gridTemplateColumns = gridCols;
+    matrixHeaderRowEl.style.minWidth = `${minWidthPx}px`;
+  }
+  if (matrixBoardEl) {
+    matrixBoardEl.style.gridTemplateColumns = gridCols;
+    matrixBoardEl.style.minWidth = `${minWidthPx}px`;
+  }
+  const scrollContainer = document.querySelector('.matrix-scroll-container');
+  if (scrollContainer) {
+    scrollContainer.style.minWidth = `${minWidthPx}px`;
+  }
 
   // 1. Top-Left Corner Header
   const axisH = list.axisH || 'НАПРАВЛЕНИЯ';
@@ -29,8 +48,8 @@ export function buildMatrixGrid() {
   `;
   headerContainer.appendChild(cornerEl);
 
-  // 2. Top Columns: 7 Majors + "ОБЩЕЕ"
-  COUNTRIES.forEach(country => {
+  // 2. Top Columns: Selected visible countries
+  visibleCountries.forEach(country => {
     const colEl = document.createElement('div');
     colEl.className = 'country-col-header';
     colEl.dataset.country = country.id;
@@ -52,7 +71,7 @@ export function buildMatrixGrid() {
     headerContainer.appendChild(colEl);
   });
 
-  // 3. Rows: 6 Tiers x 8 Columns with 3 Sub-Zones per Cell
+  // 3. Rows: 6 Tiers x Selected Columns with 3 Sub-Zones per Cell
   list.tiers.forEach(tier => {
     const rowHeaderEl = document.createElement('div');
     rowHeaderEl.className = `tier-row-header ${tier.className}`;
@@ -62,7 +81,7 @@ export function buildMatrixGrid() {
     `;
     matrixBoardEl.appendChild(rowHeaderEl);
 
-    COUNTRIES.forEach(country => {
+    visibleCountries.forEach(country => {
       const cellKey = `${country.id}__${tier.id}`;
       const cellEl = document.createElement('div');
       cellEl.className = 'matrix-cell';
@@ -179,7 +198,7 @@ export function renderCell(cellKey) {
 
 export function renderAllCells() {
   const list = getCurrentTierList();
-  COUNTRIES.forEach(country => {
+  getVisibleCountries().forEach(country => {
     list.tiers.forEach(tier => {
       ['mp', 'all', 'sp'].forEach(z => {
         renderZone(getZoneKey(country.id, tier.id, z));

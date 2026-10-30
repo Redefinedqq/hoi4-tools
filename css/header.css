@@ -1,59 +1,102 @@
 /* ==========================================================================
-   STREAMLINED TOP APP BAR (HEADER) - SURFACE OPACITY 0.75
+   HEARTS OF IRON IV - TOP APPLICATION BAR (HEADER) & UNIVERSAL BUTTON SYSTEM
+   Design System: Google Material Design 3 (M3 Dark Graphite) / Compact Gaming HUD
+   Typography: Anime Ace (var(--font-accent)) across all toolbar elements
+   Layout Architecture: Predictable Flexbox (Auto-wrap & High DPI 2K/1440p)
+   Author: @redefinedtgk
    ========================================================================== */
-.site-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: rgba(18, 20, 24, 0.75);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: var(--md-elevation-1);
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 8px;
+
+/* --------------------------------------------------------------------------
+   1. CSS VARIABLES & TYPOGRAPHY ENFORCEMENT
+   -------------------------------------------------------------------------- */
+:root {
+  --header-padding-y: 6px;
+  --header-padding-x: 12px;
+  --header-gap: 8px;
+  --header-bg: rgba(14, 16, 21, 0.88);
+  --header-border: 1px solid rgba(255, 255, 255, 0.08);
+  --header-radius: 12px;
+  --header-control-height: 28px;
 }
 
-/* Strict Anime Ace font application across ALL toolbar elements */
+/* Strict Anime Ace font application ONLY for text elements */
 .site-header,
-.site-header *,
-.header-left,
-.header-left *,
-.header-center,
-.header-center *,
-.header-actions,
-.header-actions *,
 .brand-title,
-.btn,
-.btn span,
+.developer-tag,
 .censor-segment-btn,
 .censor-segment-title,
 .tray-scale-control,
 .tray-scale-title,
-.tray-scale-value {
-  font-family: var(--font-accent) !important;
+.tray-scale-value,
+.btn,
+.btn span {
+  font-family: var(--font-accent);
 }
 
+/* Protect Font Awesome icon fonts from being overridden by Anime Ace */
+.site-header i,
+.site-header [class*="fa-"],
+.site-header svg,
+.btn i,
+.btn [class*="fa-"],
+.btn svg,
+.censor-segment-btn i,
+.tray-scale-title i,
+.tray-scale-btn i,
+.settings-dropdown-wrapper i,
+.settings-dropdown-menu i,
+.settings-menu-btn-item i,
+.countries-modal-card i {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "FontAwesome" !important;
+  font-style: normal;
+  font-weight: 900;
+}
+
+/* --------------------------------------------------------------------------
+   2. TOP APP BAR CONTAINER (.site-header)
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: relative;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--header-padding-y) var(--header-padding-x);
+  background-color: var(--header-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: var(--header-radius);
+  border: var(--header-border);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  gap: var(--header-gap);
+  flex-wrap: wrap;
+  margin-bottom: 0px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   3. LEFT GROUP: BRANDING & NAVIGATION (.header-left)
+   -------------------------------------------------------------------------- */
 .header-left {
+  flex: 0 1 auto;
   display: flex;
   align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
+  gap: 10px;
+  flex-wrap: nowrap;
 }
 
 .header-branding {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: nowrap;
   white-space: nowrap;
 }
 
 .brand-title {
-  font-family: var(--font-accent);
-  font-size: 1.18rem;
-  letter-spacing: 0.6px;
+  font-size: 1.05rem;
+  letter-spacing: 0.5px;
   color: #ffffff;
   line-height: 1;
   white-space: nowrap;
@@ -62,13 +105,13 @@
   align-items: center;
 }
 
+/* Developer Tag - Strict PROJECT_CONTEXT.md compliance */
 .developer-tag {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  font-family: var(--font-accent) !important;
-  font-size: calc(1.18rem + 2px);
-  letter-spacing: 0.6px;
+  gap: 6px;
+  font-size: calc(1.05rem + 2px);
+  letter-spacing: 0.5px;
   line-height: 1;
   color: #2ecc71;
   background: radial-gradient(ellipse at center, rgba(46, 204, 113, 0.22) 0%, rgba(46, 204, 113, 0.06) 55%, transparent 75%);
@@ -77,9 +120,9 @@
   border: none !important;
   box-shadow: none !important;
   outline: none !important;
-  padding: 4px 10px;
+  padding: 3px 8px;
   border-radius: 9999px;
-  margin: 0 0 0 18px;
+  margin: 0 0 0 12px;
   cursor: pointer;
   user-select: none;
   white-space: nowrap;
@@ -102,4 +145,321 @@
 
 .developer-tag:active {
   transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   4. RIGHT GROUP: TOOLBAR ACTIONS & CONTROLS (.header-actions)
+   -------------------------------------------------------------------------- */
+.header-actions {
+  flex: 0 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+@media (max-width: 768px) {
+  .header-actions {
+    flex: 1 0 100%;
+    width: 100%;
+    justify-content: center;
+    padding-top: 6px;
+    margin-top: 2px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    flex-wrap: wrap;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. DECK SCALE CONTROL (.tray-scale-control) - TOOLBAR INTEGRATION
+   -------------------------------------------------------------------------- */
+.tray-scale-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(14, 17, 24, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6), 0 2px 10px rgba(0, 0, 0, 0.35);
+  border-radius: 9999px;
+  padding: 0 8px;
+  height: var(--header-control-height);
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.tray-scale-title {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  line-height: 1;
+  color: #9aa0a6;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.tray-scale-title i {
+  color: #22c55e;
+  font-size: 0.72rem;
+}
+
+.tray-scale-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.58rem;
+  cursor: pointer;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all 120ms ease;
+}
+
+.tray-scale-btn:hover {
+  background: rgba(34, 197, 94, 0.25);
+  border-color: #22c55e;
+  color: #22c55e;
+  transform: scale(1.1);
+}
+
+.tray-scale-btn:active {
+  transform: scale(0.95);
+}
+
+.tray-scale-btn:focus-visible {
+  outline: 2px solid #22c55e;
+  outline-offset: 1px;
+}
+
+.tray-scale-slider {
+  width: 50px;
+  height: 3px;
+  accent-color: #22c55e;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+.tray-scale-slider:focus-visible {
+  outline: 2px solid #22c55e;
+  outline-offset: 2px;
+}
+
+.tray-scale-value {
+  font-size: 0.66rem;
+  line-height: 1;
+  color: #22c55e;
+  min-width: 30px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  transition: opacity 120ms ease;
+  user-select: none;
+}
+
+.tray-scale-value:hover {
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   6. UNIVERSAL BUTTON SYSTEM (.btn & VARIANTS)
+   Sleek capsule design matching the Historical/Censored segmented controls
+   -------------------------------------------------------------------------- */
+/* Strict Font Awesome 6 icon centering (Anti-jitter for 2K / 1440p) */
+.btn i,
+.btn svg,
+button i.fa-solid,
+.header-actions .btn i,
+.header-actions .btn svg,
+.btn-back i,
+.btn-back svg,
+.toast-btn i,
+.welcome-card-btn i,
+.tray-scale-title i,
+.tray-scale-btn i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  vertical-align: 0;
+  margin: 0;
+  color: currentColor;
+  flex-shrink: 0;
+  position: static;
+  font-size: 0.72rem;
+}
+
+.btn span,
+.btn-back span {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+/* Prevent double text bug: full vs short text with strict specificity */
+#share-btn .btn-text-full {
+  display: inline-flex;
+}
+
+#share-btn .btn-text-short {
+  display: none !important;
+}
+
+.tray-scale-label {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+/* Base Universal Button (.btn) - Exact match to segmented control design */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 10px;
+  height: var(--header-control-height);
+  border-radius: 9999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  line-height: 1;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(14, 17, 24, 0.92);
+  color: #9aa0a6;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6), 0 2px 10px rgba(0, 0, 0, 0.35);
+  text-decoration: none;
+  user-select: none;
+  box-sizing: border-box;
+  white-space: nowrap;
+  transition: all 160ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--md-sys-color-primary);
+  outline-offset: 2px;
+}
+
+/* Button Variants */
+
+/* .btn-primary: High-priority CTA (Save / Share) - Exact match to Censored active mode */
+.btn-primary {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  border-color: rgba(147, 197, 253, 0.55);
+  color: #ffffff;
+  box-shadow: 0 2px 12px rgba(37, 99, 235, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  border-color: #bfdbfe;
+  box-shadow: 0 3px 16px rgba(59, 130, 246, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+}
+
+.btn-primary:active {
+  background: linear-gradient(135deg, #1d4ed8, #2563eb);
+  transform: scale(0.97);
+}
+
+/* .btn-tonal: Standard secondary actions (Wallpapers, Preview) */
+.btn-tonal {
+  background: rgba(14, 17, 24, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6), 0 2px 10px rgba(0, 0, 0, 0.35);
+  color: #9aa0a6;
+}
+
+.btn-tonal:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+.btn-tonal:active {
+  transform: scale(0.97);
+}
+
+/* .btn-danger: Destructive actions (Reset matrix, Confirm exit) */
+.btn-danger {
+  background: linear-gradient(135deg, #881337, #dc2626);
+  border-color: rgba(254, 163, 170, 0.55);
+  color: #ffffff;
+  box-shadow: 0 2px 12px rgba(220, 38, 38, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.btn-danger:hover {
+  background: linear-gradient(135deg, #9f1239, #ef4444);
+  border-color: #fecdd3;
+  box-shadow: 0 3px 16px rgba(239, 68, 68, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+}
+
+.btn-danger:active {
+  background: linear-gradient(135deg, #701a75, #b91c1c);
+  transform: scale(0.97);
+}
+
+/* .btn-secondary: Neutral/Undo actions - Exact match to Historical active mode */
+.btn-secondary {
+  background: linear-gradient(135deg, #b45309, #d97706);
+  border-color: rgba(251, 191, 36, 0.55);
+  color: #ffffff;
+  box-shadow: 0 2px 12px rgba(217, 119, 6, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+  border-color: #fde68a;
+  box-shadow: 0 3px 16px rgba(245, 158, 11, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+}
+
+.btn-secondary:active {
+  background: linear-gradient(135deg, #92400e, #b45309);
+  transform: scale(0.97);
+}
+
+/* .btn-back: Dedicated back button in header */
+.btn-back {
+  background: rgba(14, 17, 24, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6), 0 2px 10px rgba(0, 0, 0, 0.35);
+  color: #9aa0a6;
+  font-size: 0.68rem;
+  padding: 0 10px;
+  gap: 5px;
+}
+
+.btn-back:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+.btn-back:active {
+  transform: scale(0.97);
 }

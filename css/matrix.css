@@ -6,13 +6,13 @@
   border-radius: 18px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: var(--md-elevation-1);
-  padding: 14px;
+  padding: 6px 10px 10px;
   width: 100%;
   box-sizing: border-box;
   overflow-x: auto;
   overflow-y: visible;
   -webkit-overflow-scrolling: touch;
-  margin-top: 4px;
+  margin-top: 0;
   margin-bottom: 24px;
 }
 
@@ -32,8 +32,8 @@
   gap: 5px;
   min-width: 1250px;
   width: 100%;
-  padding-top: 10px;
-  padding-bottom: 8px;
+  padding-top: 4px;
+  padding-bottom: 6px;
   background-color: #121419;
   border-radius: 14px 14px 0 0;
   box-sizing: border-box;
