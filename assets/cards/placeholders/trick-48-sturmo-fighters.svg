@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg-grad-trick-48-sturmo-fighters" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0e14" />
+      <stop offset="50%" stop-color="#141a24" />
+      <stop offset="100%" stop-color="#7c2d12" stop-opacity="0.65" />
+    </linearGradient>
+    <radialGradient id="glow-trick-48-sturmo-fighters" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#f97316" stop-opacity="0.4" />
+      <stop offset="70%" stop-color="#f97316" stop-opacity="0.06" />
+      <stop offset="100%" stop-color="#f97316" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-trick-48-sturmo-fighters" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="400" fill="url(#bg-grad-trick-48-sturmo-fighters)" />
+  <rect width="400" height="400" fill="url(#grid-trick-48-sturmo-fighters)" />
+
+  <!-- Tactical Glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#glow-trick-48-sturmo-fighters)" />
+
+  <!-- Outer HUD Ring & Crossbars -->
+  <circle cx="200" cy="200" r="145" fill="none" stroke="#f97316" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="8 6"/>
+  <circle cx="200" cy="200" r="125" fill="none" stroke="#f97316" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="200" y1="20" x2="200" y2="45" stroke="#f97316" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="200" y1="355" x2="200" y2="380" stroke="#f97316" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="20" y1="200" x2="45" y2="200" stroke="#f97316" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="355" y1="200" x2="380" y2="200" stroke="#f97316" stroke-width="2" stroke-opacity="0.6"/>
+
+  <!-- Icon Graphic: Hybrid Fighter / CAS Dive-Attacker -->
+  <g transform="translate(0, 15)">
+    <!-- Dive flight path & tracer rounds -->
+    <line x1="165" y1="90" x2="165" y2="45" stroke="#fed7aa" stroke-width="2.5" stroke-dasharray="8 6"/>
+    <line x1="235" y1="90" x2="235" y2="45" stroke="#fed7aa" stroke-width="2.5" stroke-dasharray="8 6"/>
+
+    <!-- Dual rockets / bombs mounted on wing pylons -->
+    <rect x="110" y="165" width="10" height="30" rx="4" fill="#ea580c" stroke="#fed7aa" stroke-width="1.5"/>
+    <polygon points="110,195 115,205 120,195" fill="#f97316"/>
+    <rect x="280" y="165" width="10" height="30" rx="4" fill="#ea580c" stroke="#fed7aa" stroke-width="1.5"/>
+    <polygon points="280,195 285,205 290,195" fill="#f97316"/>
+
+    <!-- Aircraft Wings & Fuselage -->
+    <polygon points="200,95 220,165 315,185 305,200 215,190 200,245 185,190 95,200 85,185 180,165" fill="#1e293b" stroke="#f97316" stroke-width="3.5" stroke-linejoin="round"/>
+    
+    <!-- Wing Guns / Cannons protruding -->
+    <line x1="140" y1="160" x2="140" y2="120" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
+    <line x1="260" y1="160" x2="260" y2="120" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Tail stabilizers -->
+    <polygon points="175,235 150,265 165,270 200,250 235,270 250,265 225,235" fill="#0f172a" stroke="#f97316" stroke-width="2"/>
+
+    <!-- Cockpit Canopy Glass -->
+    <ellipse cx="200" cy="145" rx="9" ry="24" fill="#fed7aa" opacity="0.9"/>
+    
+    <!-- Tactical Target Reticle on Ground Target below -->
+    <circle cx="200" cy="245" r="45" fill="none" stroke="#f97316" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+    <polygon points="195,215 205,215 200,205" fill="#f97316"/>
+    <polygon points="195,275 205,275 200,285" fill="#f97316"/>
+  </g>
+</svg>

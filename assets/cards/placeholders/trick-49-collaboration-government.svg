@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg-grad-trick-49-collaboration-government" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0e14" />
+      <stop offset="50%" stop-color="#141a24" />
+      <stop offset="100%" stop-color="#4c1d95" stop-opacity="0.65" />
+    </linearGradient>
+    <radialGradient id="glow-trick-49-collaboration-government" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.4" />
+      <stop offset="70%" stop-color="#a855f7" stop-opacity="0.06" />
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-trick-49-collaboration-government" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="400" fill="url(#bg-grad-trick-49-collaboration-government)" />
+  <rect width="400" height="400" fill="url(#grid-trick-49-collaboration-government)" />
+
+  <!-- Tactical Glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#glow-trick-49-collaboration-government)" />
+
+  <!-- Outer HUD Ring & Crossbars -->
+  <circle cx="200" cy="200" r="145" fill="none" stroke="#a855f7" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="8 6"/>
+  <circle cx="200" cy="200" r="125" fill="none" stroke="#a855f7" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="200" y1="20" x2="200" y2="45" stroke="#a855f7" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="200" y1="355" x2="200" y2="380" stroke="#a855f7" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="20" y1="200" x2="45" y2="200" stroke="#a855f7" stroke-width="2" stroke-opacity="0.6"/>
+  <line x1="355" y1="200" x2="380" y2="200" stroke="#a855f7" stroke-width="2" stroke-opacity="0.6"/>
+
+  <!-- Icon Graphic: Spy Agent / Collaboration Puppet & Treaty Handshake -->
+  <g transform="translate(0, 15)">
+    <!-- Spy Fedora Hat -->
+    <path d="M 125 110 C 135 90, 160 80, 200 80 C 240 80, 265 90, 275 110 L 290 120 C 300 125, 290 130, 270 128 L 130 128 C 110 130, 100 125, 110 120 Z" fill="#1e293b" stroke="#a855f7" stroke-width="3"/>
+    <!-- Hat Ribbon -->
+    <path d="M 142 112 Q 200 108 258 112 L 260 120 Q 200 116 140 120 Z" fill="#7e22ce"/>
+
+    <!-- Trenchcoat Collar & Dark Glasses -->
+    <polygon points="160,135 190,135 185,150 165,150" fill="#e9d5ff" stroke="#a855f7" stroke-width="1.5"/>
+    <polygon points="210,135 240,135 235,150 215,150" fill="#e9d5ff" stroke="#a855f7" stroke-width="1.5"/>
+    <line x1="190" y1="140" x2="210" y2="140" stroke="#a855f7" stroke-width="2"/>
+
+    <!-- Puppeteer Strings & Handshake / Capitulation Seal -->
+    <!-- Treaty Folder / Dossier -->
+    <rect x="135" y="175" width="130" height="90" rx="8" fill="#1e293b" stroke="#c084fc" stroke-width="3"/>
+    <path d="M 135 195 L 265 195" stroke="#a855f7" stroke-width="2"/>
+    <line x1="155" y1="215" x2="245" y2="215" stroke="#c084fc" stroke-width="2" stroke-dasharray="6 4"/>
+    <line x1="155" y1="235" x2="225" y2="235" stroke="#c084fc" stroke-width="2" stroke-dasharray="6 4"/>
+
+    <!-- Compliance / Collaboration 100% Badge -->
+    <circle cx="245" cy="245" r="22" fill="#7e22ce" stroke="#f3e8ff" stroke-width="2.5"/>
+    <path d="M 235 245 L 242 252 L 255 238" fill="none" stroke="#f3e8ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
