@@ -42,7 +42,7 @@
   <meta http-equiv="Expires" content="0">
 
   <!-- Application Styles (Strict HOI4 Graphite Theme) -->
-  <link rel="stylesheet" href="styles.css?v=mvzs0y1w">
+  <link rel="stylesheet" href="styles.css?v=mvzse2qx">
 
   <!-- Structured Data JSON-LD -->
   <script type="application/ld+json">
@@ -207,18 +207,17 @@
                 </div>
               </div>
 
-              <!-- MP / SP Division Toggle (Disabled / Locked in default Off state) -->
+              <!-- MP / SP Division Toggle -->
               <div class="settings-sub-toggle">
                 <div class="settings-toggle-header">
                   <span class="settings-toggle-title">Разделение на MP / SP:</span>
-                  <span class="settings-badge-dev" title="Функция временно заблокирована разработчиком">Скоро</span>
                 </div>
-                <div class="censorship-segmented-control settings-segmented-control is-disabled" role="group" aria-label="Разделение на MP и SP" title="Режим временно заблокирован разработчиком">
-                  <button type="button" id="mpsp-btn-on" class="censor-segment-btn" disabled>
+                <div class="censorship-segmented-control settings-segmented-control" role="group" aria-label="Разделение на MP и SP">
+                  <button type="button" id="mpsp-btn-on" class="censor-segment-btn is-active" title="Включить субзоны МП / ОБЩ / СП в каждой ячейке">
                     <i class="fa-solid fa-toggle-on"></i>
                     <span class="censor-segment-title">Вкл</span>
                   </button>
-                  <button type="button" id="mpsp-btn-off" class="censor-segment-btn is-active" disabled>
+                  <button type="button" id="mpsp-btn-off" class="censor-segment-btn" title="Отключить субзоны и отображать единую ячейку">
                     <i class="fa-solid fa-toggle-off"></i>
                     <span class="censor-segment-title">Выкл</span>
                   </button>
@@ -350,6 +349,6 @@
   <div id="toast-container" class="toast-container" aria-live="polite"></div>
 
   <!-- Application Logic (Modular ES6 Architecture) -->
-  <script type="module" src="app.js?v=mvzs0y1w"></script>
+  <script type="module" src="app.js?v=mvzse2qx"></script>
 </body>
 </html>

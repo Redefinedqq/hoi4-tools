@@ -78,7 +78,7 @@ try {
   // Автоматическая фиксация всех изменений
   execSync(`${gitCmd} add -A`, { stdio: 'inherit', cwd: __dirname });
   try {
-    const commitMsg = `feat: update site, header redesign, deck sync (${new Date().toISOString().replace('T', ' ').substring(0, 19)})`;
+    const commitMsg = `feat: optimize images to WebP and enable MP/SP split (${new Date().toISOString().replace('T', ' ').substring(0, 19)})`;
     execSync(`${gitCmd} commit -m "${commitMsg}"`, { stdio: 'inherit', cwd: __dirname });
     console.log('✅ Изменения закоммичены в git.');
   } catch (_) {

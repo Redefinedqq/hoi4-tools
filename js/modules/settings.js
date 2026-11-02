@@ -21,6 +21,9 @@ let countriesModalEl = null;
 let countriesChecklistGridEl = null;
 let countriesSummaryEl = null;
 
+let mpspBtnOnEl = null;
+let mpspBtnOffEl = null;
+
 // Temporary selection during modal interaction
 let tempSelectedCountryIds = new Set();
 
@@ -37,6 +40,62 @@ export function initSettings() {
   setupDropdownListeners();
   setupCountriesModalListeners();
   updateCountriesStatusLabel();
+  initMpSpMode();
+}
+
+/**
+ * MP / SP Division Toggle Controller (Sub-Zones: MP / ALL / SP vs Unified Cell)
+ */
+export function initMpSpMode() {
+  mpspBtnOnEl = document.getElementById('mpsp-btn-on');
+  mpspBtnOffEl = document.getElementById('mpsp-btn-off');
+
+  setupMpSpListeners();
+  setMpSpMode(state.isMpSpSplitEnabled, false);
+}
+
+export function setMpSpMode(enabled, save = true) {
+  state.isMpSpSplitEnabled = Boolean(enabled);
+  document.body.classList.toggle('mpsp-disabled', !state.isMpSpSplitEnabled);
+
+  if (!mpspBtnOnEl) mpspBtnOnEl = document.getElementById('mpsp-btn-on');
+  if (!mpspBtnOffEl) mpspBtnOffEl = document.getElementById('mpsp-btn-off');
+
+  if (mpspBtnOnEl && mpspBtnOffEl) {
+    if (state.isMpSpSplitEnabled) {
+      mpspBtnOnEl.classList.add('is-active');
+      mpspBtnOffEl.classList.remove('is-active');
+    } else {
+      mpspBtnOffEl.classList.add('is-active');
+      mpspBtnOnEl.classList.remove('is-active');
+    }
+  }
+
+  if (save) {
+    try {
+      localStorage.setItem('hoi4_mpsp_split', state.isMpSpSplitEnabled ? 'true' : 'false');
+    } catch (e) {}
+    const statusText = state.isMpSpSplitEnabled ? 'Включено (МП / ОБЩ / СП)' : 'Выключено (Единая ячейка)';
+    showToast(`Разделение на MP / SP: ${statusText}`, 2500, false, 'info');
+  }
+}
+
+export function setupMpSpListeners() {
+  if (mpspBtnOnEl) {
+    mpspBtnOnEl.addEventListener('click', () => {
+      if (!state.isMpSpSplitEnabled) {
+        setMpSpMode(true, true);
+      }
+    });
+  }
+
+  if (mpspBtnOffEl) {
+    mpspBtnOffEl.addEventListener('click', () => {
+      if (state.isMpSpSplitEnabled) {
+        setMpSpMode(false, true);
+      }
+    });
+  }
 }
 
 /**

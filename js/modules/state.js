@@ -20,10 +20,20 @@ export function loadSavedVisibleCountryIds() {
   return COUNTRIES.map(c => c.id);
 }
 
+export function loadSavedMpSpSplit() {
+  try {
+    const saved = localStorage.getItem('hoi4_mpsp_split');
+    if (saved !== null) {
+      return saved === 'true';
+    }
+  } catch (e) {}
+  return true; // Enabled by default
+}
+
 export const state = {
   currentTierListId: 'mistakes', // 'mistakes' or 'features'
   currentCensorshipMode: 'censored', // 'historical' or 'censored'
-  isMpSpSplitEnabled: false, // Default: false (unified cell mode, MP/SP disabled)
+  isMpSpSplitEnabled: loadSavedMpSpSplit(), // MP / SP split toggleable mode
   visibleCountryIds: loadSavedVisibleCountryIds(),
   listStates: {
     mistakes: {},
