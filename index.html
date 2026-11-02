@@ -42,7 +42,7 @@
   <meta http-equiv="Expires" content="0">
 
   <!-- Application Styles (Strict HOI4 Graphite Theme) -->
-  <link rel="stylesheet" href="styles.css?v=mvzsisg0">
+  <link rel="stylesheet" href="styles.css?v=mvzstslo">
 
   <!-- Structured Data JSON-LD -->
   <script type="application/ld+json">
@@ -212,16 +212,17 @@
                 <div class="settings-toggle-header">
                   <span class="settings-toggle-title">Разделение на MP / SP:</span>
                 </div>
-                <div class="censorship-segmented-control settings-segmented-control" role="group" aria-label="Разделение на MP и SP">
-                  <button type="button" id="mpsp-btn-on" class="censor-segment-btn is-active" title="Включить субзоны МП / ОБЩ / СП в каждой ячейке">
+                <button type="button" id="mpsp-toggle-btn" class="mpsp-switch-pill is-active" role="switch" aria-checked="true" title="Переключить разделение на MP / SP (субзоны МП / ОБЩ / СП)">
+                  <span class="mpsp-switch-slider"></span>
+                  <span class="mpsp-switch-option opt-on">
                     <i class="fa-solid fa-toggle-on"></i>
-                    <span class="censor-segment-title">Вкл</span>
-                  </button>
-                  <button type="button" id="mpsp-btn-off" class="censor-segment-btn" title="Отключить субзоны и отображать единую ячейку">
+                    <span>Вкл</span>
+                  </span>
+                  <span class="mpsp-switch-option opt-off">
                     <i class="fa-solid fa-toggle-off"></i>
-                    <span class="censor-segment-title">Выкл</span>
-                  </button>
-                </div>
+                    <span>Выкл</span>
+                  </span>
+                </button>
               </div>
             </div>
 
@@ -349,6 +350,6 @@
   <div id="toast-container" class="toast-container" aria-live="polite"></div>
 
   <!-- Application Logic (Modular ES6 Architecture) -->
-  <script type="module" src="app.js?v=mvzsisg0"></script>
+  <script type="module" src="app.js?v=mvzstslo"></script>
 </body>
 </html>

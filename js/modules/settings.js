@@ -21,8 +21,7 @@ let countriesModalEl = null;
 let countriesChecklistGridEl = null;
 let countriesSummaryEl = null;
 
-let mpspBtnOnEl = null;
-let mpspBtnOffEl = null;
+let mpspToggleBtnEl = null;
 
 // Temporary selection during modal interaction
 let tempSelectedCountryIds = new Set();
@@ -45,10 +44,10 @@ export function initSettings() {
 
 /**
  * MP / SP Division Toggle Controller (Sub-Zones: MP / ALL / SP vs Unified Cell)
+ * Single unified toggle switch with smooth sliding indicator.
  */
 export function initMpSpMode() {
-  mpspBtnOnEl = document.getElementById('mpsp-btn-on');
-  mpspBtnOffEl = document.getElementById('mpsp-btn-off');
+  mpspToggleBtnEl = document.getElementById('mpsp-toggle-btn');
 
   setupMpSpListeners();
   setMpSpMode(state.isMpSpSplitEnabled, false);
@@ -58,17 +57,11 @@ export function setMpSpMode(enabled, save = true) {
   state.isMpSpSplitEnabled = Boolean(enabled);
   document.body.classList.toggle('mpsp-disabled', !state.isMpSpSplitEnabled);
 
-  if (!mpspBtnOnEl) mpspBtnOnEl = document.getElementById('mpsp-btn-on');
-  if (!mpspBtnOffEl) mpspBtnOffEl = document.getElementById('mpsp-btn-off');
+  if (!mpspToggleBtnEl) mpspToggleBtnEl = document.getElementById('mpsp-toggle-btn');
 
-  if (mpspBtnOnEl && mpspBtnOffEl) {
-    if (state.isMpSpSplitEnabled) {
-      mpspBtnOnEl.classList.add('is-active');
-      mpspBtnOffEl.classList.remove('is-active');
-    } else {
-      mpspBtnOffEl.classList.add('is-active');
-      mpspBtnOnEl.classList.remove('is-active');
-    }
+  if (mpspToggleBtnEl) {
+    mpspToggleBtnEl.classList.toggle('is-active', state.isMpSpSplitEnabled);
+    mpspToggleBtnEl.setAttribute('aria-checked', state.isMpSpSplitEnabled ? 'true' : 'false');
   }
 
   if (save) {
@@ -81,19 +74,22 @@ export function setMpSpMode(enabled, save = true) {
 }
 
 export function setupMpSpListeners() {
-  if (mpspBtnOnEl) {
-    mpspBtnOnEl.addEventListener('click', () => {
-      if (!state.isMpSpSplitEnabled) {
-        setMpSpMode(true, true);
+  if (mpspToggleBtnEl) {
+    mpspToggleBtnEl.addEventListener('click', (e) => {
+      // Honor specific target if clicked on explicit opt-on/opt-off labels
+      const targetOpt = e.target.closest('.mpsp-switch-option');
+      if (targetOpt) {
+        if (targetOpt.classList.contains('opt-on') && !state.isMpSpSplitEnabled) {
+          setMpSpMode(true, true);
+          return;
+        }
+        if (targetOpt.classList.contains('opt-off') && state.isMpSpSplitEnabled) {
+          setMpSpMode(false, true);
+          return;
+        }
       }
-    });
-  }
-
-  if (mpspBtnOffEl) {
-    mpspBtnOffEl.addEventListener('click', () => {
-      if (state.isMpSpSplitEnabled) {
-        setMpSpMode(false, true);
-      }
+      // Otherwise toggle to the opposite state
+      setMpSpMode(!state.isMpSpSplitEnabled, true);
     });
   }
 }
